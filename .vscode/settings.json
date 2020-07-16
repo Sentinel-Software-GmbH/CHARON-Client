@@ -1,0 +1,10 @@
+{
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.clang_format_style": "Google",
+    "C_Cpp.default.cStandard": "c99",
+    "C_Cpp.default.intelliSenseMode": "clang-x64",
+    "C_Cpp.default.compilerPath": "C:\\Program Files (x86)\\LLVM\\bin",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.workspaceParsingPriority": "high"
+}
