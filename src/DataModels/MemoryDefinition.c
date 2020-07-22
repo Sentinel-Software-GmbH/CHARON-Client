@@ -8,7 +8,7 @@
 #include "MemoryDefinition.h"
 #include <stdint.h>
 
-uint8_t getAddressAndLengthFormatIdentifier(MemoryDefinition * memdef) {
+uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition * memdef) {
     return ((memdef->SizeLength & 0x0F) << 4) | (memdef->AddressLength & 0x0F);
 }
 

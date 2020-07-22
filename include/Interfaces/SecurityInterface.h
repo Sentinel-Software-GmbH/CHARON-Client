@@ -60,7 +60,7 @@ typedef struct SecurityInterface_public {
      * @note The user should implement a fast encryption algorithm since this will be called synchronous.
      */
     decryptFunc decrypt;
-} SecurityInterface;
+} SecurityInterface_t;
 
 #ifdef __cplusplus
 }

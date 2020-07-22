@@ -13,29 +13,31 @@
 extern "C" {
 #endif
 
-#include "SecurityInterface.h"
+#include "Interfaces/SecurityInterface.h"
+#include "DataModels/Session.h"
+#include "DataModels/ErrorCode.h"
+#include "DataModels/ResponseCode.h"
+#include "DataModels/SID.h"
+#include "Interfaces/CallbackInterface.h"
+#include <stdbool.h>
 
-SecurityInterface *m_SecurityInterface;
-
-
-uint8_t DiagnosticSessionControl(uint8_t session, uint16_t P2_server_max, uint16_t P2_star_server_max);
-uint8_t ECUReset(uint8_t resetType);
-uint8_t SecurityAccess(uint8_t function, byte[] securityParameter, uint8_t parameterLength);
+bool DiagnosticSessionControl(UDS_SessionType_t session, uint16_t P2_server_max, uint16_t P2_star_server_max, UDS_callback callback);
+bool ECUReset(uint8_t resetType, uint8_t *tx, uint8_t *rx);
+bool SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, uint8_t *tx, uint8_t *rx);
 /**
  * Do we have to implement this?
  * Or is it part of the Specific Com Unit?
  */
 void CommunicationControl();
-uint8_t TesterPresent();
 /**
  * Might be required
  */
 void AccessTimingParameter();
-uint8_t SecuredDataTransmission(byte* data);
-uint8_t ControlDTCSetting(uint8_t subfunction, byte[] data);
-uint8_t ResponseOnEvent(uint8_t event, boolean storeEvent, uint8_t eventWindowTime, uint8_t[10] eventTypeRecord, uint8_t serviceToRespondTo, uint8_t* serviceParameter);
+uint8_t SecuredDataTransmission(uint8_t *data);
+uint8_t ControlDTCSetting(uint8_t subfunction, uint8_t *data);
+uint8_t ResponseOnEvent(uint8_t event, bool storeEvent, uint8_t eventWindowTime, uint8_t eventTypeRecord[10], uint8_t serviceToRespondTo, uint8_t* serviceParameter);
 void LinkControl();
-boolean Init(struct ComInterface Com, struct SecurityInterface Security);
+bool DCM_Init(SecurityInterface_t *security);
 
 
 #ifdef __cplusplus

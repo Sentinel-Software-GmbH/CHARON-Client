@@ -3,16 +3,19 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/src/**"
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/toolchain/ceedling/vendor/**",
+                "${workspaceFolder}/include/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "TEST"
             ],
             "windowsSdkVersion": "10.0.18362.0",
-            "compilerPath": "C:/Program Files (x86)/LLVM/bin/clang.exe",
-            "intelliSenseMode": "clang-x64",
+            "compilerPath": "C:/Ruby27-x64/msys64/mingw64/bin/gcc.exe",
+            "intelliSenseMode": "gcc-x64",
             "cStandard": "c99"
         }
     ],

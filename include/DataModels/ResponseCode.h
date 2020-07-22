@@ -15,6 +15,7 @@ extern "C" {
 
 enum ResponseCode
 {
+    UDS_Response_amount
 };
 
 

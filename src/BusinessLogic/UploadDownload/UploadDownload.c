@@ -7,6 +7,8 @@
 
 #include "UploadDownload.h"
 
+/*
+
 void Download(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, uint8_t* data)
 {
 	
@@ -37,3 +39,4 @@ void ReadDir(uint16_t pathLength, char* path, uint8_t* buffer, uint8_t* dirSize)
 	
 } 
 
+*/

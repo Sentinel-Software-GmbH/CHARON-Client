@@ -13,12 +13,17 @@
 extern "C" {
 #endif
 
-uint16_t DID;
-/**
- * 0x01 for the first byte. First Byte is NOT 0x00.
- */
-uint8_t firstBytePosition;
-uint8_t memorySize;
+#include <stdint.h>
+
+typedef struct DataDefinition_public {
+    uint16_t DID;
+    /**
+     * 0x01 for the first byte. First Byte is NOT 0x00.
+     */
+    uint8_t firstBytePosition;
+    uint8_t memorySize;
+} DataDefinition;
+
 
 
 #ifdef __cplusplus

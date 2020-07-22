@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 
 /**
  * Data Class for a MemoryAddress.
@@ -55,7 +56,7 @@ typedef struct MemoryDefinition_public {
  * Takes the AddressLength and SizeLength of the @ref @c MemoryDefinition, masks them with @c 0x0F and saves it into one byte,
  * according to e.g. @b ISO @b 14229-1 @b Table @b 152 @c addressAndLengthFormatIdentifier.
  */
-uint8_t getAddressAndLengthFormatIdentifier(MemoryDefinition *memdef);
+uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition *memdef);
 
 #ifdef __cplusplus
 }

@@ -39,7 +39,7 @@ typedef bool (*initFunc)(void);
  * @param buffer The data to be sent. This is the inner message, this does not include the application layer protocol frames.
  * @param length Size of the data in bytes.
  */
-typedef void (*sendFunc)(uint8_t* data, uint32_t length);
+typedef bool (*sendFunc)(uint8_t* data, uint32_t length);
 
 /** @brief Should only receive the A_DATA part of the response message.
  * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).

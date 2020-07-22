@@ -8,12 +8,13 @@
 #if !defined(EA_B5D43F1B_EA2F_4dd9_ADDA_89D31FE79F42__INCLUDED_)
 #define EA_B5D43F1B_EA2F_4dd9_ADDA_89D31FE79F42__INCLUDED_
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "MemoryDefinition.h"
+#include "DataModels/MemoryDefinition.h"
+#include "DataModels/DataDefinition.h"
+#include <stdint.h>
 
 uint8_t readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, uint8_t buffer);
 uint8_t readMemoryByAddress(MemoryDefinition sourceMemory, uint8_t buffer);
@@ -27,7 +28,7 @@ void stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t peri
 /**
  * If Both Lengths are 0, the Identifier will be cleared.
  */
-void dynamicallyDefineDataIdentifier(uin16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength);
+void dynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength);
 void writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength);
 void writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory);
 

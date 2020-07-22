@@ -13,6 +13,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 void routineControl(uint8_t routineCommand, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint8_t routineControlOptionsLength);
 
 
