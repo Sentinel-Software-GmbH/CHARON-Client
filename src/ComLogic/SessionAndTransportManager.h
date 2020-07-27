@@ -20,7 +20,7 @@ extern "C" {
 
 bool STM_Init(ComInterface *com, TimerInterface *timer, uint8_t * const rxBuffer, uint32_t rxLength);
 
-bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(uint8_t* buffer, uint32_t length), bool suppressPositiveResponse);
+bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(UDS_Client_Error_t error, uint8_t* buffer, uint32_t length), bool suppressPositiveResponse);
 
 UDS_Client_Error_t STM_cyclic(void);
 

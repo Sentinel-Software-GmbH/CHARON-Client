@@ -19,11 +19,12 @@ extern "C" {
 #include "DataModels/ResponseCode.h"
 #include "DataModels/SID.h"
 #include "Interfaces/CallbackInterface.h"
+#include "DataModels/ResetTypes.h"
 #include <stdbool.h>
 
 bool DiagnosticSessionControl(UDS_SessionType_t session, uint16_t P2_server_max, uint16_t P2_star_server_max, UDS_callback callback);
-bool ECUReset(uint8_t resetType, uint8_t *tx, uint8_t *rx);
-bool SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, uint8_t *tx, uint8_t *rx);
+bool ECUReset(UDS_Reset_t resetType, UDS_callback callback);
+bool SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, UDS_callback callback);
 /**
  * Do we have to implement this?
  * Or is it part of the Specific Com Unit?

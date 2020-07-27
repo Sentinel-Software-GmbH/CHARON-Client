@@ -36,7 +36,7 @@ bool UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface
 
 UDS_Client_Error_t UDS_Client_Task(void);
 
-void UDS_Client_switchSession(UDS_SessionType_t session, uint16_t p2, uint16_t p2_star, UDS_callback callback);
+bool UDS_Client_switchSession(UDS_SessionType_t session, uint16_t p2, uint16_t p2_star, UDS_callback callback);
 
 #ifdef TEST
     /*#include "BusinessLogic/DataTransmitter/DataTransmitter.h"

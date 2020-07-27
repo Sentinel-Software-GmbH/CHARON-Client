@@ -9,11 +9,8 @@
 
 #include "SessionAndTransportManager.h"
 #include "session.h"
-#include "DataModels/PendingObject.h"
 #include "DataModels/SID.h"
-
-
-
+#include <stddef.h>
 
 /* Imports *******************************************************************/
 
@@ -23,6 +20,7 @@
 // These times are from the CHARON UDS Server implementation
 #define P2_DEFAULT 100U
 #define P2_STAR_DEFAULT 300U
+#define DEFAULT_SESSION_TIMEOUT 1000U
 
 /* Macros ********************************************************************/
 
@@ -39,13 +37,12 @@ struct PendingObject {
 
 /* Variables *****************************************************************/
 
-static ComInterface s_com;
-static TimerInterface s_timer;
+static ComInterface *s_com;
+static TimerInterface *s_timer;
 
 static UDS_Session_t session;
 static uint32_t session_timeout;
 
-static uint8_t s_currentSID;
 static uint32_t s_timeout;
 
 static struct PendingObject pending;
@@ -57,27 +54,39 @@ static uint32_t rxLength, currentRxLength;
 
 /* Private Function Definitions **********************************************/
 
+UDS_Client_Error_t KeepAlive(void);
+
 bool send(uint8_t* buffer, uint32_t length);
 
-bool receive(uint8_t* buffer, uint32_t length);
+uint32_t receive(uint8_t* buffer, uint32_t length);
 
 void resetPendingObject();
+
+void resetSession();
+
+int32_t diffNow(uint32_t start);
 
 /* Interfaces  ***************************************************************/
 
 bool STM_Init(ComInterface *com, TimerInterface *timer, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
+    if(!com->init()) {
+        return false;
+    }
+    s_com = com;
+    s_timer = timer;
     rx = rxBuffer;
     rxLength = rxBufferLength;
     currentRxLength = 0;
-    session.session = UDS_Session_Default;
-    session.p2 = P2_DEFAULT;
-    session.p2_star = P2_STAR_DEFAULT;
+    session_timeout = DEFAULT_SESSION_TIMEOUT;
+    resetSession();
+    resetPendingObject();
+    return true;
 }
 
-bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(uint8_t* buffer, uint32_t *length), bool suppressPositiveResponse) {
+bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(UDS_Client_Error_t error, uint8_t* buffer, uint32_t length), bool suppressPositiveResponse) {
     s_suppressPosResponse = suppressPositiveResponse;
     if (suppressPositiveResponse) {
-        data[0] = data[0] | SUPPRESS_BIT;
+        data[1] = data[1] | SUPPRESS_BIT;
     }
     if (send(data, length)) {
         pending.callback = callback;
@@ -97,12 +106,12 @@ UDS_Client_Error_t STM_cyclic(void) {
     }
     if (pending.SID != 0x00)
     {
-        if (receive(rx, &currentRxLength))
+        if (currentRxLength = receive(rx, rxLength) > 0)
         {
             if(rx[0] == NRC_responsePending) 
             { // Got response pending.
                 retVal = E_Pending;
-                s_timeout = s_timer.getTime() + session.p2_star;
+                s_timeout = s_timer->getTime() + session.p2_star;
             }
             else if (!(pending.SID + 0x40 == rx[0]) || SID_NEGATIVE_RESPONSE == rx[0]) 
             { // Check for negative responses.
@@ -148,7 +157,9 @@ UDS_Client_Error_t STM_cyclic(void) {
 void STM_LinkControl() {}
 
 bool STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_t p2_star_timeout) {
-    session.session = session_type;
+    if (session_type != 0x00) {
+        session.session = session_type;
+    } 
     session.p2 = p2_timeout;
     session.p2_star = p2_star_timeout;
 }
@@ -159,15 +170,15 @@ bool send(uint8_t* buffer, uint32_t length) {
     return s_com->send(buffer, length);
 }
 
-bool receive(uint8_t* buffer, uint32_t *length) {
-
+uint32_t receive(uint8_t* buffer, uint32_t length) {
+    return s_com->receive(buffer, length);
 }
 
 UDS_Client_Error_t KeepAlive() {
-    static uint32_t lastSend = 0;
+    static uint32_t lastSend = -1;
     if (diffNow(lastSend) >= session_timeout) {
-        if(send((uint8_t[]){ SID_TesterPresent | SUPPRESS_BIT, 0x00 }, 2)) {
-            lastSend = s_timer.getTime();
+        if(send((uint8_t[]){ SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2)) {
+            lastSend = s_timer->getTime();
         }
     }
 }
@@ -177,13 +188,19 @@ void resetPendingObject(void) {
     pending.callback = NULL;
 }
 
-uint32_t diffNow(uint32_t start) {
-    return s_timer.diffTime(start, s_timer.getTime());
+void resetSession(void) {
+    session.session = UDS_Session_Default;
+    session.p2 = P2_DEFAULT;
+    session.p2_star = P2_STAR_DEFAULT;
+}
+
+int32_t diffNow(uint32_t start) {
+    return s_timer->diffTime(start, s_timer->getTime());
 }
 
 #ifdef TEST
-    ComInterface* STM_getComInterface(void) { return &s_com; }
-    TimerInterface* STM_getTimerInterface(void) { return &s_timer; }
+    ComInterface* STM_getComInterface(void) { return s_com; }
+    TimerInterface* STM_getTimerInterface(void) { return s_timer; }
     UDS_Session_t STM_getCurrentSession(void) {
         return session;
     }
@@ -193,5 +210,5 @@ uint32_t diffNow(uint32_t start) {
         session.p2 = p2;
         session.p2_star = p2_star;
     }
-    void STM_setCurrentSID(uint8_t sid) { s_currentSID = sid; }
+    void STM_setCurrentSID(uint8_t sid) { pending.SID = sid; }
 #endif

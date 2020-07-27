@@ -57,6 +57,7 @@ static UDS_callback DSC_user_callback;
 /* Private Function Definitions **********************************************/
 
 void DSC_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+void Reset_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
 
 /* Interfaces  ***************************************************************/
 
@@ -64,14 +65,17 @@ bool DiagnosticSessionControl(UDS_SessionType_t session, uint16_t P2_server_max,
 {
 	// No struct or whatever because compiler could pad some bytes in between.
 	// attribute__((packed))__ is compiler dependent, and a Macro definition is impossible.
+	P2_star_server_max = P2_star_server_max / 10;
 	uint8_t message[] = {SID_DiagnosticSessionControl, session, (uint8_t)(P2_server_max >> 8), (uint8_t)(P2_server_max & 0xFF), (uint8_t)(P2_star_server_max >> 8), (uint8_t)(P2_star_server_max & 0xFF)}; 
 	DSC_user_callback = callback;
 	return STM_Deploy(&message, 6, DSC_callback, false);
 }
 
-bool ECUReset(uint8_t resetType)
+bool ECUReset(UDS_Reset_t resetType, UDS_callback callback)
 {
-	return  NULL;
+	uint8_t message[] = {SID_ECUReset, resetType};
+	DSC_user_callback = callback;
+	STM_Deploy(&message, 2, Reset_callback, false);
 }
 
 bool SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength)
@@ -88,18 +92,6 @@ void CommunicationControl()
 	
 }
 
-uint8_t TesterPresent()
-{
-	return  NULL;
-}
-
-/**
- * Might be required
- */
-void AccessTimingParameter()
-{
-	
-}
 
 uint8_t SecuredDataTransmission(uint8_t* data, uint32_t length)
 {
@@ -133,10 +125,16 @@ void DSC_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) {
 	if(error == E_OK) {
 		uint16_t p2 = data[2] << 8 + data[3];
 		uint16_t p2_star = data[4] << 8 + data[5];
-		STM_AccessTimingParameter(p2, p2_star);
+		STM_SetSession(data[1], p2, p2_star);
 	}
 	DSC_user_callback(error, data, length);
 	DSC_user_callback = NULL;
+}
+
+void Reset_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) {
+	if(error == E_OK) {
+		STM_SetSession(UDS_Session_Default, P2)
+	}
 }
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

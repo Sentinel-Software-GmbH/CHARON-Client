@@ -6,5 +6,9 @@
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "C_Cpp.default.compilerPath": "C:\\Program Files (x86)\\LLVM\\bin",
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
-    "C_Cpp.workspaceParsingPriority": "high"
+    "C_Cpp.workspaceParsingPriority": "high",
+    "files.associations": {
+        "mock_testcom.h": "c",
+        "testcom.h": "c"
+    },
 }

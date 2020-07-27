@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/src/**",
                 "${workspaceFolder}/toolchain/ceedling/vendor/**",
-                "${workspaceFolder}/include/**"
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/build/test/mocks",
+                "${workspaceFolder}/test/support/**"
             ],
             "defines": [
                 "_DEBUG",

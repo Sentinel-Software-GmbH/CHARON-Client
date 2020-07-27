@@ -52,10 +52,10 @@ typedef bool (*sendFunc)(uint8_t* data, uint32_t length);
  * Refer to @b ISO @b 14229-3,-4,-5,-6,-7 @c UDSon... Standard Documents.
  * 
  * @param buffer The buffer of the data to be received, only write the A_DATA into this buffer.
- * @param length Write the received length in bytes into this parameter.
- * @return False when no message is currently available.
+ * @param count Tries to read up to @c count bytes.
+ * @return How many bytes have been read.
  */
-typedef bool (*recvFunc)(uint8_t* buffer, uint32_t length);
+typedef uint32_t (*recvFunc)(uint8_t* buffer, uint32_t count);
 
 /** @brief Adjusts the Baudrate of the Connection.
  * 

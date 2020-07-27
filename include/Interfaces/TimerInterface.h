@@ -16,7 +16,7 @@ extern "C" {
 #include <stdint.h>
 
 typedef uint32_t(*getTimeFunc)(void);
-typedef uint32_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
+typedef int32_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 
 
 typedef struct TimerInterface_public {
