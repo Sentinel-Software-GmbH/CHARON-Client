@@ -10,6 +10,8 @@
         E_NegativeResponse,
         E_Pending,
         E_Busy,
+        E_NotSupported,
+        E_ComSpeedNotAdjusted,
         ErrorCode_amount
     } UDS_Client_Error_t;
 

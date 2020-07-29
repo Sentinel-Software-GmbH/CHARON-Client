@@ -1,7 +1,7 @@
 {
     "C_Cpp.clang_format_fallbackStyle": "Google",
     "C_Cpp.clang_format_sortIncludes": true,
-    "C_Cpp.clang_format_style": "Google",
+    "C_Cpp.clang_format_style": "Visual Studio",
     "C_Cpp.default.cStandard": "c99",
     "C_Cpp.default.intelliSenseMode": "clang-x64",
     "C_Cpp.default.compilerPath": "C:\\Program Files (x86)\\LLVM\\bin",
@@ -9,6 +9,8 @@
     "C_Cpp.workspaceParsingPriority": "high",
     "files.associations": {
         "mock_testcom.h": "c",
-        "testcom.h": "c"
+        "testcom.h": "c",
+        "sessionandtransportmanager.h": "c",
+        "timerrates.h": "c"
     },
 }

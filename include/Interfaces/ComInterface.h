@@ -38,8 +38,9 @@ typedef bool (*initFunc)(void);
  * 
  * @param buffer The data to be sent. This is the inner message, this does not include the application layer protocol frames.
  * @param length Size of the data in bytes.
+ * @return How many bytes have been sent. Returns a negative number when an error ocurred.
  */
-typedef bool (*sendFunc)(uint8_t* data, uint32_t length);
+typedef int32_t (*sendFunc)(uint8_t* data, uint32_t length);
 
 /** @brief Should only receive the A_DATA part of the response message.
  * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).
@@ -53,9 +54,9 @@ typedef bool (*sendFunc)(uint8_t* data, uint32_t length);
  * 
  * @param buffer The buffer of the data to be received, only write the A_DATA into this buffer.
  * @param count Tries to read up to @c count bytes.
- * @return How many bytes have been read.
+ * @return How many bytes have been read. If it's negative, there was an error.
  */
-typedef uint32_t (*recvFunc)(uint8_t* buffer, uint32_t count);
+typedef int32_t (*recvFunc)(uint8_t* buffer, uint32_t count);
 
 /** @brief Adjusts the Baudrate of the Connection.
  * 
@@ -66,8 +67,9 @@ typedef uint32_t (*recvFunc)(uint8_t* buffer, uint32_t count);
  * @note Depending on the Server this might be optional.
  * 
  * @param speed Baudrate in B/s
+ * @return True, if it succeeded.
  */
-typedef void (*setSpeedFunc)(uint32_t speed);
+typedef bool (*setSpeedFunc)(uint32_t speed);
 
 /** Provides Functions to communicate through the user implemented connection driver. */
 typedef struct ComInterface_public {
@@ -108,6 +110,13 @@ typedef struct ComInterface_public {
      * @note Depending on the Server this might be optional.
      */
     setSpeedFunc setSpeed;
+    /** @brief The Ability to adjust the Baudrate of the Interface.
+     * 
+     * If the Interface cannot change its Baudrate, there is no use to send a LinkControl request.
+     * So the usage of LinkControl should not allowed.
+     * 
+     */
+    bool speedIsAdjustable;
 } ComInterface;
 
 

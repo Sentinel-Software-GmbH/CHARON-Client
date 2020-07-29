@@ -24,7 +24,7 @@ extern "C" {
  * 
  * @return An encrypted message.
  */
-typedef uint8_t*(*encryptFunc)(uint8_t* message);
+typedef uint8_t*(*encryptFunc)(uint8_t* message, uint32_t length);
 
 /**
  * Prototype of an decryption Function.
@@ -34,7 +34,7 @@ typedef uint8_t*(*encryptFunc)(uint8_t* message);
  * 
  * @return A decrypted message.
  */
-typedef uint8_t*(*decryptFunc)(uint8_t* message);
+typedef uint8_t*(*decryptFunc)(uint8_t* message, uint32_t length);
 
 /**
  * Provides Security functions to encrypt and decrypt byte arrays.
@@ -60,7 +60,7 @@ typedef struct SecurityInterface_public {
      * @note The user should implement a fast encryption algorithm since this will be called synchronous.
      */
     decryptFunc decrypt;
-} SecurityInterface_t;
+} SecurityInterface;
 
 #ifdef __cplusplus
 }

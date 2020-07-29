@@ -20,16 +20,14 @@
 
 static uint8_t *rx;
 
-bool UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface_t *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
-    bool retVal = DCM_Init(security);
-    retVal &= STM_Init(com, timer, rxBuffer, rxBufferLength);
-    return retVal;
+void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
+    STM_Init(com, timer, security, rxBuffer, rxBufferLength);
 }
 
 UDS_Client_Error_t UDS_Client_Task(void) {
     return STM_cyclic();
 }
 
-bool UDS_Client_switchSession(UDS_SessionType_t session, uint16_t p2, uint16_t p2_star, UDS_callback callback) {
-    return DiagnosticSessionControl(session, p2, p2_star, callback);
+bool UDS_Client_switchSession(UDS_SessionType_t session, UDS_callback callback) {
+    return DiagnosticSessionControl(session, callback);
 }

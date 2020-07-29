@@ -32,11 +32,11 @@ extern "C" {
 // Wenn kein Receive_CB verfügbar, dann Default_CB => check if positive response
 // Wenn Pending Object bereits existiert, dann Busy zurückgeben.
 
-bool UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface_t *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
+void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
 
 UDS_Client_Error_t UDS_Client_Task(void);
 
-bool UDS_Client_switchSession(UDS_SessionType_t session, uint16_t p2, uint16_t p2_star, UDS_callback callback);
+bool UDS_Client_switchSession(UDS_SessionType_t session, UDS_callback callback);
 
 #ifdef TEST
     /*#include "BusinessLogic/DataTransmitter/DataTransmitter.h"

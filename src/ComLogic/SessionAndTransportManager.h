@@ -13,18 +13,32 @@
 extern "C" {
 #endif
 
-#include "DataModels/Session.h"
 #include "Interfaces/ComInterface.h"
 #include "Interfaces/TimerInterface.h"
+#include "Interfaces/SecurityInterface.h"
+#include "Interfaces/CallbackInterface.h"
+#include "DataModels/Session.h"
 #include "DataModels/ErrorCode.h"
+#include "DataModels/SID.h"
 
-bool STM_Init(ComInterface *com, TimerInterface *timer, uint8_t * const rxBuffer, uint32_t rxLength);
+struct PendingObject {
+    uint8_t SID;
+    UDS_callback callback;
+};
+
+void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxLength);
 
 bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(UDS_Client_Error_t error, uint8_t* buffer, uint32_t length), bool suppressPositiveResponse);
 
+bool STM_AsyncDeploy(SID_t sid, UDS_callback callback);
+
+bool STM_RemoveAsync(SID_t sid);
+
 UDS_Client_Error_t STM_cyclic(void);
 
-void STM_LinkControl();
+bool STM_LinkControl(uint32_t speed);
+
+bool STM_SpeedIsAdjustable(void);
 
 bool STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_t p2_star_timeout);
 

@@ -14,23 +14,25 @@ extern "C" {
 
 #include "DataModels/MemoryDefinition.h"
 #include "DataModels/DataDefinition.h"
+#include "DataModels/TimerRates.h"
+#include "Interfaces/CallbackInterface.h"
 #include <stdint.h>
+#include <stdbool.h>
 
-uint8_t readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, uint8_t buffer);
-uint8_t readMemoryByAddress(MemoryDefinition sourceMemory, uint8_t buffer);
+bool readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
+bool readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
 /**
  * Very Complex. Might need the user to interpret the return values
  */
-uint8_t readScalingDataByIdentifier(uint16_t dataIdentifier, uint8_t buffer);
-uint8_t controlReadDataByPeriodicIdentifier(uint8_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength);
-void readDataByPeriodicIdentifier(uint8_t buffer);
-void stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength);
+bool readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
+bool ReadDataByPeriodicIdentifier(TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
+bool stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
 /**
  * If Both Lengths are 0, the Identifier will be cleared.
  */
-void dynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength);
-void writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength);
-void writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory);
+bool dynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
+bool writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+bool writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, UDS_callback callback);
 
 
 #ifdef __cplusplus

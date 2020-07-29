@@ -28,6 +28,6 @@ void test_Init_DCM_fails(void) {
 void test_switchSessionToDefault(void) {
     uint16_t p2 = 0x0100;
     uint16_t p2_star = 2560;
-    DiagnosticSessionControl_ExpectAndReturn(UDS_Session_Default, p2, p2_star, NULL, true);
-    TEST_ASSERT_EQUAL(true, UDS_Client_switchSession(UDS_Session_Default, p2, p2_star, NULL));
+    DiagnosticSessionControl_ExpectAndReturn(UDS_Session_Default, NULL, true);
+    TEST_ASSERT_EQUAL(true, UDS_Client_switchSession(UDS_Session_Default, NULL));
 }
