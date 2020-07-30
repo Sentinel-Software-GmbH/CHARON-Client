@@ -7,7 +7,7 @@
 
 #include "InputOutputController.h"
 
-void InputOutputControlByIdentifier(uint16_t dataIdentifier, uint8_t inputOutputControlParameter, uint8_t* controlStates, uint8_t controlStatesLength, uint8_t* controlMasks, uint8_t controlMasksLength)
+void UDS_IO_InputOutputControlByIdentifier(uint16_t dataIdentifier, uint8_t inputOutputControlParameter, uint8_t* controlStates, uint8_t controlStatesLength, uint8_t* controlMasks, uint8_t controlMasksLength)
 {
 	
 } 

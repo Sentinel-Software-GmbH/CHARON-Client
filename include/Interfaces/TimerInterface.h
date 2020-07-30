@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-
+// TODO: DO-XY-GEN
 typedef uint32_t(*getTimeFunc)(void);
 typedef int32_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 

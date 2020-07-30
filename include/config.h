@@ -36,7 +36,7 @@
 #ifndef UDS_CLIENT_CONFIG_H_
 #define UDS_CLIENT_CONFIG_H_
 
-/* Timings ******************************************************************/
+/* Timings *******************************************************************/
 
 #define P2_DEFAULT              100U
 #define P2_STAR_DEFAULT         300U
@@ -47,7 +47,14 @@
 #define MAX_ASYNC_MESSAGES      5U
 #define PROGRAMMING_BAUD_RATE   9600U
 
-/* Macros ********************************************************************/
+/* OS Plug Functions *********************************************************/
+
+#define UDS_MUTEX_LOCK()
+#define UDS_MUTEX_UNLOCK()
+
+#define UDS_LOG_INFO(x)
+#define UDS_LOG_WARNING(x)
+#define UDS_LOG_ERROR(x)
 
 /* Types *********************************************************************/
 

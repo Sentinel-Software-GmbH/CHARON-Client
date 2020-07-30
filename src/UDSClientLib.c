@@ -18,16 +18,10 @@
     #include "DataModels/PendingObject.h"
 #endif
 
-static uint8_t *rx;
-
 void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
     STM_Init(com, timer, security, rxBuffer, rxBufferLength);
 }
 
 UDS_Client_Error_t UDS_Client_Task(void) {
     return STM_cyclic();
-}
-
-bool UDS_Client_switchSession(UDS_SessionType_t session, UDS_callback callback) {
-    return DiagnosticSessionControl(session, callback);
 }

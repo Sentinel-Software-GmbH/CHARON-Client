@@ -28,7 +28,7 @@ struct PendingObject {
 
 void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxLength);
 
-bool STM_Deploy(uint8_t *data, uint32_t length, void(*callback)(UDS_Client_Error_t error, uint8_t* buffer, uint32_t length), bool suppressPositiveResponse);
+bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool suppressPositiveResponse);
 
 bool STM_AsyncDeploy(SID_t sid, UDS_callback callback);
 

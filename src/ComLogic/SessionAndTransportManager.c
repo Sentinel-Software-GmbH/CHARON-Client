@@ -67,7 +67,7 @@ void resetSession();
 
 int32_t diffNow(uint32_t start);
 
-int findSID(SID_t sid);
+uint8_t findSID(SID_t sid);
 
 /* Interfaces  ***************************************************************/
 
@@ -86,7 +86,9 @@ void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *secur
 }
 
 bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool suppressPositiveResponse) {
+    UDS_MUTEX_LOCK();
     if(pending.SID != 0x00) {
+        UDS_MUTEX_UNLOCK();
         return false;
     }
     s_suppressPosResponse = suppressPositiveResponse;
@@ -96,34 +98,43 @@ bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool supp
     if(secured_transmit) {
         // TODO: Manipulate Data to send over SecureDataTransmit Service.
     }
-    if (send(data, length) == length) {
+    if (send(data, length)) {
         pending.callback = callback;
         pending.SID = data[0];
         s_timeout = s_timer->getTime() + session.p2;
+        UDS_MUTEX_UNLOCK();
         return true;
     }
+    UDS_MUTEX_UNLOCK();
     return false;
 }
 
 bool STM_AsyncDeploy(SID_t sid, UDS_callback callback) {
-    if (asyncPendingLength >= MAX_ASYNC_MESSAGES) return false;
+    UDS_MUTEX_LOCK();
+    if (asyncPendingLength >= MAX_ASYNC_MESSAGES){
+        UDS_MUTEX_UNLOCK();
+        return false;
+    }
     asyncPending[asyncPendingLength].SID = sid;
     asyncPending[asyncPendingLength].callback = callback;
     asyncPendingLength++;
+    UDS_MUTEX_UNLOCK();
     return true;
 }
 
 bool STM_RemoveAsync(SID_t sid) {
-    int idx;
+    uint8_t idx;
     // If it's not found, it can't be removed
+    UDS_MUTEX_LOCK();
     if((idx = findSID(sid)) == -1) return false;
     // Shift following objects to fill to left.
-    for (int i = idx; i < asyncPendingLength - 1; i++) {
+    for (uint8_t i = idx; i < asyncPendingLength - 1; i++) {
         asyncPending[idx].SID = asyncPending[idx + 1].SID;
         asyncPending[idx].callback = asyncPending[idx + 1].callback;
     }
     // Decrease Length
     asyncPendingLength--;
+    UDS_MUTEX_UNLOCK();
     return true;
 }
 
@@ -136,31 +147,34 @@ UDS_Client_Error_t STM_cyclic(void) {
         KeepAlive();
     }
     // Check if there is some work to do.
+    UDS_MUTEX_LOCK();
     if((readBytes = receive(rx, rxLength)) > 0) {
         SID_t sid = rx[0];
-        int idx;
+        uint8_t idx;
         if (sid == SID_NEGATIVE_RESPONSE) {
             retVal = E_NegativeResponse;
             sid = rx[1];
         }
-        else
-            if(secured_transmit) {
-                // TODO: Manipulate received data to decrypt through security interface.
-            }
-            sid -= 0x40;
+        if(secured_transmit) {
+            // TODO: Manipulate received data to decrypt through security interface.
+        }
+        sid -= 0x40;
         // If/ElseIf/Else is faster depending on platform.
         // Since we are platform independent we use the statistically fastest method.
         if (pending.SID == sid) {
             // if it's a Negative Response
             if(E_NegativeResponse == retVal && NRC_responsePending == rx[2]) {
+                UDS_LOG_INFO("Received Response Pending.");
                 retVal = E_Pending;
                 s_timeout = s_timer->getTime() + session.p2_star;
             }
-            else if(pending.callback != NULL)
+            else if(pending.callback != NULL) {
                 pending.callback(retVal, rx, readBytes);
+            }
         }
         else if(SID_TesterPresent == sid) {
             // NOTE: Not regulated in the ISO Standard.
+            UDS_LOG_WARNING("Tester Present received negative Answer, resetting Session...");
             resetSession();
         }
         else if (idx = findSID(sid) >= 0) {
@@ -168,6 +182,7 @@ UDS_Client_Error_t STM_cyclic(void) {
                 asyncPending[idx].callback(retVal, rx, readBytes);
         }
         else {
+            UDS_LOG_WARNING("Received unexpected answer.");
             // Unexpected receive
         }
     }
@@ -186,6 +201,7 @@ UDS_Client_Error_t STM_cyclic(void) {
             resetPendingObject();
         }
     }
+    UDS_MUTEX_UNLOCK();
     return retVal;
 }
 
@@ -198,11 +214,13 @@ bool STM_SpeedIsAdjustable() {
 }
 
 bool STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_t p2_star_timeout) {
+    UDS_MUTEX_LOCK();
     if (session_type != 0x00) {
         session.session = session_type;
     } 
     session.p2 = p2_timeout;
     session.p2_star = p2_star_timeout;
+    UDS_MUTEX_UNLOCK();
 }
 
 /* Private Function **********************************************************/
@@ -213,6 +231,7 @@ bool send(uint8_t* buffer, uint32_t length) {
         currentRetVal = s_com->send(buffer[sentBytes], length - sentBytes);
         if(currentRetVal < 0) {
             // ERROR
+            UDS_LOG_ERROR("Could not send full message");
             return false;
         }
         else {
@@ -227,11 +246,13 @@ int32_t receive(uint8_t* buffer, uint32_t length) {
 }
 
 UDS_Client_Error_t KeepAlive() {
+    UDS_MUTEX_LOCK();
     if (diffNow(KeepAlivelastSend) >= session_timeout) {
-        if(send((uint8_t[]){ SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2) == 2) {
+        if(send((uint8_t[]){ SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2)) {
             KeepAlivelastSend = s_timer->getTime();
         }
     }
+    UDS_MUTEX_UNLOCK();
 }
 
 void resetPendingObject(void) {
@@ -245,8 +266,8 @@ void resetSession(void) {
     session.p2_star = P2_STAR_DEFAULT;
 }
 
-int findSID(SID_t sid) {
-    for(int i = 0; i < asyncPendingLength; i++) {
+uint8_t findSID(SID_t sid) {
+    for(uint8_t i = 0; i < asyncPendingLength; i++) {
         if(asyncPending[i].SID == sid) return i;
     }
     return -1;
@@ -333,3 +354,7 @@ bool SecuredDataTransmission(uint8_t *data, uint32_t length, UDS_callback callba
 	return retVal;
 }
 */
+
+/* Abstract Mutexes and provide mutex interface */
+
+/* critical section nesting */

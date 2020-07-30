@@ -36,17 +36,12 @@ void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface
 
 UDS_Client_Error_t UDS_Client_Task(void);
 
-bool UDS_Client_switchSession(UDS_SessionType_t session, UDS_callback callback);
-
-#ifdef TEST
-    /*#include "BusinessLogic/DataTransmitter/DataTransmitter.h"
-    #include "BusinessLogic/DCM/DiagnosticCommunicationManager.h"
-    #include "BusinessLogic/DTC/StoredDataTransmitter.h"
-    #include "BusinessLogic/IOControl/InputOutputController.h"
-    #include "BusinessLogic/Routine/Routine.h"
-    #include "BusinessLogic/UploadDownload/UploadDownload.h"*/
-    #include "ComLogic/SessionAndTransportManager.h"
-#endif
+#include "BusinessLogic/DataTransmitter/DataTransmitter.h"
+#include "BusinessLogic/DCM/DiagnosticCommunicationManager.h"
+#include "BusinessLogic/DTC/StoredDataTransmitter.h"
+#include "BusinessLogic/IOControl/InputOutputController.h"
+#include "BusinessLogic/Routine/Routine.h"
+#include "BusinessLogic/UploadDownload/UploadDownload.h"
 
 #ifdef __cplusplus
 }

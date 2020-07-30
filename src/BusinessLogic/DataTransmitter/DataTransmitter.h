@@ -19,20 +19,27 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-bool readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
-bool readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
+bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
+bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
 /**
  * Very Complex. Might need the user to interpret the return values
  */
-bool readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
-bool ReadDataByPeriodicIdentifier(TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
-bool stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
-/**
+bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
+bool UDS_DT_ReadDataByPeriodicIdentifier(TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
+bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
+/** @brief Dynamically define a DataIdentifier.
  * If Both Lengths are 0, the Identifier will be cleared.
+ * 
+ * @param definedDataIdentifier Used to define a new DID.
+ * @param SourceDataDefinitions Array of source DIDs, can be NULL.
+ * @param SourceDataDefinitionsLength Length of the source DID array.
+ * @param SourceMemoryDefinitions Array of memory
  */
-bool dynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
-bool writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
-bool writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, UDS_callback callback);
+bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback);
+bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
+bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback);
+bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 
 #ifdef __cplusplus

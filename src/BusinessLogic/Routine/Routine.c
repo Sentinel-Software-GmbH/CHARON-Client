@@ -7,7 +7,7 @@
 
 #include "Routine.h"
 
-void routineControl(uint8_t routineCommand, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint8_t routineControlOptionsLength)
+void UDS_ROUTINE_routineControl(uint8_t routineCommand, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint8_t routineControlOptionsLength)
 {
 	
 } 
