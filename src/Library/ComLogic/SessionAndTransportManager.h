@@ -40,7 +40,7 @@ bool STM_LinkControl(uint32_t speed);
 
 bool STM_SpeedIsAdjustable(void);
 
-bool STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_t p2_star_timeout);
+void STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_t p2_star_timeout);
 
 void STM_SetSessionTimeout(uint32_t timeout);
 

@@ -16,18 +16,6 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-/** @brief Used to initialize the Communication Interface.
- * The user should set all the appropriate Addresses, default baudrate and everything else
- * that's used to connect to a default uds session here.
- * 
- * This will get called when the Session and Transport Manager initializes with the given ComInterface.
- * 
- * @note Set Addresses, default Baudrate and other communication relevant settings in this function.
- * 
- * @return Return true if init was successful.
- */
-typedef bool (*initFunc)(void);
-
 /** @brief Takes a uds message starting at SID and send it to the server.
  * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).
  * 
@@ -73,15 +61,6 @@ typedef bool (*setSpeedFunc)(uint32_t speed);
 
 /** Provides Functions to communicate through the user implemented connection driver. */
 typedef struct ComInterface_public {
-    /** @brief Used to initialize the Communication Interface.
-     * The user should set all the appropriate Addresses, default baudrate and everything else
-     * that's used to connect to a default uds session here.
-     * 
-     * This will get called when the Session and Transport Manager initializes with the given ComInterface.
-     * 
-     * @note Set Addresses, default Baudrate and other communication relevant settings in this function.
-     */
-    initFunc init;
     /** @brief Takes a uds message starting at SID and send it to the server.
      * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).
      * 
@@ -98,6 +77,7 @@ typedef struct ComInterface_public {
      * This will get called any time a request is send.
      * 
      * @note Implement the uds conform transport protocol here. Only write the complete A_DATA part into the buffer.
+     * @warning This needs to be NON-BLOCKING
      * Refer to @b ISO @b 14229-3,-4,-5,-6,-7 @c UDSon... Standard Documents.
      */
     recvFunc receive;

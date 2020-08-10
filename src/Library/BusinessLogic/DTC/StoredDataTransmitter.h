@@ -13,6 +13,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 void clearDiagnosticInformation(uint32_t groupOfDTC);
 /**
  * Divide by MANY subfunctions

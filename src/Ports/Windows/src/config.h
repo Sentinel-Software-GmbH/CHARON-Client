@@ -52,9 +52,9 @@
 #define UDS_MUTEX_LOCK()
 #define UDS_MUTEX_UNLOCK()
 
-#define UDS_LOG_INFO(x, ...)
-#define UDS_LOG_WARNING(x, ...)
-#define UDS_LOG_ERROR(x, ...)
+#define UDS_LOG_INFO(x, ...)         printf("[UDS Client] Info: " x "\n", ##__VA_ARGS__)
+#define UDS_LOG_WARNING(x, ...)      printf("[UDS Client] Warning: " x "\n", ##__VA_ARGS__)
+#define UDS_LOG_ERROR(x, ...)        printf("[UDS Client] Error: " x "\n", ##__VA_ARGS__)
 
 /* Types *********************************************************************/
 

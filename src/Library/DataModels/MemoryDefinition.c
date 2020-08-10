@@ -5,7 +5,7 @@
  *  Original author: Steven Inacio                     
  ****************************************************/
 
-#include "MemoryDefinition.h"
+#include "DataModels/MemoryDefinition.h"
 #include <stdint.h>
 
 uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition * memdef) {

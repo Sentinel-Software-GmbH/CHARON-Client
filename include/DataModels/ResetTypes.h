@@ -1,3 +1,5 @@
+#ifndef UDS_RESET_H_
+#define UDS_RESET_H_
 typedef enum UDS_Reset_Type_public {
     UDS_Reset_Reserved00 = 0x00,
     UDS_HardReset = 0x01,
@@ -6,3 +8,5 @@ typedef enum UDS_Reset_Type_public {
     UDS_enableRapidPowerShutDown = 0x04,
     UDS_disableRapidPowerShutDown = 0x05,
 } UDS_Reset_t;
+
+#endif /* UDS_RESET_H_ */

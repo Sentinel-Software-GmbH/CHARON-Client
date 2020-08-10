@@ -16,7 +16,7 @@ extern "C" {
 #include <stdint.h>
 // TODO: DO-XY-GEN
 typedef uint32_t(*getTimeFunc)(void);
-typedef int32_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
+typedef int64_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 
 
 typedef struct TimerInterface_public {

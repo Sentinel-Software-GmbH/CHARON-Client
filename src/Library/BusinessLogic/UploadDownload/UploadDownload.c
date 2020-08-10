@@ -18,7 +18,7 @@ void UDS_UPDOWN_Upload(uint8_t compressionMethod, uint8_t encryptionMethod, Memo
 	
 }
 
-void UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, uint8_t* data, boolean replace)
+void UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, uint8_t* data, bool replace)
 {
 	
 }

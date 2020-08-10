@@ -116,6 +116,8 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
 	// attribute__((packed))__ is compiler dependent, and a Macro definition is
 	// impossible.
 	bool retVal;
+
+	UDS_LOG_INFO("Switching Session to 0x%02x", session);
 	uint8_t message[] = {SID_DiagnosticSessionControl, session};
 	if((retVal = STM_Deploy(message, 2, DSC_callback, false)) != false)
 		DSC_user_callback = callback;
@@ -125,6 +127,7 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
 bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback)
 {
 	bool retVal;
+	UDS_LOG_INFO("Resetting ECU with type: %02x", resetType);
 	uint8_t message[] = {SID_ECUReset, resetType};
 	if((retVal = STM_Deploy(message, 2, Reset_callback, false)) != false)
 		DSC_user_callback = callback;
@@ -152,7 +155,7 @@ bool UDS_DCM_CommunicationControl(CommunicationControlSubfunction_t comCtrl, Com
 	uint8_t message[5];
 	message[0] = SID_CommunicationControl;
 	message[1] = comCtrl;
-	message[2] = ((subnet & 0xF) << 4) | communicationType & 0x3;
+	message[2] = ((subnet & 0xF) << 4) | (communicationType & 0x3);
 	message[3] = (nodeIdentificationNumber >> 8) & 0xFF;
 	message[4] = nodeIdentificationNumber & 0xFF;
 	return STM_Deploy(message, 5, callback, false);
@@ -169,6 +172,12 @@ bool UDS_DCM_ControlDTCSetting(uint8_t subfunction,
 	message[1] = subfunction;
 	memcpy(&message[2], data, length);
 	return STM_Deploy(message, length + 2, callback, false);
+}
+
+bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback){
+	if(callback != NULL) {
+		callback(E_NotSupported, NULL, 0);
+	}
 }
 
 bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool storeEvent, uint8_t eventWindowTime, uint8_t *eventTypeRecord, uint8_t eventTypeRecordLength, uint8_t serviceToRespondTo, uint8_t *serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
@@ -313,8 +322,8 @@ void DSC_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length)
 {
 	if (error == E_OK)
 	{
-		uint16_t p2 = data[2] << 8 + data[3];
-		uint16_t p2_star = data[4] << 8 + data[5];
+		uint16_t p2 = (data[2] << 8) + data[3];
+		uint16_t p2_star = (data[4] << 8) + data[5];
 		STM_SetSession(data[1], p2, p2_star);
 	}
 	DSC_user_callback(error, data, length);

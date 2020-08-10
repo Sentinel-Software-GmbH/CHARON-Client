@@ -16,7 +16,7 @@
                 "TEST"
             ],
             "windowsSdkVersion": "10.0.18362.0",
-            "compilerPath": "C:/Ruby27-x64/msys64/mingw64/bin/gcc.exe",
+            "compilerPath": "C:/msys64/mingw64/bin/gcc.exe",
             "intelliSenseMode": "gcc-x64",
             "cStandard": "c99"
         }
