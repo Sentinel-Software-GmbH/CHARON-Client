@@ -13,6 +13,8 @@
         "sessionandtransportmanager.h": "c",
         "timerrates.h": "c",
         "udsclientlib.h": "c",
-        "communicationcontrol.h": "c"
+        "communicationcontrol.h": "c",
+        "config.h": "c",
+        "errorcode.h": "c"
     },
 }
