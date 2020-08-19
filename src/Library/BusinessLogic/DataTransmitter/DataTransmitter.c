@@ -57,7 +57,7 @@ bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback ca
 	return STM_Deploy(message, 3, callback, false);
 }
 
-bool UDS_DT_ReadDataByPeriodicIdentifier(TimerRates_t transmissionMode, uint8_t *periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback)
+bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t *periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback)
 {
 	uint8_t message[2 + periodicDataIdLength];
 	message[0] = SID_ReadDataByPeriodicIdentifier;

@@ -1,6 +1,8 @@
 #include "unity.h"
 #include "BusinessLogic/DCM/DiagnosticCommunicationManager.h"
 #include "mock_SessionAndTransportManager.h"
+#include "mock_TestSecurity.h"
+#include "mock_TestCallback.h"
 #include <stdbool.h>
 
 void setUp(void) {}

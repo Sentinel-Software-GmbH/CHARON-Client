@@ -29,7 +29,7 @@
       :*:
         - -g
         - -O0
-        - -Wall
+        - -Werror
 
 :extension:
   :executable: .exe

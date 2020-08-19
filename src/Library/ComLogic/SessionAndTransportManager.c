@@ -78,7 +78,7 @@ void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *secur
     rx = rxBuffer;
     rxLength = rxBufferLength;
     currentRxLength = 0;
-    session_timeout = DEFAULT_SESSION_TIMEOUT;
+    session_timeout = NON_DEFAULT_SESSION_TIMEOUT;
     resetSession();
     resetPendingObject();
     asyncPendingLength = 0;
@@ -165,8 +165,7 @@ UDS_Client_Error_t STM_cyclic(void) {
         if (pending.SID == sid) {
             // if it's a Negative Response
             if(E_NegativeResponse == retVal && NRC_responsePending == rx[2]) {
-                UDS_LOG_INFO("Received Response Pending.");
-                retVal = E_Pending;
+                               retVal = E_Pending;
                 s_timeout = s_timer->getTime() + session.p2_star;
             }
             else if(pending.callback != NULL) {

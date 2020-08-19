@@ -44,11 +44,17 @@
 
 /* Types *********************************************************************/
 
+/** Identification Codes for different Timer rates.
+ * The exact time rates are vendor specific.
+ */
 typedef enum TimerRates_public {
-    SlowRate = 0x01,
-    MediumRate = 0x02,
-    FastRate = 0x03,
-} TimerRates_t;
+    /** Represents a Slow Timer Rate e.g. 1 second */
+    UDS_SlowTimer = 0x01,
+    /** Represents a Medium Timer Rate e.g. 300 ms */
+    UDS_MediumTimer = 0x02,
+    /** Represents a Fast Timer Rate e.g. 25 ms */
+    UDS_FastTimer = 0x03,
+} UDS_TimerRates_t;
 
 /* Interfaces ****************************************************************/
 
