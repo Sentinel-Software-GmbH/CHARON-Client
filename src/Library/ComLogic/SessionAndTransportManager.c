@@ -248,10 +248,13 @@ int32_t receive(uint8_t* buffer, uint32_t length) {
 
 bool KeepAlive() {
     UDS_MUTEX_LOCK();
-    if (diffNow(KeepAlivelastSend) >= session_timeout) {
-               if(send((uint8_t[]){ SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2)) {
+    int64_t diff = diffNow(KeepAlivelastSend);
+    if (diff >= session_timeout) {
+        UDS_LOG_INFO("Sending KeepAlive.");
+        if(send((uint8_t[]){ SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2)) {
             KeepAlivelastSend = s_timer->getTime();
-                   }
+            UDS_LOG_INFO("New Timeout: %u", KeepAlivelastSend);
+        }
         else {
             UDS_LOG_WARNING("Error sending KeepAlive.");
             UDS_MUTEX_UNLOCK();
