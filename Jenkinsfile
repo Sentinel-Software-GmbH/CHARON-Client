@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        branch = 'master'
         scmUrl = 'http://sentinel-server:7990/scm/chr/uds_client.git'
         serverPort = '7990'
     }
@@ -14,7 +13,7 @@ pipeline {
 
         stage('checkout git') {
             steps {
-                git branch: branch, credentialsId: 'kaup_on_GitLab', url: scmUrl
+                git branch: BRANCH_NAME, credentialsId: 'kaup_on_GitLab', url: scmUrl
             }
         }
 
