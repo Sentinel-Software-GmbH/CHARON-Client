@@ -11,12 +11,6 @@ pipeline {
             }
         }
 
-        stage('checkout git') {
-            steps {
-                git branch: BRANCH_NAME, credentialsId: 'kaup_on_GitLab', url: scmUrl
-            }
-        }
-
         stage('build') {
             steps {
                 bat 'ceedling build'
