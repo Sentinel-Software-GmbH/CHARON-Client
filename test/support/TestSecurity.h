@@ -48,8 +48,8 @@
 
 /* Interfaces ****************************************************************/
 
-uint8_t* encrypt(uint8_t* message, uint32_t length);
-uint8_t* decrypt(uint8_t* message, uint32_t length);
+uint8_t* test_encrypt(uint8_t* message, uint32_t length);
+uint8_t* test_decrypt(uint8_t* message, uint32_t length);
 
 #endif /* TEST_SECURITY_H_ */
 
