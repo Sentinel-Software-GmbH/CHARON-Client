@@ -6,9 +6,14 @@ pipeline {
         serverPort = '7990'
     }
     stages {
+        stage('Prepare Workspace') {
+            steps {
+                bat 'ceedling clean'
+            }
+        }
+
         stage('checkout git') {
             steps {
-                // TODO Credentials
                 git branch: branch, credentialsId: 'kaup_on_GitLab', url: scmUrl
             }
         }
