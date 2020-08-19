@@ -9,7 +9,7 @@ pipeline {
         stage('checkout git') {
             steps {
                 // TODO Credentials
-                git branch: branch, credentialsId: 'GitCredentials', url: scmUrl
+                git branch: branch, credentialsId: 'kaup_on_GitLab', url: scmUrl
             }
         }
 
