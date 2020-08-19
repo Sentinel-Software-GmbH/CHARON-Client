@@ -37,3 +37,8 @@ void UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, uint8_t* buffer, uint8_
 {
 	
 } 
+
+/* Architektur Dokument, Test Dokument, Test Log, Source Documentation, Test Source Documentation, BA */
+/* Was war gefordert. Wer ist Beteiligt, Welche Requirements */
+/* Jenkins Einrichten */
+/* Module Tests ein bisschen nacharbeiten */

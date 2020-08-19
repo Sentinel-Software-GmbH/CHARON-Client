@@ -13,6 +13,8 @@
 extern "C" {
 #endif
 
+#include "config.h"
+
 #include "DataModels/ErrorCode.h"
 #include "DataModels/Session.h"
 #include "DataModels/MemoryDefinition.h"
@@ -32,12 +34,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
-
-// UDSClient setzt Stuff Pending Object an mit Usr_CB.
-// Pending Object kann Receive_CB haben
-// Wenn kein Receive_CB verfügbar, dann Default_CB => check if positive response
-// Wenn Pending Object bereits existiert, dann Busy zurückgeben.
-
+/** Provides an universal entry function to initialize all Submodules
+ * @param com An already initialized implementation of a UDS Communication Interface.
+ * @param timer An already initialized implementation of a UDS TimerInterface.
+ * @param security
+ */
 void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
 
 UDS_Client_Error_t UDS_Client_Task(void);

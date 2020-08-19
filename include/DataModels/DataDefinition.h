@@ -15,12 +15,16 @@ extern "C" {
 
 #include <stdint.h>
 
+/** @brief Data Structure of all the Information the Server needs to access a Data Identifier */
 typedef struct DataDefinition_public {
+    /** Data Identifier. This is Server/Vendor/Manufacturer specific.
+     * Can also be a dynamically defined Identifier. */
     uint16_t DID;
-    /**
-     * 0x01 for the first byte. First Byte is NOT 0x00.
+    /** @brief Offset in Data Identifier.
+     * @warning 0x01 for the first byte. First Byte is NOT 0x00.
      */
     uint8_t firstBytePosition;
+    /** Size of underlying Data */
     uint8_t memorySize;
 } DataDefinition;
 
