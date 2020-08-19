@@ -21,7 +21,7 @@ pipeline {
             steps {
                 parallel (
                     "unit tests": { bat 'ceedling' },
-                    "integration tests": { bat 'cd src\\Ports\\Windows && ceedling build release && cd build\\artifacts\\release && call charon_client.exe' }
+                    //"integration tests": { bat 'cd src\\Ports\\Windows && ceedling build release && cd build\\artifacts\\release && call charon_client.exe' }
                 )
             }
         }
