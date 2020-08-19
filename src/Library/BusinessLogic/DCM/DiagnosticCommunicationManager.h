@@ -16,7 +16,6 @@ extern "C" {
 #include "Interfaces/SecurityInterface.h"
 #include "DataModels/Session.h"
 #include "DataModels/ErrorCode.h"
-#include "DataModels/ResponseCode.h"
 #include "DataModels/SID.h"
 #include "Interfaces/CallbackInterface.h"
 #include "DataModels/ResetTypes.h"

@@ -19,7 +19,6 @@ extern "C" {
 #include "DataModels/Session.h"
 #include "DataModels/MemoryDefinition.h"
 #include "DataModels/DataDefinition.h"
-#include "DataModels/ResponseCode.h"
 #include "DataModels/BaudRates.h"
 #include "DataModels/CommunicationControl.h"
 #include "DataModels/ComparisonLogic.h"
