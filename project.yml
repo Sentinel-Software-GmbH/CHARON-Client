@@ -72,11 +72,12 @@
 # You will need to have gcov and gcovr both installed to make it work.
 # For more information on these options, see docs in plugins/gcov
 :gcov:
-    :html_report: TRUE
-    :html_report_type: detailed
-    :html_medium_threshold: 75
-    :html_high_threshold: 90
-    :xml_report: FALSE
+  :html_report: true
+  :html_report_type: detailed
+  :xml_report: true
+  :gcovr:
+    :xml_pretty: true
+    :cobertura_pretty: true
 
 #:tools:
 # Ceedling defaults to using gcc for compiling, linking, etc.
@@ -101,4 +102,5 @@
     - module_generator
     - raw_output_report
     - xml_tests_report
+    - gcov
 ...
