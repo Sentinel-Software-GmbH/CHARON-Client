@@ -81,7 +81,7 @@ void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *secur
     rx = rxBuffer;
     rxLength = rxBufferLength;
     currentRxLength = 0;
-    session_timeout = DEFAULT_SESSION_TIMEOUT;
+    session_timeout = NON_DEFAULT_SESSION_TIMEOUT;
     resetSession();
     resetPendingObject();
     asyncPendingLength = 0;

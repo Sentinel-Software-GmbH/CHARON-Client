@@ -24,6 +24,7 @@
 #include "unity.h"
 #include "BusinessLogic/DataTransmitter/DataTransmitter.h"
 #include "mock_SessionAndTransportManager.h"
+#include "mock_MemoryDefinition.h"
 
 /* Imports *******************************************************************/
 
@@ -49,7 +50,7 @@ void tearDown(void) {
 
 /* TODO: Everything */
 void test_readDataByIdentifier(void) {
-    uint8_t expectedMessage[] = (uint8_t[]) {SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
+    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
     STM_Deploy_ExpectAndReturn(expectedMessage, 7, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_EQUAL(true, UDS_DT_readDataByIdentifier((uint16_t[]){0x0134, 0x0027, 0x0012}, 3, NULL));
@@ -58,7 +59,7 @@ void test_readDataByIdentifier(void) {
 /* TODO: Everything */
 void test_readMemoryByAddress(void) {
     // TODO(inacio): later
-    uint8_t expectedMessage[] = (uint8_t[]) {SID_ReadMemoryByAdress,/*4, 4 */ 0b01000100, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78};
+    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadMemoryByAdress,/*4, 4 */ 0b01000100, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78};
 }
 
 /* TODO: Everything */
@@ -115,7 +116,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
  * Very Complex. Might need the user to interpret the return values
  *
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
-bool UDS_DT_ReadDataByPeriodicIdentifier(TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
+bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
 bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
 ** @brief Dynamically define a DataIdentifier.
  * If Both Lengths are 0, the Identifier will be cleared.
