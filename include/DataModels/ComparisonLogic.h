@@ -44,11 +44,12 @@
 
 /* Types *********************************************************************/
 
+/** @brief Comparison Logic used in Response On Events Requests. */
 typedef enum ComparisonLogic_public {
-    LessThan = 0x01,
-    GreaterThan = 0x02,
-    Equal = 0x03,
-    NotEqual = 0x04
+    CompLogic_LessThan = 0x01,              /**< @c < */
+    CompLogic_GreaterThan = 0x02,           /**< @c > */
+    CompLogic_Equal = 0x03,                 /**< @c == */
+    CompLogic_NotEqual = 0x04               /**< @c != */
 } ComparisonLogic_t;
 
 /* Interfaces ****************************************************************/

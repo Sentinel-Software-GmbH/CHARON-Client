@@ -36,11 +36,13 @@
 #ifndef UDS_CLIENT_CONFIG_H_
 #define UDS_CLIENT_CONFIG_H_
 
+#include <stdio.h>
+
 /* Timings *******************************************************************/
 
 #define P2_DEFAULT              100U
 #define P2_STAR_DEFAULT         300U
-#define DEFAULT_SESSION_TIMEOUT 2000U
+#define NON_DEFAULT_SESSION_TIMEOUT 2000U
 
 /* Constants *****************************************************************/
 
@@ -59,6 +61,9 @@
 /* Types *********************************************************************/
 
 /* Interfaces ****************************************************************/
+
+#define str(x) #x
+#define xstr(x) str(x)
 
 #endif /* UDS_CLIENT_CONFIG_H_ */
 
