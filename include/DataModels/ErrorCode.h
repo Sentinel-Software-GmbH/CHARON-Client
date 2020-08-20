@@ -12,6 +12,7 @@
         CODE(E_Busy) \
         CODE(E_NotSupported) \
         CODE(E_ComSpeedNotAdjusted) \
+        CODE(E_Unexpected) \
         CODE(ErrorCode_Amount)
 
 #define GENERATE_ENUM(ENUM) ENUM,

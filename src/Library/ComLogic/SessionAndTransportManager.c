@@ -91,9 +91,9 @@ bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool supp
 {
     UDS_MUTEX_LOCK();
     bool startPS = false;
-    if (periodicServiceActive && data[0] == SID_ReadDataByPeriodicIdentifier)
+    if (data[0] == SID_ReadDataByPeriodicIdentifier)
     {
-        if (data[1] == 0x04)
+        if ((data[1] & 0x7F) == 0x04 && periodicServiceActive)
             stoppingPService = true;
         else
             startPS = true;
@@ -101,6 +101,7 @@ bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool supp
     if (pending.SID != 0x00 && !stoppingPService)
     {
         UDS_MUTEX_UNLOCK();
+        if(callback != NULL) callback(E_Busy, NULL, 0);
         return false;
     }
 
@@ -183,11 +184,10 @@ UDS_Client_Error_t STM_cyclic(void)
     UDS_MUTEX_LOCK();
     if ((readBytes = receive(rx, rxLength)) > 0)
     {
-        if (periodicServiceActive)
+        if (periodicServiceActive && !stoppingPService)
         {
             if (pending.callback != NULL)
-                ;
-            pending.callback(E_OK, rx, readBytes);
+                pending.callback(E_OK, rx, readBytes);
         }
         else
         {
@@ -254,7 +254,7 @@ UDS_Client_Error_t STM_cyclic(void)
             else
             {
                 UDS_LOG_WARNING("Received unexpected answer.");
-                // Unexpected receive
+                retVal = E_Unexpected;
             }
         }
     }
