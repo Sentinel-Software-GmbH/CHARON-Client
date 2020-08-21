@@ -40,7 +40,6 @@ void test_ControlDTCSetting() {
 }
 
 void test_ResponseOnEvent() {
-    TEST_ASSERT_EQUAL(true, DCM_Init(&security));
     uint8_t* expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x06};
     STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
@@ -49,11 +48,11 @@ void test_ResponseOnEvent() {
     STM_Deploy_ExpectAndReturn(expectedData, 7, NULL, false, true);
     STM_AsyncDeploy_ExpectAndReturn(SID_ReadDataByIdentifier, NULL, true);
     TEST_ASSERT_EQUAL(true, UDS_DCM_ResponseOnDTCStatusChange(false, 0x02, 0xFF, SID_ReadDataByIdentifier, (uint8_t[]){0x00, 0x01}, 2, NULL, NULL));
-    expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x42, 0x02, UDS_SlowTimer, SID_ReadDataByIdentifier, 0x00, 0x01}
+    expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x42, 0x02, UDS_SlowTimer, SID_ReadDataByIdentifier, 0x00, 0x01};
     STM_Deploy_ExpectAndReturn(expectedData, 7, NULL, false, true);
     STM_AsyncDeploy_ExpectAndReturn(SID_ReadDataByIdentifier, NULL, true);
     TEST_ASSERT_EQUAL(true, UDS_DCM_ResponseOnTimerInterrupt(true, 0x02, UDS_SlowTimer, SID_ReadDataByIdentifier, (uint8_t[]) {0x00, 0x01}, 2, NULL, NULL));
-    expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x03, 0x02, 0x00, 0x01, SID_ReadDataByIdentifier, 0x00, 0x01}
+    expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x03, 0x02, 0x00, 0x01, SID_ReadDataByIdentifier, 0x00, 0x01};
     STM_Deploy_ExpectAndReturn(expectedData, 8, NULL, false, true);
     STM_AsyncDeploy_ExpectAndReturn(SID_ReadDataByIdentifier, NULL, true);
     TEST_ASSERT_EQUAL(true, UDS_DCM_ResponseOnChangeOfDataIdentifier(false, 0x02, 0x0001, SID_ReadDataByIdentifier, (uint8_t[]) {0x00, 0x01}, 2, NULL, NULL));
@@ -77,15 +76,17 @@ void test_LinkControl() {
     STM_SpeedIsAdjustable_ExpectAndReturn(false);
     TEST_ASSERT_EQUAL(false, UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baud_PC9600, NULL));
     STM_SpeedIsAdjustable_ExpectAndReturn(false);
-    TEST_ASSERT_EQUAL(false, UDS_DCM_LinkControl_verifyWithSpecificParameter(9600, NULL));
+    TEST_ASSERT_EQUAL(false, UDS_DCM_LinkControl_verifyWithSpecificParameter(9600L, NULL));
     // Speed is adjustable
     STM_SpeedIsAdjustable_IgnoreAndReturn(true);
     uint8_t *expectedData = (uint8_t[]) {SID_LinkControl, 0x01, 0x01};
     STM_Deploy_ExpectAndReturn(expectedData, 3, NULL, false, true);
+    STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_EQUAL(true, UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baud_PC9600, NULL));
     expectedData = (uint8_t[]) {SID_LinkControl, 0x02, 0x00, 0x25, 0x80};
     STM_Deploy_ExpectAndReturn(expectedData, 5, NULL, false, true);
-    TEST_ASSERT_EQUAL(true, UDS_DCM_LinkControl_verifyWithSpecificParameter(9600, NULL));
+    STM_Deploy_IgnoreArg_callback();
+    TEST_ASSERT_EQUAL(true, UDS_DCM_LinkControl_verifyWithSpecificParameter(9600L, NULL));
 }
 
 void test_DCM_Init() {

@@ -42,7 +42,7 @@
 
 #define P2_DEFAULT              100U
 #define P2_STAR_DEFAULT         300U
-#define DEFAULT_SESSION_TIMEOUT 2000U
+#define NON_DEFAULT_SESSION_TIMEOUT 2000U
 
 /* Constants *****************************************************************/
 

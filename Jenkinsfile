@@ -20,7 +20,12 @@ pipeline {
         stage ('test') {
             steps {
                 parallel (
-                    "unit tests": { bat 'ceedling' },
+                    "unit tests": { 
+                        bat 'ceedling gcov:all'
+                        bat 'ceedling utils:gcov'
+                        xunit([Custom(customXSL: 'toolchain/ceedling/unity.xsl', deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/artifacts/gcov/report.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
+                        cobertura coberturaReportFile: 'build/artifacts/gcov/GcovCoverageResults.xml'
+                    },
                     //"integration tests": { bat 'cd src\\Ports\\Windows && ceedling build release && cd build\\artifacts\\release && call charon_client.exe' }
                 )
             }

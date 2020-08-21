@@ -3,6 +3,7 @@
 #include "SessionAndTransportManager.h"
 #include "DataModels/SID.h"
 #include <string.h>
+#include "config.h"
 #include "mock_TestCom.h"
 #include "mock_TestTime.h"
 #include "mock_TestSecurity.h"

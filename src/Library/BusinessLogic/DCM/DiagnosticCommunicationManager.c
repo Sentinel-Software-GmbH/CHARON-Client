@@ -322,6 +322,7 @@ bool UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baudrate_t linkControlMode
 	}
 	proposedSpeed = baudRateLookup[linkControlMode];
 	uint8_t message[3] = {SID_LinkControl, 0x01, linkControlMode};
+	DSC_user_callback = callback;
 	return STM_Deploy(message, 3, LinkControl_callback, false);
 }
 
@@ -329,11 +330,13 @@ bool UDS_DCM_LinkControl_verifyWithSpecificParameter(uint32_t modeParameter, UDS
 {
 	if (!STM_SpeedIsAdjustable())
 	{
-		callback(E_NotSupported, NULL, 0);
+		if(callback != NULL)
+			callback(E_NotSupported, NULL, 0);
 		return false;
 	}
 	proposedSpeed = modeParameter;
 	uint8_t message[5] = {SID_LinkControl, 0x01, (modeParameter >> 16) & 0xFF, (modeParameter >> 8) & 0xFF, modeParameter & 0xFF};
+	DSC_user_callback = callback;
 	return STM_Deploy(message, 5, LinkControl_callback, false);
 }
 
