@@ -1,3 +1,38 @@
+/**
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Wed Jul 29 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @defgroup DataModels
+ * @{
+ * @file CommunicationControl.h
+ * Includes a user friendly representation of the Communication Controls and Network Types.
+ * 
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
+
 #ifndef _UDS_COMMUNICATION_CONTROL_H_
 #define _UDS_COMMUNICATION_CONTROL_H_
 

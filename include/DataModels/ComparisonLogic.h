@@ -20,11 +20,11 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @defgroup DataModels
  * @{
- * @file $Filename$.h
- * Brief Description.
- * Detailed Description
+ * @file ComparisonLogic.h
+ * Provides a user friendly representation of the comparation logic parameter used in Response on Comparison of DIDs Event.
+ * 
  *
  * $Id:  $
  * $URL:  $

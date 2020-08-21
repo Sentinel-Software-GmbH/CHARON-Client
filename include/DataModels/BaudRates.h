@@ -20,11 +20,11 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @defgroup DataModels
  * @{
- * @file $Filename$.h
- * Brief Description.
- * Detailed Description
+ * @file BaudRates.h
+ * Includes a user friendly representation of the fixed values to adjust the speed.
+ * 
  *
  * $Id:  $
  * $URL:  $
@@ -59,7 +59,9 @@ typedef enum UDS_Baudrate_public {
     UDS_Baud_CAN500000 = 0x12,              /**< CAN 0.5 MBd */
     UDS_Baud_CAN1000000 = 0x13,             /**< CAN 1.0 MBd */
     UDS_Baud_ProgrammingSetup = 0x20,       /**< Vendor specific Programming Baudrate. */
+#ifndef DOXY_SKIP
     _UDS_Baudrate_amount
+#endif
 } UDS_Baudrate_t;
 
 /* Interfaces ****************************************************************/
