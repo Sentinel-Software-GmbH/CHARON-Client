@@ -25,6 +25,7 @@
  * @file BaudRates.h
  * Includes a user friendly representation of the fixed values to adjust the speed.
  * 
+ * Check ISO 14229-1 Table B.3 Page 335
  *
  * $Id:  $
  * $URL:  $

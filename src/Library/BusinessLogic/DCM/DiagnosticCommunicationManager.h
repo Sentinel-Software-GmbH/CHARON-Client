@@ -25,6 +25,9 @@ extern "C" {
 #include "DataModels/CommunicationControl.h"
 #include <stdbool.h>
 
+/**
+ * 
+ */
 bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback callback);
 bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
 bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, UDS_callback callback);

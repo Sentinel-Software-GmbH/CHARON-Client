@@ -46,7 +46,7 @@ extern "C"
     /** @brief Data Structure of all the Information the Server needs to access a Data Identifier */
     typedef struct DataDefinition_public
     {
-        /** Data Identifier. This is Server/Vendor/Manufacturer specific.
+        /** @brief Data Identifier. This is Server/Vendor/Manufacturer specific.
          * Can also be a dynamically defined Identifier.
          */
         uint16_t DID;
@@ -54,7 +54,7 @@ extern "C"
          * @warning 0x01 for the first byte. First Byte is NOT 0x00.
          */
         uint8_t firstBytePosition;
-        /** Size of underlying Data. */
+        /** @brief Size of underlying Data. */
         uint8_t memorySize;
     } DataDefinition;
 

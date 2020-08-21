@@ -25,6 +25,7 @@
  * @file CommunicationControl.h
  * Includes a user friendly representation of the Communication Controls and Network Types.
  * 
+ * Check ISO 14229-1 Chapter 9.5 Table 54
  *
  * $Id:  $
  * $URL:  $
@@ -48,7 +49,7 @@ typedef enum CommunicationControlSubfunction_public {
     UDS_ComCtrl_enableRxAndTxWithEnhancedAddressInformation = 0x05          /**< Enable RX and TX Channels while using vendor-specific Enhanced Address Information on the Server */
 } UDS_CommunicationControlSubfunction_t;
 
-/** Communication Type of the Server that should be modified
+/** @brief Communication Type of the Server that should be modified
  * @note ISO 14229-1 Chapter 9.5
  */
 typedef enum Com_public {
