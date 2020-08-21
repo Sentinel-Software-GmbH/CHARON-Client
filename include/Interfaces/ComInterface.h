@@ -76,8 +76,8 @@ typedef struct ComInterface_public {
      * 
      * This will get called any time a request is send.
      * 
-     * @note Implement the uds conform transport protocol here. Only write the complete A_DATA part into the buffer.
-     * @warning This needs to be NON-BLOCKING
+     * @warning This needs to be NON-BLOCKING.
+     * @note Implement the uds conform transport protocol here. Only write the complete A_DATA part into the buffer.  
      * Refer to @b ISO @b 14229-3,-4,-5,-6,-7 @c UDSon... Standard Documents.
      */
     recvFunc receive;
