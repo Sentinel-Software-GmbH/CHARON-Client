@@ -15,15 +15,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- *  Created on: Tue Jul 28 2020
+ *  Created on: Fri Aug 21 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
  * @defgroup DataModels
  * @{
- * @file TimerRates.h
- * Includes the representation of any timer rates used by some requests.
+ * @file DataIdentifier.h
+ * Adds a representation of all ISO specified Data Identifier.
  *
  * $Id:  $
  * $URL:  $
@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#ifndef TIMER_RATES_H_
-#define TIMER_RATES_H_
+#ifndef CHARON_TEMPLATE_H_
+#define CHARON_TEMPLATE_H_
 
 /* Includes ******************************************************************/
 
@@ -43,22 +43,24 @@
 
 /* Types *********************************************************************/
 
-/** @brief Identification Codes for different Timer rates.
- * The exact time rates are vendor specific.
- * 
- * @note ISO 14229-1 Table C.10
+/** @brief All ISO 14229-1 specified DIDs.
+ * @note Check ISO 14229-1 Table C.1
+ * @warning Only the Starting Address is defined, the Range of the DID can be found as Length under the notes of the documentation of the DID.
  */
-typedef enum TimerRates_public {
-    /** @brief Represents a Slow Timer Rate e.g. 1 second */
-    UDS_SlowTimer = 0x01,
-    /** @brief Represents a Medium Timer Rate e.g. 300 ms */
-    UDS_MediumTimer = 0x02,
-    /** @brief Represents a Fast Timer Rate e.g. 25 ms */
-    UDS_FastTimer = 0x03,
-} UDS_TimerRates_t;
+typedef enum DID_public {
+    /** @brief Remote addresses of all trailer systems independent of their functionality.
+     * @note Length of 0x0F
+     */
+    DID_networkConfigurationDataForTractorTrailerApplicationDataIdentifier = 0xF000,
+    /** @brief Reference the vehicle manufacturer specific ECU boot software identification record.
+     * @note Length of 0x01
+     */
+    DID_BootSoftwareIdentificationDataIdentifier = 0xF180,
+
+} UDS_DataIdentifier_t
 
 /* Interfaces ****************************************************************/
 
-#endif /* TIMER_RATES_H_ */
+#endif /* CHARON_TEMPLATE_H_ */
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

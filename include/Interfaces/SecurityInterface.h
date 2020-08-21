@@ -1,9 +1,36 @@
-/****************************************************
- *  SecurityInterface.h                                         
- *  Created on: 16-Jul-2020 09:29:59                      
- *  Implementation of the Interface SecurityInterface       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/**
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Tue Jul 28 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @defgroup Interfaces
+ * @{
+ * @file SecurityInterface.h
+ * Includes the definition of an interface to the security layer.
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
 #if !defined(EA_4EDD4C82_621C_486a_B2ED_71902C3D2463__INCLUDED_)
 #define EA_4EDD4C82_621C_486a_B2ED_71902C3D2463__INCLUDED_
@@ -38,6 +65,8 @@ typedef uint8_t*(*decryptFunc)(uint8_t* message, uint32_t length);
 
 /**
  * Provides Security functions to encrypt and decrypt byte arrays.
+ * 
+ * @req S05 Interface for Security Layer
  */
 typedef struct SecurityInterface_public {
     

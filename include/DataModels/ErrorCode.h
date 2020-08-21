@@ -1,24 +1,55 @@
 /**
- * Error Codes used as return values.
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Wed Jul 29 2020
  */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @defgroup DataModels
+ * @{
+ * @file ErrorCode.h
+ * Includes a representation for different error codes that can come up.
+ * 
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 #ifndef ERROR_CODE_H_
 #define ERROR_CODE_H_
 
-/** A representation of all the Errors that the Client could have. */
+/** @brief A representation of all the Errors that the Client could have. */
 typedef enum ErrorCode_public {
-    /** Everything was OK. */
+    /** @brief Everything was OK. */
     E_OK,
-    /** The Server does not respond. */
+    /** @brief The Server does not respond. */
     E_NotResponding,
-    /** The Server replied with a negative response. */
+    /** @brief The Server replied with a negative response. */
     E_NegativeResponse,
-    /** The Server signaled that it needs more time to handle this request. */
+    /** @brief The Server signaled that it needs more time to handle this request. */
     E_Pending,
-    /** The Communication Manager is currently waiting for an answer. */
+    /** @brief The Communication Manager is currently waiting for an answer. */
     E_Busy,
-    /** This Request is not supported by the client. */
+    /** @brief This Request is not supported by the client. */
     E_NotSupported,
-    /** The Communication Link Speed could not be adjusted because of an error. */
+    /** @brief The Communication Link Speed could not be adjusted because of an error. */
     E_ComSpeedNotAdjusted,
 #ifndef DOXY_SKIP
     ErrorCode_amount

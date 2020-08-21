@@ -25,6 +25,7 @@
  * @file ComparisonLogic.h
  * Provides a user friendly representation of the comparation logic parameter used in Response on Comparison of DIDs Event.
  * 
+ * Check ISO 14229-1 Chapter 9.10 Table 102
  *
  * $Id:  $
  * $URL:  $

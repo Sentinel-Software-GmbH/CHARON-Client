@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * @addtogroup UDSClient
+ * @addtogroup UDS_Client
  * @{
  * @addtogroup ComLogic
  * @{
@@ -87,7 +87,7 @@ static const uint32_t baudRateLookup[_UDS_Baudrate_amount] = {
 
 /* Types *********************************************************************/
 
-/** Specific Message structure of the Diagnostic Control Service.
+/** @brief Specific Message structure of the Diagnostic Control Service.
  * It contains a mask for the structure of the message and access to a
  * bytestream representing the message.
  */

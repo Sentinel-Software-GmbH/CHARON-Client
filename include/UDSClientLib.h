@@ -33,10 +33,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
-/** Provides an universal entry function to initialize all Submodules
+/** @brief Provides an universal entry function to initialize all Submodules
  * @param com An already initialized implementation of a UDS Communication Interface.
  * @param timer An already initialized implementation of a UDS TimerInterface.
- * @param security
+ * @param security An already initialized implementation of the Security Layer Interface.
+ * @param rxBuffer Pointer to the rxBuffer provided by the user.
  */
 void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
 
