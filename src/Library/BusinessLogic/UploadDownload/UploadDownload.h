@@ -156,6 +156,13 @@ bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMet
  */
 bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
 
+#ifndef DOXY_SKIP
+/* TEST INJECTION FUNCTIONS **************************************************/
+#ifdef TEST
+    void UpDown_setStaticBufferSize(uint32_t newSize);
+#endif
+#endif
+
 #ifdef __cplusplus
 }
 #endif

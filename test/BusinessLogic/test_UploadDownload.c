@@ -22,7 +22,7 @@
 #include "unity.h"
 #include "UploadDownload.h"
 #include "mock_SessionAndTransportManager.h"
-
+#include "mock_TestCallback.h"
 
 /* Imports *******************************************************************/
 
@@ -78,6 +78,17 @@ void test_UploadDataFromMemory() {
     expectedData = (uint8_t[]) {SID_RequestTransferExit};
     STM_Deploy_ExpectAndReturn(expectedData, 1, NULL, false, true);
     UDS_UPDOWN_ExitTransfer(NULL, 0, NULL);
+}
+
+void test_DataSize_Bigger_Than_MaxBlockLength() {
+    testCallback_Expect(E_MessageTooLong, NULL, 0);
+    TEST_ASSERT_FALSE(UDS_UPDOWN_Download(0, NULL, 255, 16, testCallback));
+}
+
+void test_Message_Longer_Than_BufferSize() {
+    UpDown_setStaticBufferSize(255);
+    testCallback_Expect(E_MessageTooLong, NULL, 0);
+    TEST_ASSERT_FALSE(UDS_UPDOWN_Download(0, NULL, 600, 1024, testCallback));
 }
 
 void test_FileHandling() {

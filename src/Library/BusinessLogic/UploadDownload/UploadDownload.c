@@ -49,6 +49,8 @@
 
 /* Variables *****************************************************************/
 
+uint32_t STATIC_BUFFER_SIZE = UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE;
+
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 1
     static uint8_t txBuffer[UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE];
 #endif
@@ -68,7 +70,7 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+    if (length > STATIC_BUFFER_SIZE) { 
         if(callback != NULL) {
             callback(E_MessageTooLong, NULL, 0);
         }
@@ -98,7 +100,7 @@ bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+    if (length > STATIC_BUFFER_SIZE) {
         if(callback != NULL) {
             callback(E_MessageTooLong, NULL, 0);
         }
@@ -117,7 +119,7 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+    if (length > STATIC_BUFFER_SIZE) {
         if(callback != NULL) {
             callback(E_MessageTooLong, NULL, 0);
         }
@@ -143,7 +145,7 @@ bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, M
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+    if (length > STATIC_BUFFER_SIZE) {
         if(callback != NULL) {
             callback(E_MessageTooLong, NULL, 0);
         }
@@ -160,6 +162,12 @@ bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, M
     UDS_MUTEX_UNLOCK();
     return STM_Deploy(txBuffer, length, callback, false);
 }
+
+/* TEST INJECTION FUNCTIONS **************************************************/
+#ifdef TEST
+    void UpDown_setStaticBufferSize(uint32_t newSize) { STATIC_BUFFER_SIZE = newSize; }
+#endif
+
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
 
