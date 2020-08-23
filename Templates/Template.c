@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * @addtogroup UDSClient
+ * @addtogroup UDS_Client
  * @{
  * @addtogroup ComLogic
  * @{
