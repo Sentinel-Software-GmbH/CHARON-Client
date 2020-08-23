@@ -1,44 +1,174 @@
-/****************************************************
- *  UploadDownload.c                                         
- *  Created on: 16-Jul-2020 09:30:00                      
- *  Implementation of the Class UploadDownload       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/**
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 ${Author}
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+/**
+ * @addtogroup UDSClient
+ * @{
+ * @addtogroup ComLogic
+ * @{
+ * @file ${FileName}.c
+ * Implementation of the Service and Session Control Module
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
+/* Includes ******************************************************************/
+
+#include <string.h>
 #include "UploadDownload.h"
+#include "config.h"
+#include "Interfaces/CallbackInterface.h"
+#include "DataModels/SID.h"
+#include "ComLogic/SessionAndTransportManager.h"
 
+/* Imports *******************************************************************/
 
-void UDS_UPDOWN_Download(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, uint8_t* data)
-{
-	
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Variables *****************************************************************/
+
+#if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 1
+    static uint8_t txBuffer[UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE];
+#endif
+
+/* Private Function Definitions **********************************************/
+
+bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
+
+/* Interfaces  ***************************************************************/
+
+bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+    return request(false, compressionMethod, encryptionMethod, memoryDefinition, callback);
 }
 
-void UDS_UPDOWN_Upload(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, uint8_t dataBuffer)
-{
-	
+bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t dataSize, uint32_t maxNumberOfBlockLength, UDS_callback callback) {
+    uint32_t length = maxNumberOfBlockLength;
+#if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
+    uint8_t txBuffer[length];
+#else
+    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+        if(callback != NULL) {
+            callback(E_MessageTooLong, NULL, 0);
+        }
+        return false;
+    }
+#endif
+    if(dataSize > maxNumberOfBlockLength - 2) {
+        if (callback != NULL) {
+            callback(E_MessageTooLong, NULL, 0);
+        }
+        return false;
+    }
+    OS_MUTEX_LOCK();
+    txBuffer[0] = SID_TransferData;
+    txBuffer[1] = blockSequenceCounter;
+    memcpy(&txBuffer[2], data, dataSize);
+    OS_MUTEX_UNLOCK();
+    return STM_Deploy(txBuffer, length, callback, false);
 }
 
-void UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, uint8_t* data, bool replace)
-{
-	
+bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+    return request(true, compressionMethod, encryptionMethod, memoryDefinition, callback);
 }
 
-void UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path)
-{
-	
+bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
+    uint32_t length = 2;
+#if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
+    uint8_t txBuffer[length];
+#else
+    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+        if(callback != NULL) {
+            callback(E_MessageTooLong, NULL, 0);
+        }
+        return false;
+    }
+#endif
+    OS_MUTEX_LOCK();
+    txBuffer[0] = SID_TransferData;
+    txBuffer[1] = blockSequenceCounter;
+    OS_MUTEX_UNLOCK();
+    STM_Deploy(txBuffer, 2, callback, false);
 }
 
-void UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, uint8_t* buffer, uint8_t* returnedFileSize)
-{
-	
+bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback) {
+    uint32_t length = 1 + lengthOfParameter;
+#if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
+    uint8_t txBuffer[length];
+#else
+    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+        if(callback != NULL) {
+            callback(E_MessageTooLong, NULL, 0);
+        }
+        return false;
+    }
+#endif
+    OS_MUTEX_LOCK();
+    txBuffer[0] = SID_RequestTransferExit;
+    memcpy(&txBuffer[1], vendorSpecificServiceParameter, lengthOfParameter);
+    OS_MUTEX_UNLOCK();
+    STM_Deploy(txBuffer, length, callback, false);
 }
 
-void UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, uint8_t* buffer, uint8_t* dirSize)
-{
-	
-} 
+bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace) {}
+bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path) {}
+bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback);
+bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
+
+/* Private Function **********************************************************/
+
+bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+    uint32_t length = 2 + memoryDefinition.AddressLength + memoryDefinition.SizeLength;
+#if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
+    uint8_t txBuffer[length];
+#else
+    if (length > UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE) {
+        if(callback != NULL) {
+            callback(E_MessageTooLong, NULL, 0);
+        }
+        return false;
+    }
+#endif
+    OS_MUTEX_LOCK();
+    txBuffer[0] = upload ? SID_RequestUpload : SID_RequestDownload;
+    uint8_t dataFormatIdentifier = (compressionMethod << 4) | (encryptionMethod & 0xF);
+    txBuffer[1] = dataFormatIdentifier;
+    txBuffer[2] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&memoryDefinition);
+    memcpy(&txBuffer[3], memoryDefinition.Address, memoryDefinition.AddressLength);
+    memcpy(&txBuffer[3 + memoryDefinition.AddressLength], memoryDefinition.Size, memoryDefinition.SizeLength);
+    OS_MUTEX_UNLOCK();
+    return STM_Deploy(txBuffer, length, callback, false);
+}
+
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
+
+
+
+
+
+
+
 
 /* Architektur Dokument, Test Dokument, Test Log, Source Documentation, Test Source Documentation, BA */
 /* Was war gefordert. Wer ist Beteiligt, Welche Requirements */
-/* Jenkins Einrichten */
-/* Module Tests ein bisschen nacharbeiten */

@@ -51,6 +51,8 @@ void tearDown(void) {
 /* Test Functions ************************************************************/
 
 void test_DownloadDataToMemory() {
+    TEST_MESSAGE("Testing sending data to the server.");
+    TEST_MESSAGE("This test proofs Requirement(s): R22, R24, R25");
     uint8_t* expectedData = (uint8_t[]) {SID_RequestDownload, 0x00, 0x44, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10 };
     STM_Deploy_ExpectAndReturn(expectedData, 11, NULL, false, true);
     UDS_UPDOWN_DownloadRequest(0x00, 0x00, mem);
@@ -63,6 +65,8 @@ void test_DownloadDataToMemory() {
 
 
 void test_UploadDataFromMemory() {
+    TEST_MESSAGE("Testing receiving data from the server.");
+    TEST_MESSAGE("This test proofs ROTs R23, R24 and R25.");
     uint8_t rxBuffer[16];
     uint8_t* expectedData = (uint8_t[]) {SID_RequestUpload, 0x00, 0x44, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10 };
     STM_Deploy_ExpectAndReturn(expectedData, 11, NULL, false, true);
@@ -70,11 +74,15 @@ void test_UploadDataFromMemory() {
     expectedData = (uint8_t[]) {SID_TransferData, 0x00};
     STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     UDS_UPDOWN_Upload(0x00, 16);
+    expectedData = (uint8_t[]) {SID_RequestTransferExit}
+    STM_Deploy_ExpectAndReturn()
     UDS_UPDOWN_RequestTransferExit(NULL, 0);
 }
 
 void test_FileHandling() {
-    
+    TEST_MESSAGE("NOT YET IMPLEMENTED.");
+    TEST_MESSAGE("This test proofs ROT R26.");
+    TEST_ASSERT_EQUAL(1, 1)
 }
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
