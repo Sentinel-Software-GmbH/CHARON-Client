@@ -18,9 +18,9 @@
 /**
  * @addtogroup UDSClient
  * @{
- * @addtogroup ComLogic
+ * @addtogroup BusinessLogic
  * @{
- * @file ${FileName}.c
+ * @file UploadDownload.c
  * Implementation of the Service and Session Control Module
  *
  * $Id:  $
@@ -81,11 +81,11 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
         }
         return false;
     }
-    OS_MUTEX_LOCK();
+    UDS_MUTEX_LOCK();
     txBuffer[0] = SID_TransferData;
     txBuffer[1] = blockSequenceCounter;
     memcpy(&txBuffer[2], data, dataSize);
-    OS_MUTEX_UNLOCK();
+    UDS_MUTEX_UNLOCK();
     return STM_Deploy(txBuffer, length, callback, false);
 }
 
@@ -105,10 +105,10 @@ bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
         return false;
     }
 #endif
-    OS_MUTEX_LOCK();
+    UDS_MUTEX_LOCK();
     txBuffer[0] = SID_TransferData;
     txBuffer[1] = blockSequenceCounter;
-    OS_MUTEX_UNLOCK();
+    UDS_MUTEX_UNLOCK();
     STM_Deploy(txBuffer, 2, callback, false);
 }
 
@@ -124,10 +124,10 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
         return false;
     }
 #endif
-    OS_MUTEX_LOCK();
+    UDS_MUTEX_LOCK();
     txBuffer[0] = SID_RequestTransferExit;
     memcpy(&txBuffer[1], vendorSpecificServiceParameter, lengthOfParameter);
-    OS_MUTEX_UNLOCK();
+    UDS_MUTEX_UNLOCK();
     STM_Deploy(txBuffer, length, callback, false);
 }
 
@@ -139,7 +139,7 @@ bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
 /* Private Function **********************************************************/
 
 bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
-    uint32_t length = 2 + memoryDefinition.AddressLength + memoryDefinition.SizeLength;
+    uint32_t length = 3 + memoryDefinition.AddressLength + memoryDefinition.SizeLength;
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
@@ -150,14 +150,14 @@ bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, M
         return false;
     }
 #endif
-    OS_MUTEX_LOCK();
+    UDS_MUTEX_LOCK();
     txBuffer[0] = upload ? SID_RequestUpload : SID_RequestDownload;
     uint8_t dataFormatIdentifier = (compressionMethod << 4) | (encryptionMethod & 0xF);
     txBuffer[1] = dataFormatIdentifier;
-    txBuffer[2] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&memoryDefinition);
+    txBuffer[2] = memoryDefinition.SizeLength << 4 | (memoryDefinition.AddressLength & 0xF);
     memcpy(&txBuffer[3], memoryDefinition.Address, memoryDefinition.AddressLength);
     memcpy(&txBuffer[3 + memoryDefinition.AddressLength], memoryDefinition.Size, memoryDefinition.SizeLength);
-    OS_MUTEX_UNLOCK();
+    UDS_MUTEX_UNLOCK();
     return STM_Deploy(txBuffer, length, callback, false);
 }
 
