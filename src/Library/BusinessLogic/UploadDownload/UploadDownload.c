@@ -49,8 +49,11 @@
 
 /* Variables *****************************************************************/
 
-uint32_t STATIC_BUFFER_SIZE = UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE;
-
+#if TEST
+    static uint32_t STATIC_BUFFER_SIZE = UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE;
+#else
+    #define STATIC_BUFFER_SIZE UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE
+#endif
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 1
     static uint8_t txBuffer[UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE];
 #endif

@@ -58,14 +58,6 @@ typedef enum ErrorCode_public {
 #endif
 } UDS_Client_Error_t;
 
-static const char *ErrorCode_STRING[] = {
-    "E_OK",
-    "E_NotResponding",
-    "E_NegativeResponse",
-    "E_Pending",
-    "E_Busy",
-    "E_NotSupported",
-    "E_ComSpeedNotAdjusted",
-};
+const char * ErrorCode_getString(UDS_Client_Error_t code);
 
 #endif // ERROR_CODE_H_

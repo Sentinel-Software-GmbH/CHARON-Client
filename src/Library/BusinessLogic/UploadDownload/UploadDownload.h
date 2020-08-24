@@ -33,8 +33,8 @@
 /*****************************************************************************/
 
 
-#if !defined(EA_ACF1E883_4B6F_43d1_93A7_FE33562A95D4__INCLUDED_)
-#define EA_ACF1E883_4B6F_43d1_93A7_FE33562A95D4__INCLUDED_
+#ifndef UDS_UPLOAD_DOWNLOAD_H_
+#define UDS_UPLOAD_DOWNLOAD_H_
 
 #ifdef __cplusplus
     extern "C" {
@@ -168,7 +168,7 @@ bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
 #endif
 
 
-#endif /*!defined(EA_ACF1E883_4B6F_43d1_93A7_FE33562A95D4__INCLUDED_)*/
+#endif /* UDS_UPLOAD_DOWNLOAD_H_ */
  
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
 
