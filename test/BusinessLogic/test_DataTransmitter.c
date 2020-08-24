@@ -50,6 +50,9 @@ void tearDown(void) {
 
 /* TODO: Everything */
 void test_readDataByIdentifier(void) {
+    TEST_MESSAGE("Testing the correct construction of a Read Data by DID Request.");
+    TEST_PASS_MESSAGE("This test has proven R11.");
+    TEST_FAIL_MESSAGE("Requirement(s) R11 have not been fulfilled.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
     STM_Deploy_ExpectAndReturn(expectedMessage, 7, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();

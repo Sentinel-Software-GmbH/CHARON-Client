@@ -9,6 +9,9 @@ void setUp(void) {}
 void tearDown(void) {}
 
 void test_DiagnosticSessionControl(void) {
+    TEST_MESSAGE("Testing the proper construction of the DiagnosticSessionControl Request.");
+    TEST_PASS_MESSAGE("This test has proven R01.");
+    TEST_FAIL_MESSAGE("Requirement R01 has not been fulfilled.");
     uint8_t *expectedData = (uint8_t[]){SID_DiagnosticSessionControl, UDS_Session_Programming};
     STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
@@ -16,6 +19,9 @@ void test_DiagnosticSessionControl(void) {
 }
 
 void test_ECUReset() {
+    TEST_MESSAGE("Testing the proper construction of the ECUReset Request.");
+    TEST_PASS_MESSAGE("This test has proven R02.");
+    TEST_FAIL_MESSAGE("Requirement R02 has not been fulfilled.");
     uint8_t* expectedData = (uint8_t[]){SID_ECUReset, UDS_HardReset};
     STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
@@ -23,15 +29,20 @@ void test_ECUReset() {
 }
 
 void test_SecurityAccess() {
+    TEST_MESSAGE("Testing the proper construction of a Security Access Request.");
+    TEST_PASS_MESSAGE("This test has proven R03.");
+    TEST_FAIL_MESSAGE("Requirement(s) R03 have not been fulfilled.");
     uint8_t* expectedData = (uint8_t[]) {SID_SecurityAccess, 0x05, 0xDE, 0xAD, 0xC0, 0xDE};
     uint8_t* securityParameter = (uint8_t[]) {0xDE, 0xAD, 0xC0, 0xDE};
     STM_Deploy_ExpectAndReturn(expectedData, 6, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
- 
     TEST_ASSERT_EQUAL(true, UDS_DCM_SecurityAccess(0x05, securityParameter, 4, NULL));
 }
 
 void test_ControlDTCSetting() {
+    TEST_MESSAGE("Testing the proper construction of a DTC control request");
+    TEST_PASS_MESSAGE("This test has proven R08.");
+    TEST_FAIL_MESSAGE("Requirement(s) R08 have not been fulfilled.");
     uint8_t* expectedData = (uint8_t[]) {SID_ControlDTCSettings, 0x01, 0x00, 0x01, 0x02, 0x03};
     STM_Deploy_ExpectAndReturn(expectedData, 6, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
@@ -40,6 +51,9 @@ void test_ControlDTCSetting() {
 }
 
 void test_ResponseOnEvent() {
+    TEST_MESSAGE("Testing the correct construction of every subfunction of response on event requests");
+    TEST_PASS_MESSAGE("This test has proven R09.");
+    TEST_FAIL_MESSAGE("Requirement(s) R09 have not been fulfilled.");
     uint8_t* expectedData = (uint8_t[]) {SID_ResponseOnEvent, 0x06};
     STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
@@ -72,6 +86,9 @@ void test_ResponseOnEvent() {
 }
 
 void test_LinkControl() {
+    TEST_MESSAGE("Testing the proper construction of the link control requests.");
+    TEST_PASS_MESSAGE("This test has proven R09.");
+    TEST_FAIL_MESSAGE("Requirement(s) R09 have not been fulfilled.");
     // Speed is not adjustable
     STM_SpeedIsAdjustable_ExpectAndReturn(false);
     TEST_ASSERT_EQUAL(false, UDS_DCM_LinkControl_withFixedParameter(UDS_Baud_PC9600, NULL));
@@ -87,7 +104,4 @@ void test_LinkControl() {
     STM_Deploy_ExpectAndReturn(expectedData, 5, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_EQUAL(true, UDS_DCM_LinkControl_WithSpecificParameter(9600L, NULL));
-}
-
-void test_DCM_Init() {
 }
