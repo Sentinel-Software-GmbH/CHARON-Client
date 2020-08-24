@@ -37,7 +37,7 @@
 #ifndef _UDS_COMMUNICATION_CONTROL_H_
 #define _UDS_COMMUNICATION_CONTROL_H_
 
-/** @brief How the Server should modify the @ref <tt>Communication Type</tt>
+/** @brief How the Server should modify the <tt>Communication Type</tt>
  * @note ISO 14229-1 Chapter 9.5
  */
 typedef enum CommunicationControlSubfunction_public {

@@ -47,6 +47,7 @@
 
 /* Constants *****************************************************************/
 
+/** Iso specified baudrate value to actual Bd value converter. */
 static const uint32_t baudRateLookup[_UDS_Baudrate_amount] = {
 	0U,					  // UDS_BAUDRATE_RESERVED = 0x00,
 	9600U,				  // UDS_Baud_PC9600 = 0x01,
@@ -87,17 +88,12 @@ static const uint32_t baudRateLookup[_UDS_Baudrate_amount] = {
 
 /* Types *********************************************************************/
 
-/** @brief Specific Message structure of the Diagnostic Control Service.
- * It contains a mask for the structure of the message and access to a
- * bytestream representing the message.
- */
-
 /* Variables *****************************************************************/
 
-static SecurityInterface *SecurityModule;
-
+/** Save location of the user callback to call later. */
 static UDS_callback DSC_user_callback;
 
+/** proposed speed of link control, to change after positive callback */
 static uint32_t proposedSpeed;
 
 /* Private Function Definitions **********************************************/
@@ -143,10 +139,6 @@ bool UDS_DCM_SecurityAccess(uint8_t function,
 	return STM_Deploy(message, 2 + parameterLength, callback, false);
 }
 
-/**
- * Do we have to implement this?
- * Or is it part of the Specific Com Unit?
- */
 bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl, UDS_CommunicationType_t communicationType, uint8_t subnet, uint16_t nodeIdentificationNumber, UDS_callback callback)
 {
 	uint8_t message[5];
@@ -312,7 +304,7 @@ bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback)
 	return STM_Deploy(message, 2, callback, false);
 }
 
-bool UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baudrate_t linkControlMode, UDS_callback callback)
+bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_callback callback)
 {
 	if (!STM_SpeedIsAdjustable())
 	{
@@ -326,7 +318,7 @@ bool UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baudrate_t linkControlMode
 	return STM_Deploy(message, 3, LinkControl_callback, false);
 }
 
-bool UDS_DCM_LinkControl_verifyWithSpecificParameter(uint32_t modeParameter, UDS_callback callback)
+bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callback callback)
 {
 	if (!STM_SpeedIsAdjustable())
 	{
