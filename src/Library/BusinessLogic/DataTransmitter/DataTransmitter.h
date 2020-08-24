@@ -98,9 +98,42 @@ bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8
  * @param SourceMemoryDefinitions Array of memory
  */
 bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback);
+
+/** @brief Use a memory adress to define a new data identifier or add to an existing one.
+ * @param definedDataIdentifier The dataidentifier to be changed.
+ * @param SourceMemoryDefinitions A list of memory spaces to be added to the new DID.
+ * @param SourceMemoryLength Size of the memory definition list.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
+
+/** @brief Clear the dynamically defined dataidentifier.
+ * @param definedDataIdentifier The Identifier to be cleared.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback);
+
+/** @brief Write some data to a dataIdentifier.
+ * @param dataIdentifier Data identifier to write to.
+ * @param writeBuffer A buffer of data to be written to the data identifier.
+ * @param bufferLength Size of the writeBuffer in bytes.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+
+/** @brief Write some data to a memory address.
+ * @param writeBuffer A buffer of data to be written to the data identifier.
+ * @param bufferLength Size of the writeBuffer in bytes.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 

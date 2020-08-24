@@ -73,8 +73,8 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 	return STM_Deploy(message, length, callback, false);
 }
 
-/**
- * Very Complex. Might need the user to interpret the return values
+/*
+ * TODO: Very Complex. Might need the user to interpret the return values
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback)
 {
