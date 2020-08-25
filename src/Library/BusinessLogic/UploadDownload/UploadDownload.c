@@ -49,7 +49,7 @@
 
 /* Variables *****************************************************************/
 
-#if TEST
+#ifdef TEST
     static uint32_t STATIC_BUFFER_SIZE = UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE;
 #else
     #define STATIC_BUFFER_SIZE UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE

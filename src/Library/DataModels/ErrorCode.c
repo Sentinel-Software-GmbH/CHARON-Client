@@ -61,6 +61,7 @@ static const char *ErrorCode_STRING[ErrorCode_amount] = {
 /* Interfaces  ***************************************************************/
 
 const char * ErrorCode_getString(UDS_Client_Error_t code) {
+    if(code < 0 || code >= ErrorCode_amount) return "Unknown Error Code";
     return ErrorCode_STRING[code];
 }
 
