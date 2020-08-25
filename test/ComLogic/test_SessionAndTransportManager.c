@@ -142,6 +142,8 @@ void test_Switch_Session_Keep_Alive(void) {
 void test_UnexpectedResponse() {
     uint8_t *someResponse = (uint8_t[]) {'A', 'N', 'T', 'W', 'O', 'R', 'T'};
     TEST_MESSAGE("Testing unexpected responses are handled correctly.");
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     test_com_receive_ExpectAnyArgsAndReturn(7);
     test_com_receive_ReturnMemThruPtr_buffer(someResponse, 7);
     TEST_ASSERT_EQUAL(E_Unexpected, STM_cyclic());
@@ -160,9 +162,10 @@ void test_StartingPeriodicServiceFailsAtResponse() {
     uint8_t *negativeResponse = (uint8_t[]) { SID_NEGATIVE_RESPONSE, SID_ReadDataByPeriodicIdentifier, NRC_generalReject};
     STM_setCurrentSID(SID_ReadDataByPeriodicIdentifier);
     STM_setStartPeriodicService(true);
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     test_com_receive_ExpectAnyArgsAndReturn(3);
     test_com_receive_ReturnMemThruPtr_buffer(negativeResponse, 3);
-    testCallback_ExpectWithArray(E_NegativeResponse, negativeResponse, 3, 3);
     TEST_ASSERT_EQUAL(E_NegativeResponse, STM_cyclic());
     TEST_ASSERT_FALSE(STM_getStartPeriodicService());
     TEST_ASSERT_FALSE(STM_getPeriodicServiceActive());
@@ -173,12 +176,12 @@ void test_StartingPeriodicService_Success() {
     uint8_t *positiveResponse = (uint8_t[]) { SID_ReadDataByPeriodicIdentifier + 0x40 };
     TEST_MESSAGE("START A PERIODIC SERVICE SUCCEEDS");
     test_com_send_ExpectAndReturn(startPeriodicService, 4, 4);
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     TEST_ASSERT_TRUE(STM_Deploy(startPeriodicService, 4, testCallback, false));
     TEST_ASSERT_TRUE(STM_getStartPeriodicService());
     TEST_ASSERT_FALSE(STM_getPeriodicServiceActive());
     TEST_MESSAGE("POSITIVE RESPONSE");
-    test_com_send_ExpectAndReturn(startPeriodicService, 4, 4);
-    TEST_ASSERT_TRUE(STM_Deploy(startPeriodicService, 4, testCallback, false));
     test_com_receive_ExpectAnyArgsAndReturn(1);
     test_com_receive_ReturnMemThruPtr_buffer(positiveResponse, 1);
     testCallback_ExpectWithArray(E_OK, positiveResponse, 1, 1);
@@ -199,6 +202,8 @@ void test_RandomAnswerWhenPeriodicServiceIsActive() {
     uint8_t *someResponse = (uint8_t[]) {'A', 'N', 'T', 'W', 'O', 'R', 'T'};
     STM_setPeriodicServiceActive(true);
     TEST_MESSAGE("Receiving unknown SID in Answer while periodic DID is active.");
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     test_com_receive_ExpectAnyArgsAndReturn(7);
     test_com_receive_ReturnMemThruPtr_buffer(someResponse, 7);
     testCallback_ExpectWithArray(E_OK, someResponse, 7, 7);
@@ -209,6 +214,8 @@ void test_StoppingPeriodicServiceFailsAtResponse() {
     uint8_t *negativeResponse = (uint8_t[]) { SID_NEGATIVE_RESPONSE, SID_ReadDataByPeriodicIdentifier, NRC_generalReject};
     uint8_t *stopPeriodicService = (uint8_t[]){SID_ReadDataByPeriodicIdentifier, 0x04};
     TEST_MESSAGE("TRY STOPPING");
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     test_com_send_ExpectAndReturn(stopPeriodicService, 2, 2);
     TEST_ASSERT_TRUE(STM_Deploy(stopPeriodicService, 2, testCallback, false));
     test_com_receive_ExpectAnyArgsAndReturn(3);
@@ -222,6 +229,8 @@ void test_StoppingPeriodicService() {
     uint8_t *positiveResponse = (uint8_t[]) { SID_ReadDataByPeriodicIdentifier + 0x40 };
     uint8_t *stopPeriodicService = (uint8_t[]){SID_ReadDataByPeriodicIdentifier, 0x04};
     TEST_MESSAGE("TRY STOPPING");
+    time_getTime_IgnoreAndReturn(0);
+    time_diffTime_IgnoreAndReturn(0);
     test_com_send_ExpectAndReturn(stopPeriodicService, 2, 2);
     TEST_ASSERT_TRUE(STM_Deploy(stopPeriodicService, 2, testCallback, false));
     test_com_receive_ExpectAnyArgsAndReturn(1);

@@ -57,19 +57,13 @@ static bool periodicServiceActive = false;
 
 /* Private Function Definitions **********************************************/
 
-bool KeepAlive(void);
-
-bool send(uint8_t *buffer, uint32_t length);
-
-int32_t receive(uint8_t *buffer, uint32_t length);
-
-void resetPendingObject();
-
-void resetSession();
-
-int64_t diffNow(uint32_t start);
-
-int8_t findSID(SID_t sid);
+static bool KeepAlive(void);
+static bool send(uint8_t *buffer, uint32_t length);
+static int32_t receive(uint8_t *buffer, uint32_t length);
+static void resetPendingObject();
+static void resetSession();
+static int64_t diffNow(uint32_t start);
+static int8_t findSID(SID_t sid);
 
 static UDS_Client_Error_t handlePendingNothingReceived();
 static UDS_Client_Error_t handleNegativeResponse(int32_t readBytes);
