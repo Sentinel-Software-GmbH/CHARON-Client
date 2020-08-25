@@ -20,7 +20,7 @@
  * @{
  * @addtogroup BusinessLogic
  * @{
- * @file DiagnosticCommunicationManager.c
+ * @file
  * Implementation of the Diagnostic and Communication Management Functional
  * Unit. The detailed specifications can be found in @b ISO @b 14229-1
  * Chapter 9.
@@ -87,7 +87,7 @@ bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_
  */
 bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl, UDS_CommunicationType_t communicationType, uint8_t subnet, uint16_t nodeIdentificationNumber, UDS_callback callback);
 
-/* TODO: Access Timing Parameter Service */ 
+/* TODO: Access Timing Parameter Service */
 bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback);
 
 /** @brief Stop or resume the updating of DTC status bits.

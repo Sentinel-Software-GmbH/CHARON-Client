@@ -20,7 +20,7 @@
  * @{
  * @addtogroup BusinessLogic
  * @{
- * @file DiagnosticCommunicationManager.c
+ * @file
  * Implementation of the Diagnostic and Communication Management Functional
  * Unit. The detailed specifications can be found in @b ISO @b 14229-1
  * Chapter 9.

@@ -22,7 +22,7 @@
  * @{
  * @addtogroup DataModels
  * @{
- * @file MemoryDefinition.h
+ * @file
  * Includes a Data Struct to gather all relevant data for a direct memory access.
  * 
  *

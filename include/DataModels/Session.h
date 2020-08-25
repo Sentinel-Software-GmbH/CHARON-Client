@@ -22,7 +22,7 @@
  * @{
  * @addtogroup DataModels
  * @{
- * @file MemoryDefinition.h
+ * @file
  * Includes the representation of all ISO specified UDS Sessions and a formal description of a session with its timeouts.
  * 
  * Check ISO 14229-1 Chapter 9.2 Table 25
