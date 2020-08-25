@@ -50,6 +50,12 @@ void STM_SetSessionTimeout(uint32_t timeout);
     uint8_t STM_getCurrentSID(void);
     UDS_Session_t STM_getCurrentSession(void);
     void STM_setCurrentSID(uint8_t sid);
+    void STM_setStartPeriodicService(bool val);
+    void STM_setStopPeriodicService(bool val);
+    void STM_setPeriodicServiceActive(bool val);
+    bool STM_getStartPeriodicService();
+    bool STM_getStopPeriodicService();
+    bool STM_getPeriodicServiceActive();
 #endif
 
 #ifdef __cplusplus

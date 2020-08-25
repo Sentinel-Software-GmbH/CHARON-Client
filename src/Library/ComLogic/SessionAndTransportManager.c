@@ -71,6 +71,10 @@ int64_t diffNow(uint32_t start);
 
 int8_t findSID(SID_t sid);
 
+UDS_Client_Error_t handlePendingNothingReceived();
+UDS_Client_Error_t handleNegativeResponse(int32_t readBytes);
+UDS_Client_Error_t handlePositiveResponse(int32_t readBytes);
+
 /* Interfaces  ***************************************************************/
 
 void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t *const rxBuffer, uint32_t rxBufferLength)
@@ -101,7 +105,8 @@ bool STM_Deploy(uint8_t *data, uint32_t length, UDS_callback callback, bool supp
     if (pending.SID != 0x00 && !stoppingPService)
     {
         UDS_MUTEX_UNLOCK();
-        if(callback != NULL) callback(E_Busy, NULL, 0);
+        if (callback != NULL)
+            callback(E_Busy, NULL, 0);
         return false;
     }
 
@@ -213,31 +218,11 @@ UDS_Client_Error_t STM_cyclic(void)
                 // if it's a Negative Response
                 if (E_NegativeResponse == retVal)
                 {
-                    if (NRC_responsePending == rx[2])
-                    {
-                        retVal = E_Pending;
-                        s_timeout = s_timer->getTime() + session.p2_star;
-                    }
-                    else {
-                        // TODO Negative Response on Start or Stop
-                        if (pending.callback != NULL)
-                            pending.callback(retVal, rx, readBytes);
-                        if (!stoppingPService)
-                            resetPendingObject();
-                        startingPService = stoppingPService = false;
-                    }
+                    retVal = handleNegativeResponse(readBytes);
                 }
                 else
                 {
-                    if (pending.callback != NULL)
-                        pending.callback(retVal, rx, readBytes);
-                    if (startingPService)
-                        periodicServiceActive = true;
-                    if (stoppingPService)
-                        periodicServiceActive = false;
-                    if (!startingPService)
-                        resetPendingObject();
-                    startingPService = stoppingPService = false;
+                    retVal = handlePositiveResponse(readBytes);
                 }
             }
             else if (SID_TesterPresent == sid)
@@ -264,24 +249,7 @@ UDS_Client_Error_t STM_cyclic(void)
     }
     else if (pending.SID != 0x00)
     {
-        if (!s_suppressPosResponse)
-        {
-            retVal = E_Pending;
-        }
-        if (diffNow(s_timeout) >= 0)
-        {
-            if (s_suppressPosResponse)
-            {
-                retVal = E_OK;
-            }
-            else
-            {
-                retVal = E_NotResponding;
-            }
-            if (pending.callback != NULL)
-                pending.callback(retVal, NULL, 0);
-            resetPendingObject();
-        }
+        retVal = handlePendingNothingReceived();
     }
     UDS_MUTEX_UNLOCK();
     return retVal;
@@ -310,6 +278,61 @@ void STM_SetSession(UDS_SessionType_t session_type, uint16_t p2_timeout, uint16_
 }
 
 /* Private Function **********************************************************/
+
+UDS_Client_Error_t handlePendingNothingReceived()
+{
+    UDS_Client_Error_t retVal = E_OK;
+    if (!s_suppressPosResponse)
+    {
+        retVal = E_Pending;
+    }
+    if (diffNow(s_timeout) >= 0)
+    {
+        if (s_suppressPosResponse)
+        {
+            retVal = E_OK;
+        }
+        else
+        {
+            retVal = E_NotResponding;
+        }
+        if (pending.callback != NULL)
+            pending.callback(retVal, NULL, 0);
+        resetPendingObject();
+    }
+    return retVal;
+}
+
+UDS_Client_Error_t handleNegativeResponse(int32_t readBytes)
+{
+    if (NRC_responsePending == rx[2])
+    {
+        s_timeout = s_timer->getTime() + session.p2_star;
+        return E_Pending;
+    }
+    else
+    {
+        if (pending.callback != NULL)
+            pending.callback(E_NegativeResponse, rx, readBytes);
+        if (!stoppingPService)
+            resetPendingObject();
+        startingPService = stoppingPService = false;
+        return E_NegativeResponse;
+    }
+}
+
+UDS_Client_Error_t handlePositiveResponse(int32_t readBytes)
+{
+    if (pending.callback != NULL)
+        pending.callback(E_OK, rx, readBytes);
+    if (startingPService)
+        periodicServiceActive = true;
+    if (stoppingPService)
+        periodicServiceActive = false;
+    if (!startingPService)
+        resetPendingObject();
+    startingPService = stoppingPService = false;
+}
 
 bool send(uint8_t *buffer, uint32_t length)
 {
@@ -404,4 +427,17 @@ void STM_setCurrentSession(UDS_SessionType_t sType, uint16_t p2, uint16_t p2_sta
     session.p2_star = p2_star;
 }
 void STM_setCurrentSID(uint8_t sid) { pending.SID = sid; }
+
+void STM_setStartPeriodicService(bool val) { startingPService = val; }
+
+void STM_setStopPeriodicService(bool val) { stoppingPService = val; }
+
+void STM_setPeriodicServiceActive(bool val) { periodicServiceActive = val; }
+
+bool STM_getStartPeriodicService() { return startingPService; }
+
+bool STM_getStopPeriodicService() { return stoppingPService; }
+
+bool STM_getPeriodicServiceActive() { return periodicServiceActive; }
+
 #endif
