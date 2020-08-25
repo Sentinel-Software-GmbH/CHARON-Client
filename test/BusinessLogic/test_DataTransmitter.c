@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 ${Author}
  *
@@ -16,6 +16,19 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /*****************************************************************************/
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup TestModules
+ * @{
+ * @file
+ * Data Transmitter Module.
+ * 
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
 
 /* TODO: Everything */
 

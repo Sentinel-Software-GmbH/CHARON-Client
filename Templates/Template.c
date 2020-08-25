@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 ${Author}
  *
@@ -20,8 +20,9 @@
  * @{
  * @addtogroup ComLogic
  * @{
- * @file ${FileName}.c
- * Implementation of the Service and Session Control Module
+ * @file
+ * Brief Description.
+ * Detailed Description.
  *
  * $Id:  $
  * $URL:  $

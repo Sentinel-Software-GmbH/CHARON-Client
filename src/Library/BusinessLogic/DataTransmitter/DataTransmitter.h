@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup BusinessLogic
+ * @addtogroup BusinessLogic
  * @{
  * @file DataTransmitter.h
  * Collection of all configurable variables of the client.

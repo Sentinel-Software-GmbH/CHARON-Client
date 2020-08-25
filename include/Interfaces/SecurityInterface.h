@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup Interfaces
+ * @addtogroup Interfaces
  * @{
  * @file SecurityInterface.h
  * Includes the definition of an interface to the security layer.

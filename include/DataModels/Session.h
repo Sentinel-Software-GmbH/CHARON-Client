@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file MemoryDefinition.h
  * Includes the representation of all ISO specified UDS Sessions and a formal description of a session with its timeouts.
@@ -34,8 +34,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_C65E1C79_42D9_49a7_A8D8_44B6C0BD7973__INCLUDED_)
-#define EA_C65E1C79_42D9_49a7_A8D8_44B6C0BD7973__INCLUDED_
+#ifndef UDS_SESSION_H_
+#define UDS_SESSION_H_
 
 
 #ifdef __cplusplus
@@ -68,5 +68,5 @@ typedef struct Session_public
 #endif
 
 
-#endif /*!defined(EA_C65E1C79_42D9_49a7_A8D8_44B6C0BD7973__INCLUDED_)*/
+#endif /* UDS_SESSION_H_ */
  
