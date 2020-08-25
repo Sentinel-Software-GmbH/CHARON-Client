@@ -21,10 +21,11 @@
 
 /* Includes ******************************************************************/
 
-#include "unity.h"
 #include "BusinessLogic/DataTransmitter/DataTransmitter.h"
-#include "mock_SessionAndTransportManager.h"
+#include "DataModels/SID.h"
 #include "mock_MemoryDefinition.h"
+#include "mock_SessionAndTransportManager.h"
+#include "unity.h"
 
 /* Imports *******************************************************************/
 
@@ -36,74 +37,100 @@
 
 /* Variables *****************************************************************/
 
+static const DataDefinition dataDef = {
+    .DID = 0x0134,
+    .firstBytePosition = 0x04,
+    .memorySize = 0x10,
+};
+
+static const MemoryDefinition memDef = {
+    .Address = (uint8_t[]){0x43, 0x21},
+    .Size = (uint8_t[]){0x00, 0x10},
+    .AddressLength = 2,
+    .SizeLength = 2,
+};
+
 /* Setup and Teardowns *******************************************************/
 
-void setUp(void) {
-
+void setUp(void)
+{
 }
 
-void tearDown(void) {
-
+void tearDown(void)
+{
 }
 
 /* Test Functions ************************************************************/
 
-/* TODO: Everything */
-void test_readDataByIdentifier(void) {
-    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
+void test_readDataByIdentifier(void)
+{
+    uint8_t *expectedMessage = (uint8_t[]){SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
     STM_Deploy_ExpectAndReturn(expectedMessage, 7, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_EQUAL(true, UDS_DT_readDataByIdentifier((uint16_t[]){0x0134, 0x0027, 0x0012}, 3, NULL));
 }
 
-/* TODO: Everything */
-void test_readMemoryByAddress(void) {
-    // TODO(inacio): later
-    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadMemoryByAdress,/*4, 4 */ 0b01000100, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78};
+void test_readMemoryByAddress(void)
+{
+    uint8_t *expectedMessage = (uint8_t[]){SID_ReadMemoryByAdress, /*4, 4 */ 0b01000100, 0x43, 0x21, 0x00, 0x10};
+    STM_Deploy_ExpectAndReturn(expectedMessage, 6, NULL, false, true);
+    STM_Deploy_IgnoreArg_callback();
+    TEST_ASSERT_EQUAL(true, UDS_DT_readMemoryByAddress(memDef, NULL));
+}
+
+void test_readScalingDataByIdentifier(void)
+{
+    uint8_t *expectedMessage = (uint8_t[]){SID_ReadScalingDataByIdentifier, 0x12, 0x34};
+    STM_Deploy_ExpectAndReturn(expectedMessage, 3, NULL, false, true);
+    STM_Deploy_IgnoreArg_callback();
+    TEST_ASSERT_EQUAL(true, UDS_DT_readScalingDataByIdentifier(0x1234, NULL));
+}
+
+void test_ReadDataByPeriodicIdentifier(void)
+{
+    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByPeriodicIdentifier, 0x01, 0x23, 0x53, 0x12};
+    STM_Deploy_ExpectAndReturn(expectedMessage, 5, NULL, false, true);
+    STM_Deploy_IgnoreArg_callback();
+    STM_AsyncDeploy_ExpectAndReturn(SID_ReadDataByPeriodicIdentifier, NULL, true);
+    TEST_ASSERT_EQUAL(true, UDS_DT_ReadDataByPeriodicIdentifier(UDS_SlowTimer, (uint8_t[]) {0x23, 0x53, 0x12}, 3, NULL, NULL));
 }
 
 /* TODO: Everything */
-void test_readScalingDataByIdentifier(void) {
+void test_stopDataByPeriodicIdentifier(void)
+{
+    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByPeriodicIdentifier, 0x04, 0x23, 0x53, 0x12};
+    STM_Deploy_ExpectAndReturn(expectedMessage, 5, NULL, false, true);
+    STM_Deploy_IgnoreArg_callback();
+    TEST_ASSERT_EQUAL(true, UDS_DT_stopDataByPeriodicIdentifier((uint8_t[]) {0x23, 0x53, 0x12}, 3, NULL));
+}
+
+/* TODO: Everything */
+void test_dynamicallyDefineDataIdentifierByDID(void)
+{
     TEST_ASSERT_EQUAL(1, 1);
 }
 
 /* TODO: Everything */
-void test_ReadDataByPeriodicIdentifier(void) {
+void test_dynamicallyDefineDataIdentifierByMemoryDefinition(void)
+{
     TEST_ASSERT_EQUAL(1, 1);
 }
 
 /* TODO: Everything */
-void test_stopDataByPeriodicIdentifier(void) {
+void test_clearDynamicallyDefineDataIdentifier(void)
+{
     TEST_ASSERT_EQUAL(1, 1);
 }
 
 /* TODO: Everything */
-void test_dynamicallyDefineDataIdentifier(void) {
+void test_writeDataByIdentifier(void)
+{
     TEST_ASSERT_EQUAL(1, 1);
 }
 
 /* TODO: Everything */
-void test_dynamicallyDefineDataIdentifierByDID(void) {
-    TEST_ASSERT_EQUAL(1, 1);
-}
-
-/* TODO: Everything */
-void test_dynamicallyDefineDataIdentifierByMemoryDefinition(void) {
-    TEST_ASSERT_EQUAL(1, 1);
-}
-
-/* TODO: Everything */
-void test_clearDynamicallyDefineDataIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
-}
-
-/* TODO: Everything */
-void test_writeDataByIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
-}
-
-/* TODO: Everything */
-void test_writeMemoryByAddress(void) {
+void test_writeMemoryByAddress(void)
+{
     TEST_ASSERT_EQUAL(1, 1);
 }
 

@@ -19,7 +19,13 @@
 
 /* Variables */
 
+static uint8_t *periodicDID;
+static uint32_t periodicDIDlength = 0;
+UDS_callback user_callback = NULL;
+
 /* Private Function Definitions */
+
+static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
 
 #define MAX(x, y) (x > y ? x : y)
 
@@ -48,7 +54,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 	return STM_Deploy(message, length, callback, false);
 }
 
-/**
+/*
  * Very Complex. Might need the user to interpret the return values
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback)
@@ -74,8 +80,11 @@ bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t *periodicDataIdentifiers, uint8
 	uint8_t message[2 + periodicDataIdsLength];
 	message[0] = SID_ReadDataByPeriodicIdentifier;
 	message[1] = 0x04;
+	periodicDID = periodicDataIdentifiers;
+	periodicDIDlength = periodicDataIdsLength;
+	user_callback = callback;
 	memcpy(&message[2], periodicDataIdentifiers, periodicDataIdsLength);
-	return STM_Deploy(message, 2 + periodicDataIdsLength, callback, false);
+	return STM_Deploy(message, 2 + periodicDataIdsLength, DT_StopCallback, false);
 }
 
 bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback)
@@ -147,4 +156,16 @@ bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targe
 	i += targetMemory.SizeLength;
 	memcpy(&message[i], writeBuffer, bufferLength);
 	return STM_Deploy(message, length, callback, false);
+}
+
+static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) {
+	if(E_OK == error) {
+		for (int i = 0; i < periodicDIDlength; i++) {
+			STM_RemoveAsync(periodicDID[i]);
+		}
+	}
+	if(user_callback != NULL) {
+		user_callback(error, data, length);
+	}
+	return;
 }
