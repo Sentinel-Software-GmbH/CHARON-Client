@@ -71,9 +71,9 @@ int64_t diffNow(uint32_t start);
 
 int8_t findSID(SID_t sid);
 
-UDS_Client_Error_t handlePendingNothingReceived();
-UDS_Client_Error_t handleNegativeResponse(int32_t readBytes);
-UDS_Client_Error_t handlePositiveResponse(int32_t readBytes);
+static UDS_Client_Error_t handlePendingNothingReceived();
+static UDS_Client_Error_t handleNegativeResponse(int32_t readBytes);
+static UDS_Client_Error_t handlePositiveResponse(int32_t readBytes);
 
 /* Interfaces  ***************************************************************/
 
