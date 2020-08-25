@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_)
-#define EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_
+#ifndef UDS_COM_INTERFACE_H_
+#define UDS_COM_INTERFACE_H_
 
 
 #ifdef __cplusplus
@@ -134,5 +134,5 @@ typedef struct ComInterface_public {
 #endif
 
 
-#endif /*!defined(EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_)*/
+#endif /* UDS_COM_INTERFACE_H_ */
  

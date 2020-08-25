@@ -51,63 +51,74 @@ void tearDown(void) {
 /* TODO: Everything */
 void test_readDataByIdentifier(void) {
     TEST_MESSAGE("Testing the correct construction of a Read Data by DID Request.");
-    TEST_PASS_MESSAGE("This test has proven R11.");
-    TEST_FAIL_MESSAGE("Requirement(s) R11 have not been fulfilled.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByIdentifier, 0x01, 0x34, 0x00, 0x27, 0x00, 0x12};
     STM_Deploy_ExpectAndReturn(expectedMessage, 7, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
-    TEST_ASSERT_EQUAL(true, UDS_DT_readDataByIdentifier((uint16_t[]){0x0134, 0x0027, 0x0012}, 3, NULL));
+    TEST_ASSERT_EQUAL_MESSAGE(true, UDS_DT_readDataByIdentifier((uint16_t[]){0x0134, 0x0027, 0x0012}, 3, NULL), "Requirement(s) R11 have not been fulfilled.");
+    TEST_PASS_MESSAGE("This test has proven R11.");
 }
 
 /* TODO: Everything */
 void test_readMemoryByAddress(void) {
-    // TODO(inacio): later
-    uint8_t *expectedMessage = (uint8_t[]) {SID_ReadMemoryByAdress,/*4, 4 */ 0b01000100, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78};
+    TEST_MESSAGE("Testing the correct construction of a Read Data by Memory address request.");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R12.");
 }
 
 /* TODO: Everything */
 void test_readScalingDataByIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a read scaling data by DID request.");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R13.");
 }
 
 /* TODO: Everything */
 void test_ReadDataByPeriodicIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a periodic reading of an DID request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R14.");
 }
 
 /* TODO: Everything */
 void test_stopDataByPeriodicIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a stop sending periodic DIDs request.");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R14.");
 }
 
 /* TODO: Everything */
-void test_dynamicallyDefineDataIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
-}
-
-/* TODO: Everything */
-void test_dynamicallyDefineDataIdentifierByDID(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+void test_dynamicallyDefineDataIdentifierbyDID(void) {
+    TEST_MESSAGE("Testing the correct construction of a dynamically define a DID by another DID(s) request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R15.");
 }
 
 /* TODO: Everything */
 void test_dynamicallyDefineDataIdentifierByMemoryDefinition(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a dynamically define a DID by memory range(s) request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R15.");
 }
 
 /* TODO: Everything */
 void test_clearDynamicallyDefineDataIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a clear dynamic DID request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R15.");
 }
 
 /* TODO: Everything */
 void test_writeDataByIdentifier(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a write data to DID request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R16.");
 }
 
 /* TODO: Everything */
 void test_writeMemoryByAddress(void) {
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_MESSAGE("Testing the correct construction of a write data to memory address request");
+    TEST_FAIL();
+    TEST_PASS_MESSAGE("This test has proven R17.");
 }
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
