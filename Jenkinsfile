@@ -44,8 +44,6 @@ pipeline {
     }
     post {
         success {
-            currentBuild.result = 'SUCCESS'
-            notifyBitbucket()
             archiveArtifacts 'build/documentation/html/Charon_UDS_Client.chm'
         }
         failure {
