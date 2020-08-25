@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_B5D43F1B_EA2F_4dd9_ADDA_89D31FE79F42__INCLUDED_)
-#define EA_B5D43F1B_EA2F_4dd9_ADDA_89D31FE79F42__INCLUDED_
+#ifndef UDS_DATA_TRANSMITTER_H_
+#define UDS_DATA_TRANSMITTER_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -142,5 +142,5 @@ bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targe
 #endif
 
 
-#endif /*!defined(EA_B5D43F1B_EA2F_4dd9_ADDA_89D31FE79F42__INCLUDED_)*/
+#endif /* UDS_DATA_TRANSMITTER_H_ */
  

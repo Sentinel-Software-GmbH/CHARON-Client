@@ -23,7 +23,7 @@
  * @addtogroup DataModels
  * @{
  * @file
- * Implementation of the Service and Session Control Module
+ * Provides helper functions for UDS_Client_Error_t.
  *
  * $Id:  $
  * $URL:  $

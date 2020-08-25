@@ -1,12 +1,37 @@
-/****************************************************
- *  Routine.h                                         
- *  Created on: 16-Jul-2020 09:29:59                      
- *  Implementation of the Class Routine       
- *  Original author: Steven Inacio                     
- ****************************************************/
-
-#if !defined(EA_8000A827_0A91_45b2_AE8E_2116EEC82217__INCLUDED_)
-#define EA_8000A827_0A91_45b2_AE8E_2116EEC82217__INCLUDED_
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: 16.07.2018
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @defgroup BusinessLogic
+ * @{
+ * @file
+ * Provides functions to transmit data to and from the server.
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+#ifndef UDS_ROUTINE_H_
+#define UDS_ROUTINE_H_
 
 
 #ifdef __cplusplus
@@ -23,5 +48,5 @@ void UDS_ROUTINE_routineControl(uint8_t routineCommand, uint16_t routineIdentifi
 #endif
 
 
-#endif /*!defined(EA_8000A827_0A91_45b2_AE8E_2116EEC82217__INCLUDED_)*/
+#endif /* UDS_ROUTINE_H_ */
  

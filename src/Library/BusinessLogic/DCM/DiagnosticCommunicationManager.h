@@ -1,12 +1,39 @@
-/****************************************************
- *  DiagnosticCommunicationManager.h                                         
- *  Created on: 16-Jul-2020 09:29:59                      
- *  Implementation of the Class DiagnosticCommunicationManager       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup BusinessLogic
+ * @{
+ * @file DiagnosticCommunicationManager.c
+ * Implementation of the Diagnostic and Communication Management Functional
+ * Unit. The detailed specifications can be found in @b ISO @b 14229-1
+ * Chapter 9.
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
-#if !defined(EA_D8733EBF_401F_4e54_98DB_F39301A5207A__INCLUDED_)
-#define EA_D8733EBF_401F_4e54_98DB_F39301A5207A__INCLUDED_
+#ifndef UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_
+#define UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_
 
 
 #ifdef __cplusplus
@@ -193,5 +220,5 @@ bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callb
 #endif
 
 
-#endif /*!defined(EA_D8733EBF_401F_4e54_98DB_F39301A5207A__INCLUDED_)*/
+#endif /* UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_ */
  

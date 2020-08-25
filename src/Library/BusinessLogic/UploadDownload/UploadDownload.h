@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @defgroup BusinessLogic
  * @{
  * @file UploadDownload.h
  * Provides functions to transmit data to and from the server.

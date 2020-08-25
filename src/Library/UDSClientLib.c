@@ -20,9 +20,9 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup DataModels
+ * @addtogroup Facade
  * @{
- * @file BaudRates.h
+ * @file
  * Includes a user friendly representation of the fixed values to adjust the speed.
  * 
  *
