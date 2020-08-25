@@ -1,6 +1,6 @@
-/**
+/*
  *  Sentinel Software GmbH
- *  Copyright (C) 2020 ${Author}
+ *  Copyright (C) 2020 Steven Inácio
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * @addtogroup UDSClient
+ * @addtogroup UDS_Client
  * @{
  * @addtogroup BusinessLogic
  * @{

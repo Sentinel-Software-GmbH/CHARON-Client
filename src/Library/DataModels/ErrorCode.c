@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -18,11 +18,11 @@
  * Created on: Mon Aug 24 2020
  */
 /**
- * @addtogroup UDSClient
+ * @addtogroup UDS_Client
  * @{
  * @addtogroup ComLogic
  * @{
- * @file ${FileName}.c
+ * @file
  * Implementation of the Service and Session Control Module
  *
  * $Id:  $
