@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file ComparisonLogic.h
  * Provides a user friendly representation of the comparation logic parameter used in Response on Comparison of DIDs Event.

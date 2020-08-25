@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file TimerRates.h
  * Includes the representation of any timer rates used by some requests.

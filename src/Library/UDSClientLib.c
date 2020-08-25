@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file BaudRates.h
  * Includes a user friendly representation of the fixed values to adjust the speed.

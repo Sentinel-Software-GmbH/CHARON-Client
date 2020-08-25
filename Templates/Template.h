@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 ${AUTHOR}
  *
@@ -20,9 +20,9 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @addtogroup ComLogic
  * @{
- * @file $Filename$.h
+ * @file
  * Brief Description.
  * Detailed Description
  *

@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file ResetTypes.h
  * Includes a representation of all reset functions used by the function UDS_DCM_ECUReset().

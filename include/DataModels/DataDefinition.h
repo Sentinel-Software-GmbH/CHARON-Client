@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file DataDefinition.h
  * Includes a Data Struct to gather all relevant data for an DID Access.
@@ -33,8 +33,8 @@
  */
 /*****************************************************************************/
 
-#ifndef EA_887CA2F3_18C0_457b_9C74_AABCA202DABE__INCLUDED_
-#define EA_887CA2F3_18C0_457b_9C74_AABCA202DABE__INCLUDED_
+#ifndef UDS_DATA_DEFINITION_H_
+#define UDS_DATA_DEFINITION_H_
 
 #ifdef __cplusplus
 extern "C"
@@ -62,4 +62,4 @@ extern "C"
 }
 #endif
 
-#endif /*!defined(EA_887CA2F3_18C0_457b_9C74_AABCA202DABE__INCLUDED_)*/
+#endif /* UDS_DATA_DEFINITION_H_ */

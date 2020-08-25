@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,14 +20,16 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @addtogroup TestModules
  * @{
- * @file $Filename$.h
- * Brief Description.
- * Detailed Description
- *
+ * @addtogroup Support
+ * @{
+ * @file
+ * Security Interface mockup.
+ * 
  * $Id:  $
  * $URL:  $
+ * @}
  * @}
  * @}
  */

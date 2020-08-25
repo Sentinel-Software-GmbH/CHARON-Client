@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file MemoryDefinition.h
  * Includes a Data Struct to gather all relevant data for a direct memory access.
@@ -33,8 +33,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_7EE78724_DD43_4f4e_ACD1_C384E0B642F2__INCLUDED_)
-#define EA_7EE78724_DD43_4f4e_ACD1_C384E0B642F2__INCLUDED_
+#ifndef UDS_MEMORY_DEFINITION_H_
+#define UDS_MEMORY_DEFINITION_H_
 
 
 #ifdef __cplusplus
@@ -49,7 +49,7 @@ extern "C" {
 typedef struct MemoryDefinition_public {
     /** @brief The address of the wanted memory block.
      * 
-     * This is an Array because its server dependent how much memory can be accessed.
+     * This is an Array because it's server dependent how much memory can be accessed.
      * 
      * @warning Please make sure this number has its MSB first.
      */
@@ -95,5 +95,5 @@ uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition *m
 #endif
 
 
-#endif /*!defined(EA_7EE78724_DD43_4f4e_ACD1_C384E0B642F2__INCLUDED_)*/
+#endif /* UDS_MEMORY_DEFINITION_H_ */
  

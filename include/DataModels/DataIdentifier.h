@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup DataModels
+ * @addtogroup DataModels
  * @{
  * @file DataIdentifier.h
  * Adds a representation of all ISO specified Data Identifier.
@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#ifndef CHARON_TEMPLATE_H_
-#define CHARON_TEMPLATE_H_
+#ifndef UDS_DATA_IDENTIFIER_H_
+#define UDS_DATA_IDENTIFIER_H_
 
 /* Includes ******************************************************************/
 
@@ -43,6 +43,8 @@
 
 /* Types *********************************************************************/
 
+
+/* TODO: Insert all DIDs */
 /** @brief All ISO 14229-1 specified DIDs.
  * @note Check ISO 14229-1 Table C.1
  * @warning Only the Starting Address is defined, the Range of the DID can be found as Length under the notes of the documentation of the DID.
