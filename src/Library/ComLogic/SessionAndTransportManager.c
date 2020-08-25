@@ -183,8 +183,8 @@ UDS_Client_Error_t STM_cyclic(void) {
                 asyncPending[idx].callback(retVal, rx, readBytes);
         }
         else {
-            UDS_LOG_WARNING("Received unexpected answer.");
             // Unexpected receive
+            UDS_LOG_WARNING("Received unexpected answer with SID: %d", sid);
         }
     }
     else if(pending.SID != 0x00) {
