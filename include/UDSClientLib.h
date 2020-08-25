@@ -41,6 +41,9 @@ extern "C" {
  */
 void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
 
+/** @brief Cyclic Task that receives Messages and handles KeepAlives.
+ * @returns The last error code that has occured. See @ref UDS_Client_Error_t.
+ */ 
 UDS_Client_Error_t UDS_Client_Task(void);
 
 #include "BusinessLogic/DataTransmitter/DataTransmitter.h"

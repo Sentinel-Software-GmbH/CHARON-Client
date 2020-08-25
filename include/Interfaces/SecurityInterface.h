@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_4EDD4C82_621C_486a_B2ED_71902C3D2463__INCLUDED_)
-#define EA_4EDD4C82_621C_486a_B2ED_71902C3D2463__INCLUDED_
+#ifndef UDS_SECURITY_INTERFACE_H_
+#define UDS_SECURITY_INTERFACE_H_
 
 
 #ifdef __cplusplus
@@ -96,5 +96,5 @@ typedef struct SecurityInterface_public {
 #endif
 
 
-#endif /*!defined(EA_4EDD4C82_621C_486a_B2ED_71902C3D2463__INCLUDED_)*/
+#endif /* UDS_SECURITY_INTERFACE_H_ */
  

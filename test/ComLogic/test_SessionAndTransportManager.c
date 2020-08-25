@@ -33,8 +33,6 @@ void test_Init_interfaces_should_be_correct_and_initialized(void) {
 
 void test_Deploy_Message(void) {
     TEST_MESSAGE("Testing the correct transmission of a received message buffer through the communication interface.");
-    TEST_PASS_MESSAGE("This test has proven S03.");
-    TEST_FAIL_MESSAGE("Requirement(s) S03 have not been fulfilled.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t* message = (uint8_t*)"This is a very long message buffer. It is so long, PCLint is complaining about the line length. To be fair PCLint really likes to bitch around.";
     int32_t length = strlen(message);
@@ -42,6 +40,7 @@ void test_Deploy_Message(void) {
     time_getTime_ExpectAndReturn(0);
     TEST_ASSERT_EQUAL(true, STM_Deploy(message, length, NULL, false));
     TEST_ASSERT_EQUAL_CHAR('T', STM_getCurrentSID());
+    TEST_PASS_MESSAGE("This test has proven S03.");
 }
 
 void test_Cyclic_Nothing_pending(void) {
@@ -138,8 +137,6 @@ void test_Cyclic_Pending_AnswerReceived() {
 
 void test_Switch_Session_Keep_Alive(void) {
     TEST_MESSAGE("Testing the Keep Alive function for non-default sessions.");
-    TEST_PASS_MESSAGE("This test has proven R05.");
-    TEST_FAIL_MESSAGE("Requirement(s) R05 have not been fulfilled.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     STM_SetSession(UDS_Session_Extended, 100, 300);
     uint8_t expectedData[2] = { SID_TesterPresent, 0x80 };
@@ -152,6 +149,7 @@ void test_Switch_Session_Keep_Alive(void) {
     time_diffTime_ExpectAnyArgsAndReturn(2150L);
     test_com_send_ExpectAndReturn(expectedData, 2, 2);
     TEST_ASSERT_EQUAL(E_OK, STM_cyclic());
+    TEST_PASS_MESSAGE("This test has proven R05.");
 }
 
 void test_SetSessionTiming(void) {

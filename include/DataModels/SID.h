@@ -56,7 +56,7 @@
         /** @brief Read diagnostic data defined by the DataIdentifier */
         SID_ReadDataByIdentifier = 0x22,
         /** @brief Read some piece of memory of the server at a specific address. */
-        SID_ReadMemoryByAdress = 0x23,
+        SID_ReadMemoryByAddress = 0x23,
         /** @brief Read Scaling Data defined by a DataIdentifier.
          * @note Very complicated. See ISO 14229-1 Chp. 10.4
          */

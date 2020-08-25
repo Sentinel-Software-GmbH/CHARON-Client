@@ -32,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#if !defined(EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_)
-#define EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_
+#ifndef UDS_TIMER_INTERFACE_H_
+#define UDS_TIMER_INTERFACE_H_
 
 
 #ifdef __cplusplus
@@ -57,6 +57,9 @@ typedef uint32_t(*getTimeFunc)(void);
 typedef int64_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 
 
+/** @brief A Class that represents the implementation of a System Timer.
+ * @req S04
+ */
 typedef struct TimerInterface_public {
     getTimeFunc getTime;
     diffTimeFunc diffTime;
@@ -68,5 +71,5 @@ typedef struct TimerInterface_public {
 #endif
 
 
-#endif /*!defined(EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_)*/
+#endif /* UDS_TIMER_INTERFACE_H_*/
  

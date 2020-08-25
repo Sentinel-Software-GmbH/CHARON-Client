@@ -66,7 +66,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 {
 	uint32_t length = 2 + sourceMemory.AddressLength + sourceMemory.SizeLength;
 	uint8_t message[length];
-	message[0] = SID_ReadMemoryByAdress;
+	message[0] = SID_ReadMemoryByAddress;
 	message[1] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&sourceMemory);
 	memcpy(&message[2], sourceMemory.Address, sourceMemory.AddressLength);
 	memcpy(&message[2 + sourceMemory.AddressLength], sourceMemory.Size, sourceMemory.SizeLength);
