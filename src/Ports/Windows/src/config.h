@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup ComLogic
+ * @addtogroup Config
  * @{
  * @file $Filename$.h
  * Brief Description.

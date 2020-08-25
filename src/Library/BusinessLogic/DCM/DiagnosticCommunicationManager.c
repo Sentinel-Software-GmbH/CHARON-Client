@@ -18,7 +18,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup ComLogic
+ * @addtogroup BusinessLogic
  * @{
  * @file DiagnosticCommunicationManager.c
  * Implementation of the Diagnostic and Communication Management Functional

@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup ComLogic
+ * @addtogroup DataModels
  * @{
  * @file
  * Implementation of the Service and Session Control Module
