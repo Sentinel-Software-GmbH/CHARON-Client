@@ -108,9 +108,10 @@ bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier,
 bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback)
 {
 	if(SourceMemoryLength == 0) return false;
-	uint8_t message[4 + 4 * SourceMemoryLength];
 	uint8_t addressLength = SourceMemoryDefinitions[0].AddressLength;
 	uint8_t memoryLength = SourceMemoryDefinitions[0].SizeLength;
+	uint32_t length = 5 + (addressLength + memoryLength) * SourceMemoryLength;
+	uint8_t message[length];
 	message[0] = SID_DynamicallyDefineDataIdentifier;
 	message[1] = 0x02;
 	message[2] = definedDataIdentifier >> 8;
@@ -120,7 +121,7 @@ bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDa
 		memcpy(&message[5+i*(addressLength * memoryLength)], SourceMemoryDefinitions[i].Address, addressLength);
 		memcpy(&message[5+i*(addressLength * memoryLength) + addressLength], SourceMemoryDefinitions[i].Size, memoryLength);
 	}
-	return STM_Deploy(message, 4 + 4 * SourceMemoryLength, callback, false);
+	return STM_Deploy(message, length, callback, false);
 }
 
 bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback)
@@ -143,12 +144,12 @@ bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t *writeBuffer,
 	return STM_Deploy(message, 3 + bufferLength, callback, false);
 }
 
-bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, uint8_t *writeBuffer, uint8_t bufferLength, UDS_callback callback)
+bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t *writeBuffer, uint8_t bufferLength, UDS_callback callback)
 {
 	uint32_t length = 2 + targetMemory.SizeLength + targetMemory.AddressLength + bufferLength;
 	uint32_t i = 0;
 	uint8_t message[length];
-	message[i++] = SID_WriteDataByIdentifier;
+	message[i++] = SID_WriteMemoryByAdress;
 	message[i++] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&targetMemory);
 	memcpy(&message[i], targetMemory.Address, targetMemory.AddressLength);
 	i += targetMemory.AddressLength;
