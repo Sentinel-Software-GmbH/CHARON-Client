@@ -51,6 +51,8 @@ typedef enum ErrorCode_public {
     E_NotSupported,
     /** @brief The Communication Link Speed could not be adjusted because of an error. */
     E_ComSpeedNotAdjusted,
+    /** @brief Received an unexpected response from the server. */
+    E_Unexpected,
     /** @brief The message was too long for the Static TXBuffer */
     E_MessageTooLong,
 #ifndef DOXY_SKIP
