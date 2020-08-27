@@ -48,6 +48,8 @@ static const char *ErrorCode_STRING[ErrorCode_amount] = {
     "E_Busy",
     "E_NotSupported",
     "E_ComSpeedNotAdjusted",
+    "E_Unexpected",
+    "E_MessageTooLong",
 };
 
 /* Macros ********************************************************************/

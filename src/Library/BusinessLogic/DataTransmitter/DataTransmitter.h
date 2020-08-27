@@ -128,13 +128,14 @@ bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier,
 bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 /** @brief Write some data to a memory address.
+ * @param targetMemory Memory adress the data needs to be written to.
  * @param writeBuffer A buffer of data to be written to the data identifier.
  * @param bufferLength Size of the writeBuffer in bytes.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DT_writeMemoryByAddress(uint16_t dataIdentifier, MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 
 #ifdef __cplusplus
