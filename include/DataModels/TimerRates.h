@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,11 +20,10 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @addtogroup DataModels
  * @{
- * @file $Filename$.h
- * Brief Description.
- * Detailed Description
+ * @file TimerRates.h
+ * Includes the representation of any timer rates used by some requests.
  *
  * $Id:  $
  * $URL:  $
@@ -44,15 +43,17 @@
 
 /* Types *********************************************************************/
 
-/** Identification Codes for different Timer rates.
+/** @brief Identification Codes for different Timer rates.
  * The exact time rates are vendor specific.
+ * 
+ * @note ISO 14229-1 Table C.10
  */
 typedef enum TimerRates_public {
-    /** Represents a Slow Timer Rate e.g. 1 second */
+    /** @brief Represents a Slow Timer Rate e.g. 1 second */
     UDS_SlowTimer = 0x01,
-    /** Represents a Medium Timer Rate e.g. 300 ms */
+    /** @brief Represents a Medium Timer Rate e.g. 300 ms */
     UDS_MediumTimer = 0x02,
-    /** Represents a Fast Timer Rate e.g. 25 ms */
+    /** @brief Represents a Fast Timer Rate e.g. 25 ms */
     UDS_FastTimer = 0x03,
 } UDS_TimerRates_t;
 

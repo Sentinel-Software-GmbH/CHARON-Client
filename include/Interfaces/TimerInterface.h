@@ -1,12 +1,39 @@
-/****************************************************
- *  TimerInterface.h                                         
- *  Created on: 16-Jul-2020 13:50:31                      
- *  Implementation of the Interface TimerInterface       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Tue Jul 28 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup Interfaces
+ * @{
+ * @file TimerInterface.h
+ * Includes the definition of the needed timer functions.
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
-#if !defined(EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_)
-#define EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_
+#ifndef UDS_TIMER_INTERFACE_H_
+#define UDS_TIMER_INTERFACE_H_
 
 
 #ifdef __cplusplus
@@ -30,6 +57,9 @@ typedef uint32_t(*getTimeFunc)(void);
 typedef int64_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 
 
+/** @brief A Class that represents the implementation of a System Timer.
+ * @req S04
+ */
 typedef struct TimerInterface_public {
     getTimeFunc getTime;
     diffTimeFunc diffTime;
@@ -41,5 +71,5 @@ typedef struct TimerInterface_public {
 #endif
 
 
-#endif /*!defined(EA_3000AB7D_0796_4ec4_A5F1_E152F29A2086__INCLUDED_)*/
+#endif /* UDS_TIMER_INTERFACE_H_*/
  

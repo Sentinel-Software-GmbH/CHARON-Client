@@ -65,9 +65,9 @@ void DCM() {
     uds_wait();
     UDS_DCM_GetActiveResponseEvents(printMessage);
     uds_wait();
-    UDS_DCM_LinkControl_verifyWithFixedParameter(UDS_Baud_PC9600, printMessage);
+    UDS_DCM_LinkControl_withFixedParameter(UDS_Baud_PC9600, printMessage);
     uds_wait();
-    UDS_DCM_LinkControl_verifyWithSpecificParameter(9600, printMessage);
+    UDS_DCM_LinkControl_WithSpecificParameter(9600, printMessage);
     uds_wait();
     UDS_DCM_ResponseOnChangeOfDataIdentifier(false, 0x04, 0x0001, SID_DiagnosticSessionControl, NULL, 0, printMessage, printMessage);
     uds_wait();

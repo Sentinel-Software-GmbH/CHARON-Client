@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @defgroup BusinessLogic
  * @{
  * @file UploadDownload.h
  * Provides functions to transmit data to and from the server.

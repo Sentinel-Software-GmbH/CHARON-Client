@@ -1,3 +1,36 @@
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Tue Jul 28 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup TestModules
+ * @{
+ * @file
+ * Session Management and Transport Module.
+ * 
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
 #include "unity.h"
 #include "SessionAndTransportManager.h"
@@ -26,13 +59,14 @@ void tearDown(void) {
 }
 
 void test_Init_interfaces_should_be_correct_and_initialized(void) {
+    TEST_MESSAGE("Testing the correct initialization of the STM Module.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     TEST_ASSERT_NOT_NULL(STM_getComInterface());
     TEST_ASSERT_NOT_NULL(STM_getTimerInterface());
 }
 
 void test_Deploy_Message(void) {
-    setup();
+    TEST_MESSAGE("Testing the correct transmission of a received message buffer through the communication interface.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t* message = (uint8_t*)"This is a very long message buffer. It is so long, PCLint is complaining about the line length. To be fair PCLint really likes to bitch around.";
     int32_t length = strlen(message);
@@ -40,15 +74,18 @@ void test_Deploy_Message(void) {
     time_getTime_ExpectAndReturn(0);
     TEST_ASSERT_EQUAL(true, STM_Deploy(message, length, NULL, false));
     TEST_ASSERT_EQUAL_CHAR('T', STM_getCurrentSID());
+    TEST_PASS_MESSAGE("This test has proven S03.");
 }
 
 void test_Cyclic_Nothing_pending(void) {
+    TEST_MESSAGE("Testing the correct cyclic functionality when nothing is pending, and nothing was received.");
     test_com_receive_IgnoreAndReturn(0);
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     TEST_ASSERT_EQUAL(E_OK, STM_cyclic());
 }
 
 void test_Cyclic_Pending_Timeout(void) {
+    TEST_MESSAGE("Testing the correct transmission of a request with a timeout from the server.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t *expectedData = (uint8_t[]){0x10, 0x01, 0x00, 0x34, 0x00, 0x34};
     test_com_send_ExpectAndReturn(expectedData, 6, 6);
@@ -61,6 +98,7 @@ void test_Cyclic_Pending_Timeout(void) {
 }
 
 void test_Cyclic_Pending_WrongAnswer(void) {
+    TEST_MESSAGE("Testing the correct transmission of a request but receives a negative response.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t *expectedData = (uint8_t[]){0x10, 0x01, 0x00, 0x34, 0x00, 0x34};
     test_com_send_ExpectWithArrayAndReturn(expectedData, 6, 6, 6);
@@ -73,6 +111,7 @@ void test_Cyclic_Pending_WrongAnswer(void) {
 }
 
 void test_Cyclic_Pending_CorrectAnswer(void) {
+    TEST_MESSAGE("Testing the correct transmission of a request and a positive response.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t *expectedData = (uint8_t[]){0x10, 0x01, 0x00, 0x34, 0x00, 0x34};
     test_com_send_ExpectWithArrayAndReturn(expectedData, 6, 6, 6);
@@ -85,25 +124,31 @@ void test_Cyclic_Pending_CorrectAnswer(void) {
 }
 
 void test_Cyclic_Pending_AnswerPending_Timeout(void) {
+    TEST_MESSAGE("Testing the timeout functionality after the server has requested an extended timeout frame.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t *expectedData = (uint8_t[]){0x10, 0x01, 0x00, 0x34, 0x00, 0x34};
     test_com_send_ExpectWithArrayAndReturn(expectedData, 6, 6, 6);
     time_getTime_ExpectAndReturn(0);
+    // send message.
     STM_Deploy(expectedData, 6, NULL, false);
     uint8_t *receiveData = (uint8_t[]){SID_NEGATIVE_RESPONSE, 0x10, 0x78};
     test_com_receive_ExpectAnyArgsAndReturn(3);
     test_com_receive_ReturnMemThruPtr_buffer(receiveData, 3);
     time_getTime_ExpectAndReturn(50);
+    // receiving Request correctly received response pending response.
     TEST_ASSERT_EQUAL(E_Pending, STM_cyclic());
     test_com_receive_IgnoreAndReturn(0);
     time_getTime_IgnoreAndReturn(0);
     time_diffTime_ExpectAnyArgsAndReturn(-250L);
+    // Still pending even after "negative" response and nothing received, so pending SID has not been cleared.
     TEST_ASSERT_EQUAL(E_Pending, STM_cyclic());
     time_diffTime_ExpectAnyArgsAndReturn(10);
+    // Timeout.
     TEST_ASSERT_EQUAL(E_NotResponding, STM_cyclic());
 }
 
 void test_Cyclic_Pending_AnswerReceived() {
+    TEST_MESSAGE("Test the correct reception of a response after a response pending negative response has been received.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     uint8_t *expectedData = (uint8_t[]){SID_DiagnosticSessionControl, UDS_Session_Default, 0x00, 0x34, 0x00, 0x34};
     test_com_send_ExpectWithArrayAndReturn(expectedData, 6, 6, 6);
@@ -125,6 +170,7 @@ void test_Cyclic_Pending_AnswerReceived() {
 }
 
 void test_Switch_Session_Keep_Alive(void) {
+    TEST_MESSAGE("Testing the Keep Alive function for non-default sessions.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     STM_SetSession(UDS_Session_Extended, 100, 300);
     uint8_t expectedData[2] = { SID_TesterPresent, 0x80 };
@@ -137,6 +183,7 @@ void test_Switch_Session_Keep_Alive(void) {
     time_diffTime_ExpectAnyArgsAndReturn(2150L);
     test_com_send_ExpectAndReturn(expectedData, 2, 2);
     TEST_ASSERT_EQUAL(E_OK, STM_cyclic());
+    TEST_PASS_MESSAGE("This test has proven R05.");
 }
 
 void test_UnexpectedResponse() {
@@ -241,6 +288,7 @@ void test_StoppingPeriodicService() {
 }
 
 void test_SetSessionTiming(void) {
+    TEST_MESSAGE("Tests the setting of different timeout values.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     UDS_Session_t expected = (UDS_Session_t){UDS_Session_Default, 100, 1000};
     STM_SetSession(0, 100, 1000);
@@ -250,6 +298,7 @@ void test_SetSessionTiming(void) {
     TEST_ASSERT_EQUAL(expected.p2_star, session.p2_star);
 }
 void test_SetSessionExtended(void) {
+    TEST_MESSAGE("Tests the setting of a different Session.");
     STM_Init(&test_com, &test_timer, &test_security, (uint8_t * const)usr_rxBuffer, 4096);
     UDS_Session_t expected = (UDS_Session_t){UDS_Session_Extended, 50, 5000};
     STM_SetSession(UDS_Session_Extended, 50, 5000);

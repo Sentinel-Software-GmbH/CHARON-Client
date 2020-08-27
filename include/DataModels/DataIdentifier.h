@@ -15,17 +15,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- *  Created on: Wed Jul 29 2020
+ *  Created on: Fri Aug 21 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
  * @addtogroup DataModels
  * @{
- * @file
- * Includes a user friendly representation of the fixed values to adjust the speed.
- * 
- * Check ISO 14229-1 Table B.3 Page 335
+ * @file DataIdentifier.h
+ * Adds a representation of all ISO specified Data Identifier.
  *
  * $Id:  $
  * $URL:  $
@@ -34,8 +32,8 @@
  */
 /*****************************************************************************/
 
-#ifndef UDS_BAUD_RATE_H_
-#define UDS_BAUD_RATE_H_
+#ifndef UDS_DATA_IDENTIFIER_H_
+#define UDS_DATA_IDENTIFIER_H_
 
 /* Includes ******************************************************************/
 
@@ -45,28 +43,26 @@
 
 /* Types *********************************************************************/
 
-/** @brief ISO-specified fixed Baudrates.
- * Used to tell the UDS-Server at what speed the client wants to communicate.
+
+/* TODO: Insert all DIDs */
+/** @brief All ISO 14229-1 specified DIDs.
+ * @note Check ISO 14229-1 Table C.1
+ * @warning Only the Starting Address is defined, the Range of the DID can be found as Length under the notes of the documentation of the DID.
  */
-typedef enum UDS_Baudrate_public {
-    UDS_BAUDRATE_RESERVED = 0x00,           /**< ISO Reserved */
-    UDS_Baud_PC9600 = 0x01,                 /**< UART 9600 Bd */
-    UDS_Baud_PC19200 = 0x02,                /**< UART 19200 Bd */
-    UDS_Baud_PC38400 = 0x03,                /**< UART 38400 Bd */
-    UDS_Baud_PC57600 = 0x04,                /**< UART 57600 Bd*/
-    UDS_Baud_PC115200 = 0x05,               /**< UART 115200 Bd*/
-    UDS_Baud_CAN125000 = 0x10,              /**< CAN 0.125 MBd*/
-    UDS_Baud_CAN250000 = 0x11,              /**< CAN 0.25 MBd */
-    UDS_Baud_CAN500000 = 0x12,              /**< CAN 0.5 MBd */
-    UDS_Baud_CAN1000000 = 0x13,             /**< CAN 1.0 MBd */
-    UDS_Baud_ProgrammingSetup = 0x20,       /**< Vendor specific Programming Baudrate. */
-#ifndef DOXY_SKIP
-    _UDS_Baudrate_amount
-#endif
-} UDS_Baudrate_t;
+typedef enum DID_public {
+    /** @brief Remote addresses of all trailer systems independent of their functionality.
+     * @note Length of 0x0F
+     */
+    DID_networkConfigurationDataForTractorTrailerApplicationDataIdentifier = 0xF000,
+    /** @brief Reference the vehicle manufacturer specific ECU boot software identification record.
+     * @note Length of 0x01
+     */
+    DID_BootSoftwareIdentificationDataIdentifier = 0xF180,
+
+} UDS_DataIdentifier_t
 
 /* Interfaces ****************************************************************/
 
-#endif /* UDS_BAUD_RATE_H_ */
+#endif /* CHARON_TEMPLATE_H_ */
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

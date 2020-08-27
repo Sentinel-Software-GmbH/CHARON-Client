@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 ${Author}
  *
@@ -91,7 +91,7 @@ void test_readDataByIdentifier(void)
 void test_readMemoryByAddress(void)
 {
     TEST_MESSAGE("Testing the correct construction of a Read Memory by Address request.");
-    uint8_t *expectedMessage = (uint8_t[]){SID_ReadMemoryByAdress, /*4, 4 */ 0b01000100, 0x43, 0x21, 0x00, 0x10};
+    uint8_t *expectedMessage = (uint8_t[]){SID_ReadMemoryByAddress, /*4, 4 */ 0b01000100, 0x43, 0x21, 0x00, 0x10};
     MemoryDefinition_getAddressAndLengthFormatIdentifier_ExpectAndReturn(&memDef, 0x22);
     STM_Deploy_ExpectAndReturn(expectedMessage, 6, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();

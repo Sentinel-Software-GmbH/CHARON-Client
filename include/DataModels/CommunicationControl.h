@@ -1,7 +1,43 @@
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Wed Jul 29 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup DataModels
+ * @{
+ * @file CommunicationControl.h
+ * Includes a user friendly representation of the Communication Controls and Network Types.
+ * 
+ * Check ISO 14229-1 Chapter 9.5 Table 54
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
+
 #ifndef _UDS_COMMUNICATION_CONTROL_H_
 #define _UDS_COMMUNICATION_CONTROL_H_
 
-/** @brief How the Server should modify the @ref <tt>Communication Type</tt>
+/** @brief How the Server should modify the <tt>Communication Type</tt>
  * @note ISO 14229-1 Chapter 9.5
  */
 typedef enum CommunicationControlSubfunction_public {
@@ -13,7 +49,7 @@ typedef enum CommunicationControlSubfunction_public {
     UDS_ComCtrl_enableRxAndTxWithEnhancedAddressInformation = 0x05          /**< Enable RX and TX Channels while using vendor-specific Enhanced Address Information on the Server */
 } UDS_CommunicationControlSubfunction_t;
 
-/** Communication Type of the Server that should be modified
+/** @brief Communication Type of the Server that should be modified
  * @note ISO 14229-1 Chapter 9.5
  */
 typedef enum Com_public {

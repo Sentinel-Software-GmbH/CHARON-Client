@@ -1,12 +1,39 @@
-/****************************************************
- *  ComInterface.h                                         
- *  Created on: 16-Jul-2020 09:29:59                      
- *  Implementation of the Interface ComInterface       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * 
+ *  Created on: Tue Jul 28 2020
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup Interfaces
+ * @{
+ * @file ComInterface.h
+ * Includes the definition of a communication socket.
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
-#if !defined(EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_)
-#define EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_
+#ifndef UDS_COM_INTERFACE_H_
+#define UDS_COM_INTERFACE_H_
 
 
 #ifdef __cplusplus
@@ -59,7 +86,9 @@ typedef int32_t (*recvFunc)(uint8_t* buffer, uint32_t count);
  */
 typedef bool (*setSpeedFunc)(uint32_t speed);
 
-/** Provides Functions to communicate through the user implemented connection driver. */
+/** @brief Provides Functions to communicate through the user implemented connection driver.
+ * @req S03 Interface for Communication Sockets
+*/
 typedef struct ComInterface_public {
     /** @brief Takes a uds message starting at SID and send it to the server.
      * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).
@@ -76,8 +105,8 @@ typedef struct ComInterface_public {
      * 
      * This will get called any time a request is send.
      * 
-     * @note Implement the uds conform transport protocol here. Only write the complete A_DATA part into the buffer.
-     * @warning This needs to be NON-BLOCKING
+     * @warning This needs to be NON-BLOCKING.
+     * @note Implement the uds conform transport protocol here. Only write the complete A_DATA part into the buffer.  
      * Refer to @b ISO @b 14229-3,-4,-5,-6,-7 @c UDSon... Standard Documents.
      */
     recvFunc receive;
@@ -105,5 +134,5 @@ typedef struct ComInterface_public {
 #endif
 
 
-#endif /*!defined(EA_F8F6B55A_280A_47fe_A337_41AB995A9668__INCLUDED_)*/
+#endif /* UDS_COM_INTERFACE_H_ */
  

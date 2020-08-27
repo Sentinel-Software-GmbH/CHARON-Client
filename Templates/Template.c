@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 ${Author}
  *
@@ -16,12 +16,13 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /**
- * @addtogroup UDSClient
+ * @addtogroup UDS_Client
  * @{
  * @addtogroup ComLogic
  * @{
- * @file ${FileName}.c
- * Implementation of the Service and Session Control Module
+ * @file
+ * Brief Description.
+ * Detailed Description.
  *
  * $Id:  $
  * $URL:  $

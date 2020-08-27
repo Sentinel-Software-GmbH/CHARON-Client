@@ -1,4 +1,4 @@
-/**
+/*
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -20,11 +20,10 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup ComLogic
+ * @addtogroup Config
  * @{
- * @file $Filename$.h
- * Brief Description.
- * Detailed Description
+ * @file config.h
+ * Collection of all configurable variables of the client.
  *
  * $Id:  $
  * $URL:  $
@@ -43,44 +42,41 @@
 
 /* Timings *******************************************************************/
 
-/** The server has to answer the client within this timerange */
+/** @brief The server has to answer the client within this timerange */
 #define P2_DEFAULT              100U
-/** Extended server response timeout. */
+/** @brief Extended server response timeout. */
 #define P2_STAR_DEFAULT         300U
-/** Timeout of a non-default Session, where the Client needs to send a Tester Present Request. */
+/** @brief Timeout of a non-default Session, where the Client needs to send a Tester Present Request. */
 #define NON_DEFAULT_SESSION_TIMEOUT 2000U
 
 /* Constants *****************************************************************/
 
-/** Maximum amount of Asynchronous Messages in the receive buffer.
+/** @brief Maximum amount of Asynchronous Messages in the receive buffer.
  * @note Memory Size of one Async Buffer Entry is 1 Byte + sizeof(FunctionPointer)
  */
 #define MAX_ASYNC_MESSAGES      5U
 
-/** Vendor specific Baudrate of the programming setup */
+/** @brief Vendor specific Baudrate of the programming setup */
 #define PROGRAMMING_BAUD_RATE   9600U
 
 /* OS Plug Functions *********************************************************/
 
-/** Optional implementation of a mutex lock function. */
+/** @brief Optional implementation of a mutex lock function. */
 #define UDS_MUTEX_LOCK()
-/** Optional implementation of a mutex unlock function */
+/** @brief Optional implementation of a mutex unlock function */
 #define UDS_MUTEX_UNLOCK()
 
-/** Optional implementation of a logging functions in a info context */
+/** @brief Optional implementation of a logging functions in a info context */
 #define UDS_LOG_INFO(x, ...)
-/** Optional implementation of a logging functions in a warning context */
+/** @brief Optional implementation of a logging functions in a warning context */
 #define UDS_LOG_WARNING(x, ...)
-/** Optional implementation of a logging functions in a error context */
+/** @brief Optional implementation of a logging functions in a error context */
 #define UDS_LOG_ERROR(x, ...)
 
 /* Types *********************************************************************/
 
 /* Interfaces ****************************************************************/
 
-/** Utility functions to provide a string representation of an enumeration. */
-#define str(x) #x
-#define xstr(x) str(x)
 
 #endif /* UDS_CLIENT_CONFIG_H_ */
 

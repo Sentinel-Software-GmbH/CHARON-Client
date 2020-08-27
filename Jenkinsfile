@@ -30,8 +30,22 @@ pipeline {
                 )
             }
         }
+
+        stage ('post-build') {
+            steps {
+                parallel (
+                    "doxygen": {
+                        bat 'doxygen'
+                        
+                    }
+                )
+            }
+        }
     }
     post {
+        success {
+            archiveArtifacts 'build/documentation/html/Charon_UDS_Client.chm'
+        }
         failure {
             mail to: 'inacio.steven@sentinelsw.de', subject: 'Pipeline failed', body: "${env.BUILD_URL}"
         }

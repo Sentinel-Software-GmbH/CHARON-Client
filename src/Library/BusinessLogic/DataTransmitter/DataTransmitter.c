@@ -1,9 +1,34 @@
-/****************************************************
- *  DataTransmitter.c                                         
- *  Created on: 16-Jul-2020 09:29:59                      
- *  Implementation of the Class DataTransmitter       
- *  Original author: Steven Inacio                     
- ****************************************************/
+/*
+ *  Sentinel Software GmbH
+ *  Copyright (C) 2020 Steven Inácio
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+/**
+ * @addtogroup UDS_Client
+ * @{
+ * @addtogroup BusinessLogic
+ * @{
+ * @file DataTransmitter.c
+ * Implementation of the Service and Session Control Module
+ *
+ * $Id:  $
+ * $URL:  $
+ * @}
+ * @}
+ */
+/*****************************************************************************/
 
 /* Includes */
 
@@ -47,7 +72,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 {
 	uint32_t length = 2 + sourceMemory.AddressLength + sourceMemory.SizeLength;
 	uint8_t message[length];
-	message[0] = SID_ReadMemoryByAdress;
+	message[0] = SID_ReadMemoryByAddress;
 	message[1] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&sourceMemory);
 	memcpy(&message[2], sourceMemory.Address, sourceMemory.AddressLength);
 	memcpy(&message[2 + sourceMemory.AddressLength], sourceMemory.Size, sourceMemory.SizeLength);
@@ -55,7 +80,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 }
 
 /*
- * Very Complex. Might need the user to interpret the return values
+ * TODO: Very Complex. Might need the user to interpret the return values
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback)
 {
