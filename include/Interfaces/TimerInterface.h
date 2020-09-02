@@ -58,7 +58,7 @@ typedef int64_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 
 
 /** @brief A Class that represents the implementation of a System Timer.
- * @req S04
+ * @req S04 Define a Timer Interface
  */
 typedef struct TimerInterface_public {
     getTimeFunc getTime;

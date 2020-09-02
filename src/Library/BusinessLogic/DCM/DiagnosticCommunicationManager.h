@@ -53,12 +53,14 @@ extern "C" {
 #include <stdbool.h>
 
 /** @brief Switches Diagnostic Sessions on the server.
+ * @req R01 Request to control a diagnostic session.
  * @param session Session to change to.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
 bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback callback);
 
 /** @brief Forces server to perform a reset.
+ * @req R02 Force server to perform a reset.
  * @param resetType What kind of reset should be used.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
@@ -67,6 +69,7 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
 bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
 
 /** @brief Request security seed or send security answer.
+ * @req R03 Request to unlock a secured server.
  * @param function Uneven functions are used to request a seed, even functions are used to send the Key.
  * @param securityParameter Provides additional information to the server, or the security key to unlock the server.
  * @param parameterLength Size of the securityParameter in bytes.
@@ -77,6 +80,7 @@ bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
 bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, UDS_callback callback);
 
 /** @brief Control the communication on the server.
+ * @req R04 Request to switch on/off the transmission orreception of certain messages of a server.
  * @param comCtrl How to control the communication on the server.
  * @param communicationType What communication will be controlled.<br>@b NOTE: communicationType and subnet build one byte of bit-encoded data.
  * @param subnet The subnet to be controlled.<br>@b NOTE: communicationType and subnet build one byte of bit-encoded data.<br><table><tr><th>Value</th><th>Function</th></tr><tr><td>0x0</td><td>Disables the complete communicationType</td></tr><tr><td>0x1-0xE</td><td>Specific Subnets.</td></tr><tr><td>0xF</td><td>disables the subnet where the request was received on</td></tr></table>
@@ -91,6 +95,7 @@ bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl,
 bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback);
 
 /** @brief Stop or resume the updating of DTC status bits.
+ * @req R07 Perform data transmission with an extended data link security layer.
  * @param subfunction The DTC Control Type you want to use.
  * @param data List of DTCs or additional parameter for a vendor specific service.
  * @param length Size of the data parameter.
@@ -101,6 +106,7 @@ bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback c
 bool UDS_DCM_ControlDTCSetting(uint8_t subfunction, uint8_t *data, uint32_t length, UDS_callback callback);
 
 /** @brief Setup a response on a custom vendor specific event.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param event Event identifier of the custom event.
  * @param isPersistent Indicates if a requested event logic shall be
  * stored persistently till the event logic is explicitly cleared (via clearResponseOnEvent) or the event logic is overwritten.
@@ -118,6 +124,7 @@ bool UDS_DCM_ControlDTCSetting(uint8_t subfunction, uint8_t *data, uint32_t leng
 bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool isPersistent, uint8_t eventWindowTime, uint8_t* eventTypeRecord, uint8_t eventTypeRecordLength, uint8_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a DTC status change.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param isPersistent Indicates if a requested event logic shall be
  * stored persistently till the event logic is explicitly cleared (via clearResponseOnEvent) or the event logic is overwritten.
  * @param eventWindowTime 0x00-0x01 are ISO reserved, 0x02 is Infinite and 0x03-0x7F is manufacturer specific.
@@ -133,6 +140,7 @@ bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool isPersistent, uint8_t eve
 bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTime, uint8_t DTC_Status_Mask, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param isPersistent Indicates if a requested event logic shall be
  * stored persistently till the event logic is explicitly cleared (via clearResponseOnEvent) or the event logic is overwritten.
  * @param eventWindowTime 0x00-0x01 are ISO reserved, 0x02 is Infinite and 0x03-0x7F is manufacturer specific.
@@ -148,6 +156,7 @@ bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTim
 bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime, UDS_TimerRates_t timerRate, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param isPersistent Indicates if a requested event logic shall be
  * stored persistently till the event logic is explicitly cleared (via clearResponseOnEvent) or the event logic is overwritten.
  * @param eventWindowTime 0x00-0x01 are ISO reserved, 0x02 is Infinite and 0x03-0x7F is manufacturer specific.
@@ -163,6 +172,7 @@ bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime
 bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param isPersistent Indicates if a requested event logic shall be
  * stored persistently till the event logic is explicitly cleared (via clearResponseOnEvent) or the event logic is overwritten.
  * @param eventWindowTime 0x00-0x01 are ISO reserved, 0x02 is Infinite and 0x03-0x7F is manufacturer specific.
@@ -182,23 +192,28 @@ bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWi
  */
 bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, ComparisonLogic_t logic, uint32_t reference, uint8_t hysteresis, bool comparisonWithSign, uint8_t lengthOfDID, uint16_t DIDoffset, uint8_t serviceToRespondTo, uint16_t comparedDID, UDS_callback callback, UDS_callback response_callback);
 /** @brief Start the Execution of the set Response on Event Services.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
 bool UDS_DCM_StartResponseOnEvents(UDS_callback callback);
 /** @brief Stop the Execution of the set Response on Event Services.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
 bool UDS_DCM_StopResponseOnEvents(UDS_callback callback);
 /** @brief Clear all set Response on Event Services.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
 bool UDS_DCM_ClearResponseOnEvents(UDS_callback callback);
 /** @brief Receive a list of all set Response on Event Services.
+ * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
 bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback);
 
 /** @brief Control the Communication Link Speed with ISO specified values.
+ * @req R10 Request control of the communication baudrate.
  * @param linkControlMode Specified Baudrate to be set up.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
@@ -207,6 +222,7 @@ bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback);
 bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_callback callback);
 
 /** @brief Control the Communication Link Speed with user specified values.
+ * @req R10 Request control of the communication baudrate.
  * @param modeParameter User specified connection speed.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.

@@ -57,6 +57,8 @@
 
 /** Sends a Request to Transfer Data from the client to the server.
  * This puts the server into Data Transmission mode.
+ * 
+ * @req R22 Request the negotiation of a data transfer from the client to the server.
  * @note After a positive Response the User needs to call UDS_UPDOWN_Download() as many times as needed with the maxNumberOfBlockLength that was in the response message of the server.
  * After the Transfer has finished a UDS_UPDOWN_ExitTransfer() request needs to be sent to the server to release it from the Data Transmission Mode. 
  * 
@@ -70,6 +72,7 @@
 bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
 
 /** Send data to the server.
+ * @req R24 transmit data to the server.
  * @param blockSequenceCounter Similiar to the TCP Sequence Number. If the block was successfully transmitted this number will increase by 1, else it indicates that the last block needs to be send again. It wraps around 0xFF to 0x00.
  * @param data Pointer to the data that needs to be sent to the server.
  * @param dataSize Size of the data. <br>@b WARNING: dataSize must always be less than or equal to (maxNumberOfBlockLength - 2).
@@ -82,6 +85,7 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
 
 /** Sends a Request to Transfer Data from the server to the client.
  * This puts the server into Data Transmission mode.
+ * @req R23 Request the negotiation of a data transfer from the server to the client.
  * @note After a positive Response the user needs to call UDS_UPDOWN_Upload() as many times as needed with the maxNumberOfBlockLength that was in the positive response message of the server.
  * After the Transfer has finished a UDS_UPDOWN_ExitTransfer() request need to be sent ot the server to releaseit from the Data Transmission Mode.
  * 
@@ -95,6 +99,7 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
 bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
 
 /** Receives data from the server.
+ * @req R24 Request data from the server.
  * @param blockSequenceCounter Similiar to the TCP Sequence Number. If the block was successfully transmitted this number will increase by 1, else it indicates that the last block needs to be send again. It wraps around 0xFF to 0x00.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
@@ -103,6 +108,7 @@ bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMetho
 bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback);
 
 /** Releases the Server from Data Transmission Mode.
+ * @req R25 Request the termination of a data transfer.
  * @param vendorSpecificServiceParameter Vendor specific parameters to support the transfer of data.
  * @param lengthOfParameter Size of the vendorSpecificServiceParameter data.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
@@ -113,6 +119,7 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
 
 /** Sends a Request to add a file on the server's file system.
  * This puts the server into Data Transmission Mode.
+ * @req R26 Request the negotiation of a file transfer.
  * @note After this you need to send the file contents with UDS_UPDOWN_Download() and conclude the Transfer with UDS_UPDOWN_ExitTransfer()
  * @param pathLength Number of characters inside the pathLength.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
@@ -129,6 +136,7 @@ bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMeth
 
 /** Deletes a file from the server's filesystem.
  * This does NOT put the server into data transmission mode.
+ * @req R26 Request the negotiation of a file transfer.
  * @param pathLength Number of characters inside the path.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
  */
@@ -136,6 +144,7 @@ bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path);
 
 /** Reads out content from a file on the server's filesystem.
  * This puts the server into data transmission mode.
+ * @req R26 Request the negotiation of a file transfer.
  * @param pathLength Number of characters inside the path.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
  * @param compressionMethod Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
@@ -148,6 +157,7 @@ bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMet
 
 /**
  * Reads out the contents of a complete folder on the server's filesystem.
+ * @req R26 Request the negotiation of a file transfer.
  * @param pathLength Number of characters inside the path.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
