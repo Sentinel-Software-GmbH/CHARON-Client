@@ -333,11 +333,11 @@ bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callb
 }
 
 // TODO: SecuredDataTransmission einstellen
-bool activateSecuredDataTransmission() {
+bool UDS_DCM_activateSecuredDataTransmission() {
 	
 }
 
-bool deactivateSecuredDataTransmission() {
+bool UDS_DCM_deactivateSecuredDataTransmission() {
 	
 }
 

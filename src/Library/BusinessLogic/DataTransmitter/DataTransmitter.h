@@ -47,6 +47,7 @@ extern "C" {
 #include <stdbool.h>
 
 /** @brief Read out the value of a Data Identifier.
+ * @req R11 Request to Read current value of a record identified by a provided data identifier.
  * 
  * @param dataIdentifier List of DIDs you want to read out.
  * @param length Amount of entries in the list of DIDs.
@@ -55,13 +56,14 @@ extern "C" {
 bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
 
 /** @brief Read out the values at the specified memory address
+ * @req R12 Request to read the current value of the provided memory range.
  * 
  * @param sourceMemory The address and size of the data in the servers memory.
  * @param callback Callback that gets executed when the service has finished.
  */
 bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
 /** @brief Read out the scaling data pointed at by the specified DataIdentifier.
- * 
+ * @req R13 request to read the scaling information of a record identified by a provided data identifier.
  * @todo Very Complex. Might need the user to interpret the return values or provide a function to decrypt the return value.
  * 
  * @param dataIdentifier Data identifier of the scaling data.
@@ -69,7 +71,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
 /** @brief Set up a periodic polling of the specified DIDs at a fixed speed defined by the server.
- * 
+ * @req R14 Request to schedule data in the server for periodic transmission.
  * @note When you set up too many DIDs the server might not be able to respond at its fixed speed.
  * Check ISO 14229-1 Chapter 10.5 for an explanation.
  * 
@@ -90,7 +92,7 @@ bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint
  */ 
 bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
 /** @brief Dynamically define a DataIdentifier.
- * If Both Lengths are 0, the Identifier will be cleared.
+ * @req R15 Request to dynamically define data identifiers.
  * 
  * @param definedDataIdentifier Used to define a new DID.
  * @param SourceDataDefinitions Array of source DIDs, can be NULL.
@@ -100,6 +102,7 @@ bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8
 bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback);
 
 /** @brief Use a memory adress to define a new data identifier or add to an existing one.
+ * @req R15 Request to dynamically define data identifiers.
  * @param definedDataIdentifier The dataidentifier to be changed.
  * @param SourceMemoryDefinitions A list of memory spaces to be added to the new DID.
  * @param SourceMemoryLength Size of the memory definition list.
@@ -118,6 +121,7 @@ bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDa
 bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback);
 
 /** @brief Write some data to a dataIdentifier.
+ * @req R16 Request to write a record specified by a data identifier.
  * @param dataIdentifier Data identifier to write to.
  * @param writeBuffer A buffer of data to be written to the data identifier.
  * @param bufferLength Size of the writeBuffer in bytes.
@@ -128,6 +132,7 @@ bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier,
 bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 /** @brief Write some data to a memory address.
+ * @req R17 Request to overwrite a provided memory range.
  * @param targetMemory Memory adress the data needs to be written to.
  * @param writeBuffer A buffer of data to be written to the data identifier.
  * @param bufferLength Size of the writeBuffer in bytes.
