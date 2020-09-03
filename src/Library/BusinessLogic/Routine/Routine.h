@@ -42,8 +42,32 @@ extern "C" {
 #include <stdbool.h>
 #include "Interfaces/CallbackInterface.h"
 
+/** @brief Start routine in the server.
+ * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
+ * @param routineControlOptionRecord Routine entry option parameters, which optionally specify start conditions of the routine.
+ * @param routineControlOptionsLength Size in bytes of the routineControlOptionRecord.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+
+/** @brief Stop routine in the server.
+ * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
+ * @param routineControlOptionRecord Routine exit option parameters, which optionally specify stop conditions of the routine.
+ * @param routineControlOptionsLength Size in bytes of the routineControlOptionRecord.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+
+/** @brief Request the Routine Results.
+ * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
 bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback);
 
 #ifdef __cplusplus
