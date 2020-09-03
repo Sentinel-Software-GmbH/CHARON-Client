@@ -39,9 +39,12 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "Interfaces/CallbackInterface.h"
 
-void UDS_ROUTINE_routineControl(uint8_t routineCommand, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint8_t routineControlOptionsLength);
-
+bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback);
 
 #ifdef __cplusplus
 }

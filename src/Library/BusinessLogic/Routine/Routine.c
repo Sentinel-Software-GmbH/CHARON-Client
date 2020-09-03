@@ -29,10 +29,43 @@
  * @}
  */
 
+/* INCLUDE */
+
+#include <string.h>
 #include "Routine.h"
+#include "DataModels/SID.h"
+#include "ComLogic/SessionAndTransportManager.h"
 
-void UDS_ROUTINE_routineControl(uint8_t routineCommand, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint8_t routineControlOptionsLength)
+/* Private Function Definitions */
+
+bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+
+/* Interface Functions */
+
+bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
-	
-} 
+    return commonRoutine(0x01, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
+}
+bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+{
+    return commonRoutine(0x02, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
+}
+bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback)
+{
+    return commonRoutine(0x03, routineIdentifier, NULL, 0, callback);
+}
 
+/* Private Functions */
+
+bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+{
+    uint8_t message[4 + routineControlOptionsLength];
+    message[0] = SID_RoutineControl;
+    message[1] = command;
+    message[2] = routineIdentifier >> 8;
+    message[3] = routineIdentifier;
+    if (routineControlOptionsLength > 0) {
+        memcpy(&message[4], routineControlOptionRecord, routineControlOptionsLength);
+    }
+    return STM_Deploy(message, 4 + routineControlOptionsLength, callback, false);
+}
