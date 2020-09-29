@@ -38,7 +38,7 @@
 
 /* Private Function Definitions */
 
-bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
 
 /* Interface Functions */
 
@@ -57,7 +57,7 @@ bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback 
 
 /* Private Functions */
 
-bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
     uint8_t message[4 + routineControlOptionsLength];
     message[0] = SID_RoutineControl;
