@@ -40,7 +40,7 @@ extern "C" {
 #endif
 
 #include "config.h"
-
+#include "compiler.h"
 #include "DataModels/ErrorCode.h"
 #include "DataModels/Session.h"
 #include "DataModels/MemoryDefinition.h"
@@ -65,12 +65,12 @@ extern "C" {
  * @param security An already initialized implementation of the Security Layer Interface.
  * @param rxBuffer Pointer to the rxBuffer provided by the user.
  */
-void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
+public void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength);
 
 /** @brief Cyclic Task that receives Messages and handles KeepAlives.
  * @returns The last error code that has occured. See @ref UDS_Client_Error_t.
  */ 
-UDS_Client_Error_t UDS_Client_Task(void);
+public UDS_Client_Error_t UDS_Client_Task(void);
 
 #include "BusinessLogic/DataTransmitter/DataTransmitter.h"
 #include "BusinessLogic/DCM/DiagnosticCommunicationManager.h"
