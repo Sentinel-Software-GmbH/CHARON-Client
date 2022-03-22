@@ -40,9 +40,50 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "Interfaces/CallbackInterface.h"
 
-void UDS_IO_InputOutputControlByIdentifier(uint16_t dataIdentifier, uint8_t inputOutputControlParameter, uint8_t* controlStates, uint8_t controlStatesLength, uint8_t* controlMasks, uint8_t controlMasksLength);
+/** @brief Return the Control of an IO DataIdentifier back to the ECU
+ * @req R21 Request to Control IO of the server.
+ * @param dataIdentifier A data identifier that references an in- or output value.
+ * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
+ * @param controlMaskLength Length of the Control Mask list.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
+/** @brief Return the IO DataIdentifier back to it's default Values.
+ * @req R21 Request to Control IO of the server.
+ * @param dataIdentifier A data identifier that references an in- or output value.
+ * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
+ * @param controlMaskLength Length of the Control Mask list.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+
+/** @brief Freeze the current state of an io data identifier.
+ * @req R21 Request to Control IO of the server.
+ * @param dataIdentifier A data identifier that references an in- or output value.
+ * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
+ * @param controlMaskLength Length of the Control Mask list.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+
+/** @brief Adjust the io data identifier data.
+ * @req R21 Request to Control IO of the server.
+ * @param dataIdentifier A data identifier that references an in- or output value.
+ * @param adjustedData A Bytearray of the adjusted data behind a data identifier reference you want to change.
+ * @param adjustedDataLength Length of the adjustedData byte array.
+ * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
+ * @param controlMaskLength Length of the Control Mask list.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, uint32_t adjustedDataLength, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 #ifdef __cplusplus
 }
