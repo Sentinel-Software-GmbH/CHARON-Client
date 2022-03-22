@@ -48,6 +48,7 @@ extern "C" {
  * @param dataIdentifier A data identifier that references an in- or output value.
  * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
  * @param controlMaskLength Length of the Control Mask list.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
@@ -58,6 +59,7 @@ bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, ui
  * @param dataIdentifier A data identifier that references an in- or output value.
  * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
  * @param controlMaskLength Length of the Control Mask list.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
@@ -68,6 +70,7 @@ bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32
  * @param dataIdentifier A data identifier that references an in- or output value.
  * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
  * @param controlMaskLength Length of the Control Mask list.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
@@ -80,6 +83,7 @@ bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, ui
  * @param adjustedDataLength Length of the adjustedData byte array.
  * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
  * @param controlMaskLength Length of the Control Mask list.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
