@@ -36,7 +36,7 @@
 
 
 /* Private Function Definitions */
-bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /* Interface Functions */
 
@@ -73,7 +73,7 @@ bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, 
 
 /* Private Functions */
 
-bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
     uint8_t message[4 + controlMaskLength];
     message[0] = SID_InputOutputControlByIdentifier;
