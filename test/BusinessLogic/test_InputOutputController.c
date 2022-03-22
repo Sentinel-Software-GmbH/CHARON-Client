@@ -52,7 +52,7 @@ void test_ReturnControlToECU(void) {
     STM_Deploy_ExpectAndReturn(expectedData, 5, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_TRUE(UDS_IO_ReturnControlToECU(0x1234, (uint8_t[]){0xFF}, 1, NULL));
-    TEST_PASS_MESSAGE("This proves R21.");
+    TEST_PASS_MESSAGE("This proves R20.");
 }
 
 void test_ResetToDefault(void) {
@@ -61,7 +61,7 @@ void test_ResetToDefault(void) {
     STM_Deploy_ExpectAndReturn(expectedData, 4, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_TRUE(UDS_IO_ResetToDefault(0x1234, NULL, 0, NULL));
-    TEST_PASS_MESSAGE("This proves R21.");
+    TEST_PASS_MESSAGE("This proves R20.");
 }
 
 void test_FreezeCurrentState(void) {
@@ -70,7 +70,7 @@ void test_FreezeCurrentState(void) {
     STM_Deploy_ExpectAndReturn(expectedData, 10, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_TRUE(UDS_IO_FreezeCurrentState(0x1234, (uint8_t[]) {0xFF, 0xAA, 0xFF, 0xAA, 0xFF, 0xAA}, 6, NULL));
-    TEST_PASS_MESSAGE("This proves R21.");
+    TEST_PASS_MESSAGE("This proves R20.");
 }
 
 void test_ShortTermAdjustments(void) {
@@ -79,7 +79,7 @@ void test_ShortTermAdjustments(void) {
     STM_Deploy_ExpectAndReturn(expectedData, 12, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
     TEST_ASSERT_TRUE(UDS_IO_ShortTermAdjustment(0x1234, (uint8_t[]) {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88}, 8, NULL, 0, NULL));
-    TEST_PASS_MESSAGE("This proves R21.");
+    TEST_PASS_MESSAGE("This proves R20.");
 }
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
