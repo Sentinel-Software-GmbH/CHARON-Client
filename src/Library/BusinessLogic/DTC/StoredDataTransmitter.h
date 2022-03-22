@@ -40,13 +40,144 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "Interfaces/CallbackInterface.h"
 
-void clearDiagnosticInformation(uint32_t groupOfDTC);
-/*
- * Divide by MANY subfunctions
+/** @brief Clear the DTCs of a given Group of DTCs
+ * @req R18 Clear diagnostic information from server.
+ * @param groupOfDTC 3-byte value indicating the group of DTCs to be cleared.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-void readDTCInformation();
+bool UDS_DTC_ClearDiagnosticInformation(uint32_t groupOfDTC, UDS_callback callback);
 
+/** @brief Retrieve the number of DTCs matchjing a client defined DTC status mask.
+ * @param DTCStatusMask StatusMask to be matched.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportNumberOfDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+
+/** @brief Retrieve the list of all DTCs matching a client defined DTC status mask.
+ * @param DTCStatusMask status mask to be matched.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+
+/** @brief Retrieve all captured DTCSnapshot data records.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCSnapshotIdentification(UDS_callback callback);
+
+/** @brief Retrieve captured DTCSnapshot record data for a client defined DTCMaskRecord in conjunction with a DRCSnapshot.
+ * @param DTCMaskRecord The server will search though it's supported DTCs for an exact match.
+ * @param DTCSnapshotRecordNumber Specifies a particular occurrence of the specified DTC.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCSnapshotRecordByDTCNumber(uint32_t DTCMaskRecord, uint8_t DTCSnapshotRecordNumber, UDS_callback callback);
+
+/** @brief Retrieve captured DTCStoreData record data for a DTCStoredDataRecordNumber.
+ * @param DTCStoredDataRecordNumber Data record number to be searched for.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCStoredDataByRecordNumber(uint8_t DTCStoredDataRecordNumber, UDS_callback callback);
+
+/** @brief Request a DTC Extended Data Record with matching DTCNumber.
+ * @param DTCMaskRecord The server will search though it's supported DTCs for an exact match.
+ * @param DTCExtDataRecordNumber Specify a particular DTCExtendedData record of the specified DTC for which DTCExtendedData is being requested.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCExtDataRecordByDTCNumber(uint32_t DTCMaskRecord, uint8_t DTCExtDataRecordNumber, UDS_callback callback);
+
+/** @brief Check ISO 14229-1 Chapter 11.3.1.8
+ * @param DTCSeverityMask Will be AND-ed with the DTCStatusMask. Every DTC Match will increase the counter.
+ * @param DTCStatusMask Will be AND-ed with the DTCSeverityMask. Every DTC Match will increase the counter.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */ 
+bool UDS_DTC_ReportNumberOfDTCBySeverityMaskRecord(uint8_t DTCSeverityMask, uint8_t DTCStatusMask, UDS_callback callback);
+
+/** @brief Request a list of DTCs that fulfill the function DTC == (DTCSeverityMask & DTCStatusMask)
+ * @param DTCSeverityMask Will be AND-ed with the DTCStatusMask.
+ * @param DTCStatusMask Will be AND-ed with the DTCSeverityMask.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportDTCBySeverityMaskRecord(uint8_t DTCSeverityMask, uint8_t DTCStatusMask, UDS_callback callback);
+
+/** @brief Request the severity and functional unit information for an exact match with the DTCMaskRecord.
+ * @param DTCMaskRecord The server will search though it's supported DTCs for an exact match.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportSeverityInformationOfDTC(uint32_t DTCMaskRecord, UDS_callback callback);
+
+/** @brief A client requests the status of all DTCs supported by the server. 
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportSupportedDTC(UDS_callback callback);
+
+/** @brief Request the first failed DTC from the server. 
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportFirstTestFailedDTC(UDS_callback callback);
+
+/** @brief Request the first confirmed DTC from the server. 
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
+ * @returns An Indicator for the successful deployment of the message.
+ * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
+ */
+bool UDS_DTC_ReportFirstConfirmedDTC(UDS_callback callback);
+// TODO: Do the docu for the rest of the stuffs.
+/* 0x0D */
+bool UDS_DTC_ReportMostRecentTestFailedDTC(UDS_callback callback);
+/* 0x0E */
+bool UDS_DTC_ReportMostRecentConfirmedDTC(UDS_callback callback);
+/* 0x0F */
+bool UDS_DTC_ReportMirrorMemoryDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+/* 0x10 */
+bool UDS_DTC_ReportMirrorMemoryDTCExtDataRecordByDTCNumber(uint32_t DTCMaskRecord, uint8_t DTCExtDataRecordNumber, UDS_callback callback);
+/* 0x11 */
+bool UDS_DTC_ReportNumberOfMirrorMemoryDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+/* 0x12 */
+bool UDS_DTC_ReportNumberOfEmissionsOBDDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+/* 0x13 */
+bool UDS_DTC_ReportEmissionsOBDDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback);
+/* 0x14 */
+bool UDS_DTC_ReportDTCFaultDetectionCounter(UDS_callback callback);
+/* 0x15 */
+bool UDS_DTC_ReportDTCWithPermanentStatus(UDS_callback callback);
+/* 0x16 */
+bool UDS_DTC_ReportDTCExtDataRecordByRecordNumber(uint8_t DTCExtDataRecordNumber, UDS_callback callback);
+/* 0x17 */
+bool UDS_DTC_ReportUserDefMemoryDTCByStatusMask(uint8_t DTCStatusMask, uint8_t MemorySelection, UDS_callback callback);
+/* 0x18 */
+bool UDS_DTC_ReportUserDefMemoryDTCSnapshotRecordByDTCNumber(uint32_t DTCMaskRecord, uint8_t DTCSnapshotRecordNumber, uint8_t MemorySelection, UDS_callback callback);
+/* 0x19 */
+bool UDS_DTC_ReportUserDefMemoryDTCExtDataRecordByDTCNumber(uint32_t DTCMaskRecord, uint8_t DTCExtDataRecordNumber, uint8_t MemorySelection, UDS_callback callback);
+/* 0x42 */
+bool UDS_DTC_ReportWWHOBDDTCByMaskRecord(uint8_t FunctionalGroupIdentifier, uint8_t DTCStatusMask, uint8_t DTCSeverityMask, UDS_callback callback);
+/* 0x55 */
+bool UDS_DTC_ReportWWHOBDDTCWithPermanentStatus(uint8_t FunctionalGroupIdentifier, UDS_callback callback);
 
 #ifdef __cplusplus
 }
