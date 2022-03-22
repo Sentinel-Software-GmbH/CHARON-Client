@@ -39,6 +39,7 @@
 extern "C" {
 #endif
 
+#include "compiler.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "Interfaces/CallbackInterface.h"
@@ -52,7 +53,7 @@ extern "C" {
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+public bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /** @brief Return the IO DataIdentifier back to it's default Values.
  * @req R20 Request to Control IO of the server.
@@ -63,7 +64,7 @@ bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, ui
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+public bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /** @brief Freeze the current state of an io data identifier.
  * @req R20 Request to Control IO of the server.
@@ -74,7 +75,7 @@ bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+public bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /** @brief Adjust the io data identifier data.
  * @req R20 Request to Control IO of the server.
@@ -87,7 +88,7 @@ bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, ui
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, uint32_t adjustedDataLength, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+public bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, uint32_t adjustedDataLength, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 #ifdef __cplusplus
 }
