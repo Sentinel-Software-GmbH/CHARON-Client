@@ -30,9 +30,58 @@
  */
 
 #include "InputOutputController.h"
+#include "DataModels/SID.h"
+#include "string.h"
+#include "ComLogic/SessionAndTransportManager.h"
 
-void UDS_IO_InputOutputControlByIdentifier(uint16_t dataIdentifier, uint8_t inputOutputControlParameter, uint8_t* controlStates, uint8_t controlStatesLength, uint8_t* controlMasks, uint8_t controlMasksLength)
+
+/* Private Function Definitions */
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+
+/* Interface Functions */
+
+bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-	
-} 
+    return commonControl(0x00, dataIdentifier, controlMask, controlMaskLength, callback);
+}
 
+bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+{
+    return commonControl(0x01, dataIdentifier, controlMask, controlMaskLength, callback);
+}
+
+bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+{
+    return commonControl(0x02, dataIdentifier, controlMask, controlMaskLength, callback);
+}
+
+bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, uint32_t adjustedDataLength, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+{
+    uint8_t message[4 + adjustedDataLength + controlMaskLength];
+    message[0] = SID_InputOutputControlByIdentifier;
+    message[1] = dataIdentifier >> 8;
+    message[2] = dataIdentifier;
+    message[3] = 0x03;
+    if (adjustedDataLength > 0) {
+        memcpy(&message[4], adjustedData, adjustedDataLength);
+    }
+    if (controlMaskLength > 0) {
+        memcpy(&message[4 + adjustedDataLength], controlMask, controlMaskLength);
+    }
+    return STM_Deploy(message, 4 + adjustedDataLength + controlMaskLength, callback, false);
+}
+
+/* Private Functions */
+
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+{
+    uint8_t message[4 + controlMaskLength];
+    message[0] = SID_InputOutputControlByIdentifier;
+    message[1] = dataIdentifier >> 8;
+    message[2] = dataIdentifier;
+    message[3] = command;
+    if (controlMaskLength > 0) {
+        memcpy(&message[4], controlMask, controlMaskLength);
+    }
+    return STM_Deploy(message, 4 + controlMaskLength, callback, false);
+}
