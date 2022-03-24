@@ -76,6 +76,8 @@ public bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_call
  * @note When you set up too many DIDs the server might not be able to respond at its fixed speed.
  * Check ISO 14229-1 Chapter 10.5 for an explanation.
  * 
+ * @TODO: rename to UDS_DT_read[...]
+ * 
  * @param transmissionMode Slow/Medium/Fast Rate at which the data will be read.
  * @param periodicDataIdentifiers A List of DIDs to set up for periodic polling.<br>
  * Periodic DIDs only have 8-bit length, because only 0xF2XX DIDs can be polled periodically.

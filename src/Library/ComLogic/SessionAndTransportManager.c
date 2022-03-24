@@ -215,16 +215,16 @@ UDS_Client_Error_t STM_cyclic(void)
         }
         else
         {
-            SID_t sid = rx[0];
+            SID_t sid = (SID_t)rx[0];
             int8_t idx;
             if (sid == SID_NEGATIVE_RESPONSE)
             {
                 retVal = E_NegativeResponse;
-                sid = rx[1];
+                sid = (SID_t)rx[1];
             }
             else
             {
-                sid -= 0x40;
+                sid = (SID_t)(((uint8_t) sid) - 0x40);
             }
             if (secured_transmit)
             {
@@ -351,11 +351,13 @@ UDS_Client_Error_t handlePositiveResponse(int32_t readBytes)
     if (!startingPService)
         resetPendingObject();
     startingPService = stoppingPService = false;
+    return E_OK;
 }
 
 bool send(uint8_t *buffer, uint32_t length)
 {
-    int32_t sentBytes = 0, currentRetVal = 0;
+    uint32_t sentBytes = 0;
+    int32_t  currentRetVal = 0;
     do
     {
         currentRetVal = s_com->send(&buffer[sentBytes], length - sentBytes);
@@ -380,11 +382,13 @@ int32_t receive(uint8_t *buffer, uint32_t length)
 
 bool KeepAlive()
 {
+    uint8_t keepAlive[2] = {SID_TesterPresent, 0x00 | SUPPRESS_BIT};
     UDS_MUTEX_LOCK();
     if (diffNow(KeepAlivelastSend) >= session_timeout)
     {
         UDS_LOG_INFO("Sending KeepAlive.");
-        if (send((uint8_t[]){SID_TesterPresent, 0x00 | SUPPRESS_BIT}, 2))
+
+        if (send(keepAlive, 2))
         {
             KeepAlivelastSend = s_timer->getTime();
             UDS_LOG_INFO("New Timeout: %u", KeepAlivelastSend);

@@ -15,28 +15,29 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-/**
- * @addtogroup UDS_Client
- * @{
- * @addtogroup BusinessLogic
- * @{
- * @file DataTransmitter.c
- * Implementation of the Service and Session Control Module
- *
- * $Id:  $
- * $URL:  $
- * @}
- * @}
- */
-/*****************************************************************************/
+ /**
+  * @addtogroup UDS_Client
+  * @{
+  * @addtogroup BusinessLogic
+  * @{
+  * @file DataTransmitter.c
+  * Implementation of the Service and Session Control Module
+  *
+  * $Id:  $
+  * $URL:  $
+  * @}
+  * @}
+  */
+  /*****************************************************************************/
 
-/* Includes */
+  /* Includes */
 
 #include "DataTransmitter.h"
 #include "ComLogic/SessionAndTransportManager.h"
 #include "DataModels/SID.h"
 #include <stdint.h>
 #include <string.h>
+#include "config.h"
 
 /* Types */
 
@@ -44,9 +45,13 @@
 
 /* Variables */
 
-static uint8_t *periodicDID;
+static uint8_t* periodicDID;
 static uint32_t periodicDIDlength = 0;
 UDS_callback user_callback = NULL;
+
+#if USE_STATIC_BUFFER==1
+static uint8_t message[STATIC_BUFFER_SIZE];
+#endif
 
 /* Private Function Definitions */
 
@@ -56,9 +61,18 @@ static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t le
 
 /* Interfaces */
 
-bool UDS_DT_readDataByIdentifier(uint16_t *dataIdentifier, uint8_t length, UDS_callback callback)
+bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback)
 {
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[1 + length * 2];
+#else
+	if (1 + length * 2 > STATIC_BUFFER_SIZE) {
+		if (callback != NULL) {
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_ReadDataByIdentifier;
 	for (uint16_t i = 0; i < length; i++)
 	{
@@ -71,7 +85,16 @@ bool UDS_DT_readDataByIdentifier(uint16_t *dataIdentifier, uint8_t length, UDS_c
 bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback)
 {
 	uint32_t length = 2 + sourceMemory.AddressLength + sourceMemory.SizeLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL) {
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_ReadMemoryByAddress;
 	message[1] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&sourceMemory);
 	memcpy(&message[2], sourceMemory.Address, sourceMemory.AddressLength);
@@ -84,13 +107,24 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback)
 {
-	uint8_t message[] = {SID_ReadScalingDataByIdentifier, (dataIdentifier >> 8) & 0xFF, dataIdentifier & 0xFF};
+	uint8_t message[] = { SID_ReadScalingDataByIdentifier, (uint8_t)((dataIdentifier >> 8) & 0xFF), (uint8_t)(dataIdentifier & 0xFF) };
 	return STM_Deploy(message, 3, callback, false);
 }
 
-bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t *periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback)
+bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback)
 {
+#if USE_STATIC_BUFFER==0
 	uint8_t message[2 + periodicDataIdLength];
+#else
+	if (2 + periodicDataIdLength > STATIC_BUFFER_SIZE)
+	{
+		if (callback != NULL)
+		{
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_ReadDataByPeriodicIdentifier;
 	message[1] = transmissionMode;
 	memcpy(&message[2], periodicDataIdentifiers, periodicDataIdLength);
@@ -99,10 +133,21 @@ bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint
 	return retVal;
 }
 
-bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t *periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback)
+bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback)
 {
-	if(periodicDataIdsLength == 0) return false;
+	if (periodicDataIdsLength == 0) return false;
+#if USE_STATIC_BUFFER==0
 	uint8_t message[2 + periodicDataIdsLength];
+#else
+	if (2 + periodicDataIdsLength > STATIC_BUFFER_SIZE)
+	{
+		if (callback != NULL)
+		{
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_ReadDataByPeriodicIdentifier;
 	message[1] = 0x04;
 	periodicDID = periodicDataIdentifiers;
@@ -112,39 +157,61 @@ bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t *periodicDataIdentifiers, uint8
 	return STM_Deploy(message, 2 + periodicDataIdsLength, DT_StopCallback, false);
 }
 
-bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback)
+bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition* SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback)
 {
 	if (SourceDataDefinitionsLength == 0) return false;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[4 + 4 * SourceDataDefinitionsLength];
+#else
+	if (4 + 4 * SourceDataDefinitionsLength > STATIC_BUFFER_SIZE)
+	{
+		if (callback != NULL)
+		{
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_DynamicallyDefineDataIdentifier;
 	message[1] = 0x01;
-	message[2] = definedDataIdentifier >> 8;
-	message[3] = definedDataIdentifier;
+	message[2] = (uint8_t)(definedDataIdentifier >> 8);
+	message[3] = (uint8_t)(definedDataIdentifier);
 	for (uint32_t i = 0; i < SourceDataDefinitionsLength; i++)
 	{
-		message[4 + i * 4] = SourceDataDefinitions[i].DID >> 8;
-		message[5 + i * 4] = SourceDataDefinitions[i].DID;
+		message[4 + i * 4] = (uint8_t)(SourceDataDefinitions[i].DID >> 8);
+		message[5 + i * 4] = (uint8_t)(SourceDataDefinitions[i].DID);
 		message[6 + i * 4] = SourceDataDefinitions[i].firstBytePosition;
 		message[7 + i * 4] = SourceDataDefinitions[i].memorySize;
 	}
 	return STM_Deploy(message, 4 + 4 * SourceDataDefinitionsLength, callback, false);
 }
 
-bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback)
+bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition* SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback)
 {
-	if(SourceMemoryLength == 0) return false;
+	if (SourceMemoryLength == 0) return false;
 	uint8_t addressLength = SourceMemoryDefinitions[0].AddressLength;
 	uint8_t memoryLength = SourceMemoryDefinitions[0].SizeLength;
 	uint32_t length = 5 + (addressLength + memoryLength) * SourceMemoryLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE)
+	{
+		if (callback != NULL)
+		{
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_DynamicallyDefineDataIdentifier;
 	message[1] = 0x02;
-	message[2] = definedDataIdentifier >> 8;
-	message[3] = definedDataIdentifier;
+	message[2] = (uint8_t)(definedDataIdentifier >> 8);
+	message[3] = (uint8_t)(definedDataIdentifier);
 	message[4] = MemoryDefinition_getAddressAndLengthFormatIdentifier(SourceMemoryDefinitions);
-	for(uint32_t i = 0; i < SourceMemoryLength; i++) {
-		memcpy(&message[5+i*(addressLength * memoryLength)], SourceMemoryDefinitions[i].Address, addressLength);
-		memcpy(&message[5+i*(addressLength * memoryLength) + addressLength], SourceMemoryDefinitions[i].Size, memoryLength);
+	for (uint32_t i = 0; i < SourceMemoryLength; i++) {
+		memcpy(&message[5 + i * (addressLength * memoryLength)], SourceMemoryDefinitions[i].Address, addressLength);
+		memcpy(&message[5 + i * (addressLength * memoryLength) + addressLength], SourceMemoryDefinitions[i].Size, memoryLength);
 	}
 	return STM_Deploy(message, length, callback, false);
 }
@@ -154,26 +221,44 @@ bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier,
 	uint8_t message[4];
 	message[0] = SID_DynamicallyDefineDataIdentifier;
 	message[1] = 0x03;
-	message[2] = definedDataIdentifier >> 8;
-	message[3] = definedDataIdentifier;
+	message[2] = (uint8_t)(definedDataIdentifier >> 8);
+	message[3] = (uint8_t)(definedDataIdentifier);
 	return STM_Deploy(message, 4, callback, false);
 }
 
-bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t *writeBuffer, uint8_t bufferLength, UDS_callback callback)
+bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback)
 {
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[3 + bufferLength];
+#else
+	if (3 + bufferLength > STATIC_BUFFER_SIZE) {
+		if (callback != NULL) {
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[0] = SID_WriteDataByIdentifier;
-	message[1] = dataIdentifier >> 8;
-	message[2] = dataIdentifier;
+	message[1] = (uint8_t)(dataIdentifier >> 8);
+	message[2] = (uint8_t)(dataIdentifier);
 	memcpy(&message[3], writeBuffer, bufferLength);
 	return STM_Deploy(message, 3 + bufferLength, callback, false);
 }
 
-bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t *writeBuffer, uint8_t bufferLength, UDS_callback callback)
+bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback)
 {
 	uint32_t length = 2 + targetMemory.SizeLength + targetMemory.AddressLength + bufferLength;
 	uint32_t i = 0;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL) {
+			callback(E_MessageTooLong, NULL, 0);
+		}
+		return false;
+	}
+#endif
 	message[i++] = SID_WriteMemoryByAdress;
 	message[i++] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&targetMemory);
 	memcpy(&message[i], targetMemory.Address, targetMemory.AddressLength);
@@ -185,12 +270,12 @@ bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t *writeBu
 }
 
 static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) {
-	if(E_OK == error) {
-		for (int i = 0; i < periodicDIDlength; i++) {
-			STM_RemoveAsync(periodicDID[i]);
+	if (E_OK == error) {
+		for (uint32_t i = 0; i < periodicDIDlength; i++) {
+			STM_RemoveAsync((SID_t)periodicDID[i]);
 		}
 	}
-	if(user_callback != NULL) {
+	if (user_callback != NULL) {
 		user_callback(error, data, length);
 	}
 	return;

@@ -15,73 +15,94 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-/**
- * @addtogroup UDS_Client
- * @{
- * @addtogroup BusinessLogic
- * @{
- * @file
- * Implementation of the Input Output Controller Functional Unit.
- *
- * $Id:  $
- * $URL:  $
- * @}
- * @}
- */
+ /**
+  * @addtogroup UDS_Client
+  * @{
+  * @addtogroup BusinessLogic
+  * @{
+  * @file
+  * Implementation of the Input Output Controller Functional Unit.
+  *
+  * $Id:  $
+  * $URL:  $
+  * @}
+  * @}
+  */
 
 #include "InputOutputController.h"
 #include "DataModels/SID.h"
 #include "string.h"
 #include "ComLogic/SessionAndTransportManager.h"
+#include "config.h"
+
+#if USE_STATIC_BUFFER == 1
+extern uint8_t message[STATIC_BUFFER_SIZE];
+#endif
 
 
-/* Private Function Definitions */
-static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
+  /* Private Function Definitions */
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /* Interface Functions */
 
-bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+bool UDS_IO_ReturnControlToECU(uint16_t dataIdentifier, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-    return commonControl(0x00, dataIdentifier, controlMask, controlMaskLength, callback);
+	return commonControl(0x00, dataIdentifier, controlMask, controlMaskLength, callback);
 }
 
-bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+bool UDS_IO_ResetToDefault(uint16_t dataIdentifier, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-    return commonControl(0x01, dataIdentifier, controlMask, controlMaskLength, callback);
+	return commonControl(0x01, dataIdentifier, controlMask, controlMaskLength, callback);
 }
 
-bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+bool UDS_IO_FreezeCurrentState(uint16_t dataIdentifier, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-    return commonControl(0x02, dataIdentifier, controlMask, controlMaskLength, callback);
+	return commonControl(0x02, dataIdentifier, controlMask, controlMaskLength, callback);
 }
 
-bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjustedData, uint32_t adjustedDataLength, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t* adjustedData, uint32_t adjustedDataLength, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-    uint8_t message[4 + adjustedDataLength + controlMaskLength];
-    message[0] = SID_InputOutputControlByIdentifier;
-    message[1] = dataIdentifier >> 8;
-    message[2] = dataIdentifier;
-    message[3] = 0x03;
-    if (adjustedDataLength > 0) {
-        memcpy(&message[4], adjustedData, adjustedDataLength);
-    }
-    if (controlMaskLength > 0) {
-        memcpy(&message[4 + adjustedDataLength], controlMask, controlMaskLength);
-    }
-    return STM_Deploy(message, 4 + adjustedDataLength + controlMaskLength, callback, false);
+#if USE_STATIC_BUFFER == 0
+	uint8_t message[4 + adjustedDataLength + controlMaskLength];
+#else
+	if (4 + adjustedDataLength + controlMaskLength > STATIC_BUFFER_SIZE) {
+		if(callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
+	message[0] = SID_InputOutputControlByIdentifier;
+	message[1] = (uint8_t)(dataIdentifier >> 8);
+	message[2] = (uint8_t)dataIdentifier;
+	message[3] = 0x03;
+	if (adjustedDataLength > 0) {
+		memcpy(&message[4], adjustedData, adjustedDataLength);
+	}
+	if (controlMaskLength > 0) {
+		memcpy(&message[4 + adjustedDataLength], controlMask, controlMaskLength);
+	}
+	return STM_Deploy(message, 4 + adjustedDataLength + controlMaskLength, callback, false);
 }
 
 /* Private Functions */
 
-static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback)
+static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t* controlMask, uint32_t controlMaskLength, UDS_callback callback)
 {
-    uint8_t message[4 + controlMaskLength];
-    message[0] = SID_InputOutputControlByIdentifier;
-    message[1] = dataIdentifier >> 8;
-    message[2] = dataIdentifier;
-    message[3] = command;
-    if (controlMaskLength > 0) {
-        memcpy(&message[4], controlMask, controlMaskLength);
-    }
-    return STM_Deploy(message, 4 + controlMaskLength, callback, false);
+#if USE_STATIC_BUFFER == 0
+	uint8_t message[4 + controlMaskLength];
+#else
+	if (4 + controlMaskLength > STATIC_BUFFER_SIZE) {
+		if(callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
+	message[0] = SID_InputOutputControlByIdentifier;
+	message[1] = (uint8_t)(dataIdentifier >> 8);
+	message[2] = (uint8_t)dataIdentifier;
+	message[3] = command;
+	if (controlMaskLength > 0) {
+		memcpy(&message[4], controlMask, controlMaskLength);
+	}
+	return STM_Deploy(message, 4 + controlMaskLength, callback, false);
 }

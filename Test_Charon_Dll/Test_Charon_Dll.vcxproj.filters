@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\BusinessLogic">
+      <UniqueIdentifier>{6119731d-bbfd-4e71-8a65-bf74106be9e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ComLogic">
+      <UniqueIdentifier>{f5d290c3-f114-4f0f-9801-0b2f73cf39bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataModel">
+      <UniqueIdentifier>{7d00009a-1cf5-4a26-b239-b86db8eb5405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BusinessLogic">
+      <UniqueIdentifier>{3198aa89-266f-4660-89cc-f74450d35099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DataModel">
+      <UniqueIdentifier>{e5bb5ab2-989d-48a1-b043-9ff30930bca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{9942e5c6-1db9-4bc9-8af7-b931f2c0190d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ComLogic">
+      <UniqueIdentifier>{3f37e5be-da10-45d8-8cd7-ba566d175659}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Library\UDSClientLib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\DataTransmitter\DataTransmitter.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\DCM\DiagnosticCommunicationManager.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\DTC\StoredDataTransmitter.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\IOControl\InputOutputController.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\Routine\Routine.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\BusinessLogic\UploadDownload\UploadDownload.c">
+      <Filter>Source Files\BusinessLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\ComLogic\SessionAndTransportManager.c">
+      <Filter>Source Files\ComLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\DataModels\ErrorCode.c">
+      <Filter>Source Files\DataModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Library\DataModels\MemoryDefinition.c">
+      <Filter>Source Files\DataModel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Library\BusinessLogic\DataTransmitter\DataTransmitter.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\BusinessLogic\DCM\DiagnosticCommunicationManager.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\BusinessLogic\IOControl\InputOutputController.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\BusinessLogic\Routine\Routine.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\BusinessLogic\DTC\StoredDataTransmitter.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\BusinessLogic\UploadDownload\UploadDownload.h">
+      <Filter>Header Files\BusinessLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\UDSClientLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\BaudRates.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\CommunicationControl.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\ComparisonLogic.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\DataDefinition.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\DataIdentifier.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\ErrorCode.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\MemoryDefinition.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\ResetTypes.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\Session.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\SID.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DataModels\TimerRates.h">
+      <Filter>Header Files\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Interfaces\CallbackInterface.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Interfaces\ComInterface.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Interfaces\SecurityInterface.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Interfaces\TimerInterface.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Library\ComLogic\SessionAndTransportManager.h">
+      <Filter>Header Files\ComLogic</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

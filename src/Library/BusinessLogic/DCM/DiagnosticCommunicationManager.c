@@ -15,35 +15,39 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-/**
- * @addtogroup UDS_Client
- * @{
- * @addtogroup BusinessLogic
- * @{
- * @file
- * Implementation of the Diagnostic and Communication Management Functional
- * Unit. The detailed specifications can be found in @b ISO @b 14229-1
- * Chapter 9.
- *
- * $Id:  $
- * $URL:  $
- * @}
- * @}
- */
-/*****************************************************************************/
+ /**
+  * @addtogroup UDS_Client
+  * @{
+  * @addtogroup BusinessLogic
+  * @{
+  * @file
+  * Implementation of the Diagnostic and Communication Management Functional
+  * Unit. The detailed specifications can be found in @b ISO @b 14229-1
+  * Chapter 9.
+  *
+  * $Id:  $
+  * $URL:  $
+  * @}
+  * @}
+  */
+  /*****************************************************************************/
 
-/* Includes ******************************************************************/
+  /* Includes ******************************************************************/
 
 #include "DiagnosticCommunicationManager.h"
 
 #include <stddef.h>
 #include <string.h>
 
-#include "SessionAndTransportManager.h"
+#include "ComLogic/SessionAndTransportManager.h"
 
 /* Imports *******************************************************************/
 
 #include "config.h"
+
+#if USE_STATIC_BUFFER == 1
+extern uint8_t message[STATIC_BUFFER_SIZE];
+#endif
 
 /* Constants *****************************************************************/
 
@@ -98,11 +102,11 @@ static uint32_t proposedSpeed;
 
 /* Private Function Definitions **********************************************/
 
-void DSC_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length);
-void Reset_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length);
-void LinkControl_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length);
-void LinkTransition_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length);
-void SecureData_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length);
+void DSC_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+void Reset_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+void LinkControl_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+void LinkTransition_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+void SecureData_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
 
 /* Interfaces  ***************************************************************/
 
@@ -112,8 +116,8 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
 	// attribute__((packed))__ is compiler dependent, and a Macro definition is
 	// impossible.
 	bool retVal;
-	uint8_t message[] = {SID_DiagnosticSessionControl, session};
-	if((retVal = STM_Deploy(message, 2, DSC_callback, false)) != false)
+	uint8_t message[] = { SID_DiagnosticSessionControl, (uint8_t)session };
+	if ((retVal = STM_Deploy(message, 2, DSC_callback, false)) != false)
 		DSC_user_callback = callback;
 	return retVal;
 }
@@ -121,18 +125,26 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
 bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback)
 {
 	bool retVal;
-	uint8_t message[] = {SID_ECUReset, resetType};
-	if((retVal = STM_Deploy(message, 2, Reset_callback, false)) != false)
+	uint8_t message[] = { SID_ECUReset, (uint8_t)resetType };
+	if ((retVal = STM_Deploy(message, 2, Reset_callback, false)) != false)
 		DSC_user_callback = callback;
 	return retVal;
 }
 
 bool UDS_DCM_SecurityAccess(uint8_t function,
-					uint8_t *securityParameter,
-					uint8_t parameterLength,
-					UDS_callback callback)
+	uint8_t* securityParameter,
+	uint8_t parameterLength,
+	UDS_callback callback)
 {
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[2 + parameterLength];
+#else
+	if (2 + parameterLength > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	message[0] = (uint8_t)SID_SecurityAccess;
 	message[1] = function;
 	memcpy(&message[2], securityParameter, parameterLength);
@@ -152,39 +164,56 @@ bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl,
 
 
 bool UDS_DCM_ControlDTCSetting(uint8_t subfunction,
-					   uint8_t *data,
-					   uint32_t length,
-					   UDS_callback callback)
+	uint8_t* data,
+	uint32_t length,
+	UDS_callback callback)
 {
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[2 + length];
+#else
+	if (2 + length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	message[0] = SID_ControlDTCSettings;
 	message[1] = subfunction;
 	memcpy(&message[2], data, length);
 	return STM_Deploy(message, length + 2, callback, false);
 }
 
-bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback){
-   	if(callback != NULL) {
+bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback) {
+	if (callback != NULL) {
 		callback(E_NotSupported, NULL, 0);
 	}
+	return false;
 }
 
 bool UDS_DCM_ResponseOnCustomEvent(uint8_t event,
-								   bool isPersistent,
-								   uint8_t eventWindowTime,
-								   uint8_t *eventTypeRecord,
-								   uint8_t eventTypeRecordLength,
-								   uint8_t serviceToRespondTo,
-								   uint8_t *serviceParameter,
-								   uint8_t serviceParameterLength,
-								   UDS_callback callback,
-								   UDS_callback response_callback
-								   )
+	bool isPersistent,
+	uint8_t eventWindowTime,
+	uint8_t* eventTypeRecord,
+	uint8_t eventTypeRecordLength,
+	uint8_t serviceToRespondTo,
+	uint8_t* serviceParameter,
+	uint8_t serviceParameterLength,
+	UDS_callback callback,
+	UDS_callback response_callback
+)
 {
 	UDS_LOG_INFO("Sending Response on Custom Event [Event: 0x%02x, StoreEvent: %s, eventWindowTime: 0x%02x, eventTypeRecordLength: %d, serviceToRespondTo: %s, serviceParameterLength: 0x%02x",
-				event, isPersistent ? "true": "false", eventWindowTime, eventTypeRecordLength, xstr(serviceToRespondTo), serviceParameterLength);
+		event, isPersistent ? "true" : "false", eventWindowTime, eventTypeRecordLength, xstr(serviceToRespondTo), serviceParameterLength);
 	uint32_t length = 3 + eventTypeRecordLength + 1 + serviceParameterLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	uint16_t i = 0;
 	message[i++] = SID_ResponseOnEvent;
 	message[i++] = isPersistent ? 0x40 | (event & 0x3F) : (event & 0x3F);
@@ -194,16 +223,24 @@ bool UDS_DCM_ResponseOnCustomEvent(uint8_t event,
 	message[i++] = serviceToRespondTo;
 	memcpy(&message[i], serviceParameter, serviceParameterLength);
 	bool retVal = STM_Deploy(message, length, callback, false);
-	retVal &= STM_AsyncDeploy(serviceToRespondTo, response_callback);
+	retVal &= STM_AsyncDeploy((SID_t)serviceToRespondTo, response_callback);
 	return retVal;
 }
 
-bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTime, uint8_t DTCStatusMask, SID_t serviceToRespondTo, uint8_t *serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
+bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTime, uint8_t DTCStatusMask, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
 {
 	UDS_LOG_INFO("Sending Response on DTC Status Change [StoreEvent: %s, eventWindowTime: 0x%02x, DTC Status Mask: 0x%02x, serviceToRespondTo: %s, serviceParameterLength: 0x%02x",
-				isPersistent ? "true": "false", eventWindowTime, DTCStatusMask, xstr(serviceToRespondTo), serviceParameterLength);
+		isPersistent ? "true" : "false", eventWindowTime, DTCStatusMask, xstr(serviceToRespondTo), serviceParameterLength);
 	uint32_t length = 5 + serviceParameterLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	message[0] = SID_ResponseOnEvent;
 	message[1] = isPersistent ? 0x01 | 0x40 : 0x01;
 	message[2] = eventWindowTime;
@@ -215,12 +252,20 @@ bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTim
 	return retVal;
 }
 
-bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime, UDS_TimerRates_t timerRate, SID_t serviceToRespondTo, uint8_t *serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
+bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime, UDS_TimerRates_t timerRate, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
 {
 	UDS_LOG_INFO("Sending Response on Timer Interrupt [StoreEvent: %s, eventWindowTime: 0x%02x, TimerRate: %s, serviceToRespondTo: %s, serviceParameterLength: 0x%02x",
-				isPersistent ? "true": "false", eventWindowTime, xstr(timerRate), xstr(serviceToRespondTo), serviceParameterLength);
+		isPersistent ? "true" : "false", eventWindowTime, xstr(timerRate), xstr(serviceToRespondTo), serviceParameterLength);
 	uint32_t length = 5 + serviceParameterLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	message[0] = SID_ResponseOnEvent;
 	message[1] = isPersistent ? 0x02 | 0x40 : 0x02;
 	message[2] = eventWindowTime;
@@ -232,12 +277,20 @@ bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime
 	return retVal;
 }
 
-bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, SID_t serviceToRespondTo, uint8_t *serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
+bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback)
 {
 	UDS_LOG_INFO("Sending Response on DID Change [StoreEvent: %s, eventWindowTime: 0x%02x, DataIdentifier: 0x%04x, serviceToRespondTo: %s, serviceParameterLength: 0x%02x",
-				isPersistent ? "true": "false", eventWindowTime, dataIdentifier, xstr(serviceToRespondTo), serviceParameterLength);
+		isPersistent ? "true" : "false", eventWindowTime, dataIdentifier, xstr(serviceToRespondTo), serviceParameterLength);
 	uint32_t length = 6 + serviceParameterLength;
+#if USE_STATIC_BUFFER == 0
 	uint8_t message[length];
+#else
+	if (length > STATIC_BUFFER_SIZE) {
+		if (callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
 	message[0] = SID_ResponseOnEvent;
 	message[1] = isPersistent ? 0x03 | 0x40 : 0x03;
 	message[2] = eventWindowTime;
@@ -253,8 +306,8 @@ bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWi
 bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, ComparisonLogic_t logic, uint32_t reference, uint8_t hysteresis, bool comparisonWithSign, uint8_t lengthOfDID, uint16_t DIDoffset, uint8_t serviceToRespondTo, uint16_t comparedDID, UDS_callback callback, UDS_callback response_callback)
 {
 	UDS_LOG_INFO("Sending Response on Comparison of Values [StoreEvent: %s, eventWindowTime: 0x%02x, DID: 0x%04x, Comparison Logic: %s, Reference Value: %d, Hysteresis: %d%%, Signed Comparison: %s, Length of DID: %d, DID Offset: %d, Service to Respond To: %s, Compared DID: 0x%04x]",
-				isPersistent ? "true": "false", eventWindowTime, dataIdentifier, xstr(logic), reference, hysteresis, comparisonWithSign ? "true" : "false", lengthOfDID, DIDoffset, xstr(serviceToRespondTo), comparedDID);
-	uint8_t message[16]; 
+		isPersistent ? "true" : "false", eventWindowTime, dataIdentifier, xstr(logic), reference, hysteresis, comparisonWithSign ? "true" : "false", lengthOfDID, DIDoffset, xstr(serviceToRespondTo), comparedDID);
+	uint8_t message[16];
 	message[0] = SID_ResponseOnEvent;
 	message[1] = isPersistent ? 0x07 | 0x40 : 0x07;
 	message[2] = eventWindowTime;
@@ -267,7 +320,7 @@ bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindow
 	message[9] = reference & 0xFF;
 	message[10] = hysteresis;
 	// TODO: Design Choice: throw error on more than 32?
-	if(lengthOfDID >= 32) lengthOfDID = 0x00;
+	if (lengthOfDID >= 32) lengthOfDID = 0x00;
 	uint16_t localization = (comparisonWithSign ? 0x80 : 0x00) | ((lengthOfDID & 0x1F) << 10) | (DIDoffset & 0x3F);
 	message[11] = (localization >> 8) & 0xFF;
 	message[12] = localization & 0xFF;
@@ -275,32 +328,32 @@ bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindow
 	message[14] = (comparedDID >> 8) & 0xFF;
 	message[15] = comparedDID & 0xFF;
 	bool retVal = STM_Deploy(message, 16, callback, false);
-	retVal &= STM_AsyncDeploy(serviceToRespondTo, response_callback);
+	retVal &= STM_AsyncDeploy((SID_t)serviceToRespondTo, response_callback);
 	return retVal;
 }
 
 bool UDS_DCM_StartResponseOnEvents(UDS_callback callback)
 {
-	uint8_t message[] = {SID_ResponseOnEvent, 0x05};
+	uint8_t message[] = { SID_ResponseOnEvent, 0x05 };
 	return STM_Deploy(message, 2, callback, false);
 }
 
 bool UDS_DCM_StopResponseOnEvents(UDS_callback callback)
 {
-	uint8_t message[] = {SID_ResponseOnEvent, 0x00};
+	uint8_t message[] = { SID_ResponseOnEvent, 0x00 };
 	return STM_Deploy(message, 2, callback, false);
 }
 
 // TODO: Clear Async Queue in STM
 bool UDS_DCM_ClearResponseOnEvents(UDS_callback callback)
 {
-	uint8_t message[] = {SID_ResponseOnEvent, 0x06};
+	uint8_t message[] = { SID_ResponseOnEvent, 0x06 };
 	return STM_Deploy(message, 2, callback, false);
 }
 
 bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback)
 {
-	uint8_t message[] = {SID_ResponseOnEvent, 0x04};
+	uint8_t message[] = { SID_ResponseOnEvent, 0x04 };
 	return STM_Deploy(message, 2, callback, false);
 }
 
@@ -308,12 +361,12 @@ bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_
 {
 	if (!STM_SpeedIsAdjustable())
 	{
-		if(callback != NULL)
+		if (callback != NULL)
 			callback(E_NotSupported, NULL, 0);
 		return false;
 	}
 	proposedSpeed = baudRateLookup[linkControlMode];
-	uint8_t message[3] = {SID_LinkControl, 0x01, linkControlMode};
+	uint8_t message[3] = { SID_LinkControl, 0x01, (uint8_t)linkControlMode };
 	DSC_user_callback = callback;
 	return STM_Deploy(message, 3, LinkControl_callback, false);
 }
@@ -322,80 +375,80 @@ bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callb
 {
 	if (!STM_SpeedIsAdjustable())
 	{
-		if(callback != NULL)
+		if (callback != NULL)
 			callback(E_NotSupported, NULL, 0);
 		return false;
 	}
 	proposedSpeed = modeParameter;
-	uint8_t message[5] = {SID_LinkControl, 0x01, (modeParameter >> 16) & 0xFF, (modeParameter >> 8) & 0xFF, modeParameter & 0xFF};
+	uint8_t message[5] = { SID_LinkControl, 0x01, (modeParameter >> 16) & 0xFF, (modeParameter >> 8) & 0xFF, modeParameter & 0xFF };
 	DSC_user_callback = callback;
 	return STM_Deploy(message, 5, LinkControl_callback, false);
 }
 
-// TODO: SecuredDataTransmission einstellen
+// TODO: setup SecuredDataTransmission
 bool UDS_DCM_activateSecuredDataTransmission() {
-	
+	return false;
 }
 
 bool UDS_DCM_deactivateSecuredDataTransmission() {
-	
+	return false;
 }
 
 /* Private Function **********************************************************/
 
-void DSC_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length)
+void DSC_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length)
 {
 	if (error == E_OK)
 	{
 		uint16_t p2 = (data[2] << 8) + data[3];
 		uint16_t p2_star = (data[4] << 8) + data[5];
-			STM_SetSession(data[1], p2, p2_star);
-	}
-	if(DSC_user_callback != NULL)
-		DSC_user_callback(error, data, length);
-	DSC_user_callback = NULL;
-}
-
-void Reset_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length)
-{
-	if (error == E_OK)
-	{
-			STM_SetSession(UDS_Session_Default, P2_DEFAULT, P2_STAR_DEFAULT);
+		STM_SetSession((UDS_SessionType_t)data[1], p2, p2_star);
 	}
 	if (DSC_user_callback != NULL)
 		DSC_user_callback(error, data, length);
 	DSC_user_callback = NULL;
 }
 
-void LinkControl_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length)
+void Reset_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length)
+{
+	if (error == E_OK)
+	{
+		STM_SetSession(UDS_Session_Default, P2_DEFAULT, P2_STAR_DEFAULT);
+	}
+	if (DSC_user_callback != NULL)
+		DSC_user_callback(error, data, length);
+	DSC_user_callback = NULL;
+}
+
+void LinkControl_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length)
 {
 	if (E_OK == error)
 	{
-			uint8_t message[2] = {SID_LinkControl, 0x03};
+		uint8_t message[2] = { SID_LinkControl, 0x03 };
 		STM_Deploy(message, 2, LinkTransition_callback, false);
 	}
 	else
 	{
-		if(DSC_user_callback != NULL)
+		if (DSC_user_callback != NULL)
 			DSC_user_callback(error, data, length);
 		DSC_user_callback = NULL;
 	}
 }
 
-void LinkTransition_callback(UDS_Client_Error_t error, uint8_t *data, uint32_t length)
+void LinkTransition_callback(UDS_Client_Error_t error, uint8_t* data, uint32_t length)
 {
 	if (E_OK == error)
 	{
-			if (!STM_LinkControl(proposedSpeed))
+		if (!STM_LinkControl(proposedSpeed))
 		{
 			UDS_LOG_WARNING("Couldn't adjust LinkControl speed.");
-			if(DSC_user_callback != NULL)
+			if (DSC_user_callback != NULL)
 				DSC_user_callback(E_ComSpeedNotAdjusted, data, length);
 			DSC_user_callback = NULL;
 			return;
 		}
 	}
-	if(DSC_user_callback != NULL)
+	if (DSC_user_callback != NULL)
 		DSC_user_callback(error, data, length);
 	DSC_user_callback = NULL;
 }

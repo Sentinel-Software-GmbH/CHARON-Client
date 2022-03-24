@@ -36,6 +36,10 @@
 #include "UDSClientLib.h"
 #include "ComLogic/SessionAndTransportManager.h"
 
+#if USE_STATIC_BUFFER == 1
+uint8_t message[STATIC_BUFFER_SIZE];
+#endif
+
 void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
     STM_Init(com, timer, security, rxBuffer, rxBufferLength);
 }

@@ -5,3 +5,9 @@
 **.code-snippets
 
 **/.vscode
+
+**/.vs
+**/x64
+**/obj
+**/bin
+*.user

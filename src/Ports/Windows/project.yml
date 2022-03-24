@@ -18,7 +18,7 @@
     - release
 
 :release_build:
-  :output: charon_client.exe
+  :output: charon_client.dll
   :use_assembly: FALSE
 
 :environment:

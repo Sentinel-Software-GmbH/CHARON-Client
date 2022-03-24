@@ -15,57 +15,70 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-/**
- * @addtogroup UDS_Client
- * @{
- * @addtogroup BusinessLogic
- * @{
- * @file
- * Implementation of the Routine Functional Unit.
- *
- * $Id:  $
- * $URL:  $
- * @}
- * @}
- */
+ /**
+  * @addtogroup UDS_Client
+  * @{
+  * @addtogroup BusinessLogic
+  * @{
+  * @file
+  * Implementation of the Routine Functional Unit.
+  *
+  * $Id:  $
+  * $URL:  $
+  * @}
+  * @}
+  */
 
-/* INCLUDE */
+  /* INCLUDE */
 
 #include <string.h>
 #include "Routine.h"
 #include "DataModels/SID.h"
 #include "ComLogic/SessionAndTransportManager.h"
+#include "config.h"
+
+#if USE_STATIC_BUFFER == 1
+extern uint8_t message[STATIC_BUFFER_SIZE];
+#endif
 
 /* Private Function Definitions */
 
-static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
 
 /* Interface Functions */
 
-bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
-    return commonRoutine(0x01, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
+	return commonRoutine(0x01, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
 }
-bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
-    return commonRoutine(0x02, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
+	return commonRoutine(0x02, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
 }
 bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback)
 {
-    return commonRoutine(0x03, routineIdentifier, NULL, 0, callback);
+	return commonRoutine(0x03, routineIdentifier, NULL, 0, callback);
 }
 
 /* Private Functions */
 
-static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
+static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
-    uint8_t message[4 + routineControlOptionsLength];
-    message[0] = SID_RoutineControl;
-    message[1] = command;
-    message[2] = routineIdentifier >> 8;
-    message[3] = routineIdentifier;
-    if (routineControlOptionsLength > 0) {
-        memcpy(&message[4], routineControlOptionRecord, routineControlOptionsLength);
-    }
-    return STM_Deploy(message, 4 + routineControlOptionsLength, callback, false);
+#if USE_STATIC_BUFFER == 0
+	uint8_t message[4 + routineControlOptionsLength];
+#else
+	if (4 + routineControlOptionsLength > STATIC_BUFFER_SIZE) {
+		if(callback != NULL)
+			callback(E_MessageTooLong, NULL, 0);
+		return false;
+	}
+#endif
+	message[0] = SID_RoutineControl;
+	message[1] = command;
+	message[2] = (uint8_t)(routineIdentifier >> 8);
+	message[3] = (uint8_t)routineIdentifier;
+	if (routineControlOptionsLength > 0) {
+		memcpy(&message[4], routineControlOptionRecord, routineControlOptionsLength);
+	}
+	return STM_Deploy(message, 4 + routineControlOptionsLength, callback, false);
 }
