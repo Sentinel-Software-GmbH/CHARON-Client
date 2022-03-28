@@ -51,13 +51,14 @@ extern "C" {
 #include "DataModels/BaudRates.h"
 #include "DataModels/CommunicationControl.h"
 #include <stdbool.h>
+#include "compiler.h"
 
 /** @brief Switches Diagnostic Sessions on the server.
  * @req R01 Request to control a diagnostic session.
  * @param session Session to change to.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
-bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback callback);
+public bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback callback);
 
 /** @brief Forces server to perform a reset.
  * @req R02 Force server to perform a reset.
@@ -66,7 +67,7 @@ bool UDS_DCM_DiagnosticSessionControl(UDS_SessionType_t session, UDS_callback ca
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
+public bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
 
 /** @brief Request security seed or send security answer.
  * @req R03 Request to unlock a secured server.
@@ -77,7 +78,7 @@ bool UDS_DCM_ECUReset(UDS_Reset_t resetType, UDS_callback callback);
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, UDS_callback callback);
+public bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_t parameterLength, UDS_callback callback);
 
 /** @brief Control the communication on the server.
  * @req R04 Request to switch on/off the transmission orreception of certain messages of a server.
@@ -89,10 +90,10 @@ bool UDS_DCM_SecurityAccess(uint8_t function, uint8_t *securityParameter, uint8_
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl, UDS_CommunicationType_t communicationType, uint8_t subnet, uint16_t nodeIdentificationNumber, UDS_callback callback);
+public bool UDS_DCM_CommunicationControl(UDS_CommunicationControlSubfunction_t comCtrl, UDS_CommunicationType_t communicationType, uint8_t subnet, uint16_t nodeIdentificationNumber, UDS_callback callback);
 
 /* TODO: Access Timing Parameter Service */
-bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback);
+public bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback callback);
 
 /** @brief Stop or resume the updating of DTC status bits.
  * @req R07 Perform data transmission with an extended data link security layer.
@@ -103,7 +104,7 @@ bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback c
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ControlDTCSetting(uint8_t subfunction, uint8_t *data, uint32_t length, UDS_callback callback);
+public bool UDS_DCM_ControlDTCSetting(uint8_t subfunction, uint8_t *data, uint32_t length, UDS_callback callback);
 
 /** @brief Setup a response on a custom vendor specific event.
  * @req R09 Request to setup and/or control an event mechanism in the server
@@ -121,7 +122,7 @@ bool UDS_DCM_ControlDTCSetting(uint8_t subfunction, uint8_t *data, uint32_t leng
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool isPersistent, uint8_t eventWindowTime, uint8_t* eventTypeRecord, uint8_t eventTypeRecordLength, uint8_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool isPersistent, uint8_t eventWindowTime, uint8_t* eventTypeRecord, uint8_t eventTypeRecordLength, uint8_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a DTC status change.
  * @req R09 Request to setup and/or control an event mechanism in the server
@@ -137,7 +138,7 @@ bool UDS_DCM_ResponseOnCustomEvent(uint8_t event, bool isPersistent, uint8_t eve
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTime, uint8_t DTC_Status_Mask, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTime, uint8_t DTC_Status_Mask, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
  * @req R09 Request to setup and/or control an event mechanism in the server
@@ -153,7 +154,7 @@ bool UDS_DCM_ResponseOnDTCStatusChange(bool isPersistent, uint8_t eventWindowTim
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime, UDS_TimerRates_t timerRate, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime, UDS_TimerRates_t timerRate, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
  * @req R09 Request to setup and/or control an event mechanism in the server
@@ -169,7 +170,7 @@ bool UDS_DCM_ResponseOnTimerInterrupt(bool isPersistent, uint8_t eventWindowTime
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, SID_t serviceToRespondTo, uint8_t* serviceParameter, uint8_t serviceParameterLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Setup a response on a Timer Interrupt.
  * @req R09 Request to setup and/or control an event mechanism in the server
@@ -190,27 +191,27 @@ bool UDS_DCM_ResponseOnChangeOfDataIdentifier(bool isPersistent, uint8_t eventWi
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, ComparisonLogic_t logic, uint32_t reference, uint8_t hysteresis, bool comparisonWithSign, uint8_t lengthOfDID, uint16_t DIDoffset, uint8_t serviceToRespondTo, uint16_t comparedDID, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DCM_ResponseOnComparisonOfValues(bool isPersistent, uint8_t eventWindowTime, uint16_t dataIdentifier, ComparisonLogic_t logic, uint32_t reference, uint8_t hysteresis, bool comparisonWithSign, uint8_t lengthOfDID, uint16_t DIDoffset, uint8_t serviceToRespondTo, uint16_t comparedDID, UDS_callback callback, UDS_callback response_callback);
 /** @brief Start the Execution of the set Response on Event Services.
  * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
-bool UDS_DCM_StartResponseOnEvents(UDS_callback callback);
+public bool UDS_DCM_StartResponseOnEvents(UDS_callback callback);
 /** @brief Stop the Execution of the set Response on Event Services.
  * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
-bool UDS_DCM_StopResponseOnEvents(UDS_callback callback);
+public bool UDS_DCM_StopResponseOnEvents(UDS_callback callback);
 /** @brief Clear all set Response on Event Services.
  * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
-bool UDS_DCM_ClearResponseOnEvents(UDS_callback callback);
+public bool UDS_DCM_ClearResponseOnEvents(UDS_callback callback);
 /** @brief Receive a list of all set Response on Event Services.
  * @req R09 Request to setup and/or control an event mechanism in the server
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occured.
  */
-bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback);
+public bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback);
 
 /** @brief Control the Communication Link Speed with ISO specified values.
  * @req R10 Request control of the communication baudrate.
@@ -219,7 +220,7 @@ bool UDS_DCM_GetActiveResponseEvents(UDS_callback callback);
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_callback callback);
+public bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_callback callback);
 
 /** @brief Control the Communication Link Speed with user specified values.
  * @req R10 Request control of the communication baudrate.
@@ -228,7 +229,7 @@ bool UDS_DCM_LinkControl_withFixedParameter(UDS_Baudrate_t linkControlMode, UDS_
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callback callback);
+public bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callback callback);
 
 
 #ifdef __cplusplus

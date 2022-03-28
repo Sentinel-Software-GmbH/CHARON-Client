@@ -41,6 +41,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include "Interfaces/CallbackInterface.h"
+#include "compiler.h"
 
 /** @brief Start routine in the server.
  * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
@@ -50,7 +51,7 @@ extern "C" {
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+public bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
 
 /** @brief Stop routine in the server.
  * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
@@ -60,7 +61,7 @@ bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t* routineContro
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
+public bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
 
 /** @brief Request the Routine Results.
  * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
@@ -68,7 +69,7 @@ bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t* routineControl
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback);
+public bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback);
 
 #ifdef __cplusplus
 }

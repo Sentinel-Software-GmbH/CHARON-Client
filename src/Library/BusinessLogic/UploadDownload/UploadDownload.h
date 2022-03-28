@@ -46,6 +46,7 @@
 #include <stdbool.h>
 #include "Interfaces/CallbackInterface.h"
 #include "DataModels/MemoryDefinition.h"
+#include "compiler.h"
 
 /* Constants *****************************************************************/
 
@@ -69,7 +70,7 @@
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
+public bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
 
 /** Send data to the server.
  * @req R24 transmit data to the server.
@@ -81,7 +82,7 @@ bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMet
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t dataSize, uint32_t maxNumberOfBlockLength, UDS_callback callback);
+public bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t dataSize, uint32_t maxNumberOfBlockLength, UDS_callback callback);
 
 /** Sends a Request to Transfer Data from the server to the client.
  * This puts the server into Data Transmission mode.
@@ -96,7 +97,7 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
+public bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
 
 /** Receives data from the server.
  * @req R24 Request data from the server.
@@ -105,7 +106,7 @@ bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMetho
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback);
+public bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback);
 
 /** Releases the Server from Data Transmission Mode.
  * @req R25 Request the termination of a data transfer.
@@ -115,7 +116,7 @@ bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback);
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback);
+public bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback);
 
 /** Sends a Request to add a file on the server's file system.
  * This puts the server into Data Transmission Mode.
@@ -132,7 +133,7 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace);
+public bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace);
 
 /** Deletes a file from the server's filesystem.
  * This does NOT put the server into data transmission mode.
@@ -140,7 +141,7 @@ bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMeth
  * @param pathLength Number of characters inside the path.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
  */
-bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path);
+public bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path);
 
 /** Reads out content from a file on the server's filesystem.
  * This puts the server into data transmission mode.
@@ -153,7 +154,7 @@ bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path);
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback);
+public bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback);
 
 /**
  * Reads out the contents of a complete folder on the server's filesystem.
@@ -164,7 +165,7 @@ bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMet
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
+public bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
 
 #ifndef DOXY_SKIP
 /* TEST INJECTION FUNCTIONS **************************************************/
