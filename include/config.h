@@ -37,6 +37,7 @@
 
 /* Optionals *****************************************************************/
 
+#define EXPORT_TO_DLL                      1
 #define UPLOAD_DOWNLOAD_USES_STATIC_BUFFER 1
 #define UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE 4096
 

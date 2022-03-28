@@ -45,6 +45,7 @@ extern "C" {
 #include "Interfaces/CallbackInterface.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "compiler.h"
 
 /** @brief Read out the value of a Data Identifier.
  * @req R11 Request to Read current value of a record identified by a provided data identifier.
@@ -53,7 +54,7 @@ extern "C" {
  * @param length Amount of entries in the list of DIDs.
  * @param callback Callback that gets executed when the service has finished.
  */
-bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
+public bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback);
 
 /** @brief Read out the values at the specified memory address
  * @req R12 Request to read the current value of the provided memory range.
@@ -61,7 +62,7 @@ bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_c
  * @param sourceMemory The address and size of the data in the servers memory.
  * @param callback Callback that gets executed when the service has finished.
  */
-bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
+public bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback callback);
 /** @brief Read out the scaling data pointed at by the specified DataIdentifier.
  * @req R13 request to read the scaling information of a record identified by a provided data identifier.
  * @todo Very Complex. Might need the user to interpret the return values or provide a function to decrypt the return value.
@@ -69,7 +70,7 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
  * @param dataIdentifier Data identifier of the scaling data.
  * @param callback Callback that gets executed when the service has finished.
  */
-bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
+public bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback);
 /** @brief Set up a periodic polling of the specified DIDs at a fixed speed defined by the server.
  * @req R14 Request to schedule data in the server for periodic transmission.
  * @note When you set up too many DIDs the server might not be able to respond at its fixed speed.
@@ -82,7 +83,7 @@ bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback ca
  * @param callback Callback that gets executed when the service request has finished.
  * @param callback Callback that gets executed when a response has been received.
  */
-bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
+public bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdLength, UDS_callback callback, UDS_callback response_callback);
 
 /** @brief Stop any periodic poll set up of the specified DIDs.
  * 
@@ -90,7 +91,7 @@ bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint
  * @param periodicDataIdsLength Amount of entries in the DID list.
  * @param callback Callback that gets executed when the service request has finished.
  */ 
-bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
+public bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback);
 /** @brief Dynamically define a DataIdentifier.
  * @req R15 Request to dynamically define data identifiers.
  * 
@@ -99,7 +100,7 @@ bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t* periodicDataIdentifiers, uint8
  * @param SourceDataDefinitionsLength Length of the source DID array.
  * @param SourceMemoryDefinitions Array of memory
  */
-bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback);
+public bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier, DataDefinition *SourceDataDefinitions, uint8_t SourceDataDefinitionsLength, UDS_callback callback);
 
 /** @brief Use a memory adress to define a new data identifier or add to an existing one.
  * @req R15 Request to dynamically define data identifiers.
@@ -110,7 +111,7 @@ bool UDS_DT_dynamicallyDefineDataIdentifierByDID(uint16_t definedDataIdentifier,
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
+public bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDataIdentifier, MemoryDefinition *SourceMemoryDefinitions, uint8_t SourceMemoryLength, UDS_callback callback);
 
 /** @brief Clear the dynamically defined dataidentifier.
  * @param definedDataIdentifier The Identifier to be cleared.
@@ -118,7 +119,7 @@ bool UDS_DT_dynamicallyDefineDataIdentifierByMemoryDefinition(uint16_t definedDa
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback);
+public bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier, UDS_callback callback);
 
 /** @brief Write some data to a dataIdentifier.
  * @req R16 Request to write a record specified by a data identifier.
@@ -129,7 +130,7 @@ bool UDS_DT_clearDynamicallyDefineDataIdentifier(uint16_t definedDataIdentifier,
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+public bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 /** @brief Write some data to a memory address.
  * @req R17 Request to overwrite a provided memory range.
@@ -140,7 +141,7 @@ bool UDS_DT_writeDataByIdentifier(uint16_t dataIdentifier, uint8_t* writeBuffer,
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
  */
-bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
+public bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t* writeBuffer, uint8_t bufferLength, UDS_callback callback);
 
 
 #ifdef __cplusplus
