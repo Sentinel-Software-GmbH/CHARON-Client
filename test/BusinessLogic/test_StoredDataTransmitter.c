@@ -70,10 +70,10 @@ void test_reportDTCByStatusMask(void) {
 }
 
 void test_reportDTCSnapshotIdentification(void) {
-    uint8_t *expectedData = (uint8_t[]) {SID_ReadDTCInformation, 0x03, 0x22, 0x33, 0x44, 0xFF};
-    STM_Deploy_ExpectAndReturn(expectedData, 6, NULL, false, true);
+    uint8_t *expectedData = (uint8_t[]) {SID_ReadDTCInformation, 0x03};
+    STM_Deploy_ExpectAndReturn(expectedData, 2, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();
-    TEST_ASSERT_TRUE(UDS_DTC_ReportDTCSnapshotIdentification(0x11223344, 0xFF, NULL));
+    TEST_ASSERT_TRUE(UDS_DTC_ReportDTCSnapshotIdentification(NULL));
 }
 
 void test_reportDTCSnapshotRecordByDTCNumber(void) {

@@ -49,14 +49,14 @@
 /* Variables *****************************************************************/
 
 /** Definition of a DID */
-static const DataDefinition dataDef = {
+static DataDefinition dataDef = {
     .DID = 0x0134,
     .firstBytePosition = 0x04,
     .memorySize = 0x10,
 };
 
 /** Definition of a Memory Range on the server */
-static const MemoryDefinition memDef = {
+static MemoryDefinition memDef = {
     .Address = (uint8_t[]){0x43, 0x21},
     .Size = (uint8_t[]){0x00, 0x10},
     .AddressLength = 2,
@@ -64,7 +64,7 @@ static const MemoryDefinition memDef = {
 };
 
 /** Test Data */
-static const uint8_t data[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
+static uint8_t data[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
 
 /* Setup and Teardowns *******************************************************/
 
