@@ -10,7 +10,7 @@ add_library(${MODULE_NAME} UDSClientLib.c)
 
 target_include_directories(${MODULE_NAME}
   PUBLIC
-  CMAKE_SOURCE_DIR/include
-  PRIVATE
-  CMAKE_CURRENT_SOURCE_DIR/ComLogic
+  ${CHARON_SOURCE_DIR}/include
+  ${CHARON_SOURCE_DIR}/src/Library/BusinessLogic/DataTransmitter
+  ${CHARON_SOURCE_DIR}/src/Library/ComLogic
 )

@@ -5,6 +5,13 @@ set(MODULE_NAME DTC)
 add_library(${MODULE_NAME} StoredDataTransmitter.c)
 
 target_include_directories(${MODULE_NAME}
-  PRIVATE
-  CMAKE_SOURCE_DIR/src/ComLogic
-  )
+  PUBLIC 
+  ${CMAKE_CURRENT_LIST_DIR}
+  ${CMAKE_SOURCE_DIR}/include/Interfaces
+  ${CMAKE_SOURCE_DIR}/include/DataModels
+)
+
+target_link_libraries(${MODULE_NAME}
+  PUBLIC
+  ComLogic
+ )

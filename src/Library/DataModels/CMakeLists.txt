@@ -9,7 +9,8 @@ add_library(${MODULE_NAME}
 
 target_include_directories(${MODULE_NAME} 
   PUBLIC
-  CMAKE_SOURCE_DIR/include
+  ${CHARON_SOURCE_DIR}/include
+  ${CHARON_SOURCE_DIR}/include/DataModels
 
 )
   

@@ -27,3 +27,13 @@ So thanks to all participating parties for providing me with this great opportun
 You guys rock.
 
 I also want to thank you, the user, to give my measly bachelor project a chance. Any and all feedback is much appreciated.
+
+
+## Bulding Tools:
+
+CMAKE:
+For CMAKE use this Pattern in your Build folder:
+```
+cmake ../uds_client --preset=Windows
+
+```
