@@ -6,7 +6,12 @@ add_library(${MODULE_NAME} Routine.c)
 
 target_include_directories(${MODULE_NAME}
   PUBLIC
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_SOURCE_DIR}/include/DataModels
-  ${CMAKE_SOURCE_DIR}/include/Interfaces
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/include/DataModels
+  ${PROJECT_SOURCE_DIR}/include/Interfaces
+  ${PROJECT_SOURCE_DIR}/src/Library
+)
+target_link_libraries(${MODULE_NAME} 
+  PRIVATE
+  ComLogic
 )

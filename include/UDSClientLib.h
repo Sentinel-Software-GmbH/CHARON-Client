@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *

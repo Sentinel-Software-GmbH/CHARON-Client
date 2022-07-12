@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-set(MODULE_NAME Charon_WindowsPort.exe)
+set(MODULE_NAME charonClientWindows)
 
 add_executable(${MODULE_NAME}
   ${CMAKE_CURRENT_LIST_DIR}/src/main.c
@@ -9,7 +9,7 @@ add_executable(${MODULE_NAME}
 )
 
 target_link_directories(${MODULE_NAME}
-  PUBLIC
+  PRIVATE
   ${CHARON_SOURCE_DIR}/include
   ${CHARON_SOURCE_DIR}/include/Interfaces
 )
@@ -18,4 +18,5 @@ target_link_libraries(${MODULE_NAME}
   PUBLIC
   DataTransmitter
   UDSClientLib
+  DCM
 )

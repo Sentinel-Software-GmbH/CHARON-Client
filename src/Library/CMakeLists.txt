@@ -11,6 +11,8 @@ add_library(${MODULE_NAME} UDSClientLib.c)
 target_include_directories(${MODULE_NAME}
   PUBLIC
   ${CHARON_SOURCE_DIR}/include
-  ${CHARON_SOURCE_DIR}/src/Library/BusinessLogic/DataTransmitter
-  ${CHARON_SOURCE_DIR}/src/Library/ComLogic
+)
+target_link_libraries(${MODULE_NAME} 
+  PRIVATE
+  DataTransmitter
 )
