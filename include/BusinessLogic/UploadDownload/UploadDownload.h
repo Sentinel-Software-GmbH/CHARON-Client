@@ -182,9 +182,3 @@ public bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback cal
 #endif /* UDS_UPLOAD_DOWNLOAD_H_ */
  
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
-
-
-
-
-
-

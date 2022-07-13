@@ -34,30 +34,21 @@
 #ifndef UDS_CLIENT_LIBRARY_H_
 #define UDS_CLIENT_LIBRARY_H_
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "config.h"
-#include "compiler.h"
-#include "DataModels/ErrorCode.h"
-#include "DataModels/Session.h"
-#include "DataModels/MemoryDefinition.h"
-#include "DataModels/DataDefinition.h"
-#include "DataModels/BaudRates.h"
-#include "DataModels/CommunicationControl.h"
-#include "DataModels/ComparisonLogic.h"
-#include "DataModels/ResetTypes.h"
-#include "DataModels/SID.h"
-#include "DataModels/TimerRates.h"
-#include "Interfaces/ComInterface.h"
-#include "Interfaces/TimerInterface.h"
-#include "Interfaces/CallbackInterface.h"
-#include "Interfaces/SecurityInterface.h"
-
+/* Includes ******************************************************************/
 #include <stdbool.h>
 #include <stdint.h>
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /** @brief Provides an universal entry function to initialize all Submodules
  * @param com An already initialized implementation of a UDS Communication Interface.
@@ -72,16 +63,9 @@ public void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityIn
  */ 
 public UDS_Client_Error_t UDS_Client_Task(void);
 
-#include "BusinessLogic/DataTransmitter/DataTransmitter.h"
-#include "BusinessLogic/DCM/DiagnosticCommunicationManager.h"
-#include "BusinessLogic/DTC/StoredDataTransmitter.h"
-#include "BusinessLogic/IOControl/InputOutputController.h"
-#include "BusinessLogic/Routine/Routine.h"
-#include "BusinessLogic/UploadDownload/UploadDownload.h"
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* UDS_CLIENT_LIBRARY_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

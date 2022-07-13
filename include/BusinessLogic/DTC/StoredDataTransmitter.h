@@ -38,11 +38,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+/* Includes ******************************************************************/
 #include <stdint.h>
 #include <stdbool.h>
-#include "Interfaces/CallbackInterface.h"
+#include "CallbackInterface.h"
 #include "compiler.h"
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /** @brief Clear the DTCs of a given Group of DTCs
  * @req R18 Clear diagnostic information from server.
@@ -278,4 +286,4 @@ public bool UDS_DTC_ReportWWHOBDDTCWithPermanentStatus(uint8_t FunctionalGroupId
 
 
 #endif /* UDS_STORED_DATA_TRANSMITTER_H_*/
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

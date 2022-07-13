@@ -34,25 +34,32 @@
 
 #ifndef UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_
 #define UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_
-
+/* Includes ******************************************************************/
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "Interfaces/SecurityInterface.h"
-#include "DataModels/Session.h"
-#include "DataModels/ErrorCode.h"
-#include "DataModels/SID.h"
-#include "Interfaces/CallbackInterface.h"
-#include "DataModels/ResetTypes.h"
-#include "DataModels/ComparisonLogic.h"
-#include "DataModels/TimerRates.h"
-#include "DataModels/BaudRates.h"
-#include "DataModels/CommunicationControl.h"
+#include "SecurityInterface.h"
+#include "Session.h"
+#include "ErrorCode.h"
+#include "SID.h"
+#include "CallbackInterface.h"
+#include "ResetTypes.h"
+#include "ComparisonLogic.h"
+#include "TimerRates.h"
+#include "BaudRates.h"
+#include "CommunicationControl.h"
 #include <stdbool.h>
 #include "compiler.h"
 
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 /** @brief Switches Diagnostic Sessions on the server.
  * @req R01 Request to control a diagnostic session.
  * @param session Session to change to.
@@ -238,4 +245,4 @@ public bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UD
 
 
 #endif /* UDS_DIAGNOSTIC_COMMUNICATION_MANAGER_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

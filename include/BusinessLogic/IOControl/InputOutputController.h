@@ -39,10 +39,20 @@
 extern "C" {
 #endif
 
+/* Includes ******************************************************************/
+
 #include "compiler.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "Interfaces/CallbackInterface.h"
+#include "CallbackInterface.h"
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /** @brief Return the Control of an IO DataIdentifier back to the ECU
  * @req R20 Request to Control IO of the server.
@@ -96,4 +106,4 @@ public bool UDS_IO_ShortTermAdjustment(uint16_t dataIdentifier, uint8_t *adjuste
 
 
 #endif /* UDS_INPUT_OUTPUT_CONTROLLER_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

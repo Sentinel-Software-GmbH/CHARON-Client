@@ -14,17 +14,16 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
- *  Created on: Wed Jul 29 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup DataModels
+ * @addtogroup BusinessLogic
  * @{
- * @file DataDefinition.h
- * Includes a Data Struct to gather all relevant data for an DID Access.
- * 
+ * @file
+ * Implementation of the Diagnostic and Communication Management Functional
+ * Unit. The detailed specifications can be found in @b ISO @b 14229-1
+ * Chapter 9.
  *
  * $Id:  $
  * $URL:  $
@@ -33,44 +32,21 @@
  */
 /*****************************************************************************/
 
-#ifndef UDS_DATA_DEFINITION_H_
-#define UDS_DATA_DEFINITION_H_
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 /* Includes ******************************************************************/
-
-#include <stdint.h>
+#include "config.h"
 
 /* Constants *****************************************************************/
 
 /* Macros ********************************************************************/
 
-/* Types *********************************************************************/
+#if EXPORT_TO_DLL==1
+#define public __declspec(dllexport)
+#else
+#define public
+#endif
 
-/** @brief Data Structure of all the Information the Server needs to access a Data Identifier */
-typedef struct DataDefinition_public
-{
-    /** @brief Data Identifier. This is Server/Vendor/Manufacturer specific.
-     * Can also be a dynamically defined Identifier.
-     */
-    uint16_t DID;
-    /** @brief Offset in Data Identifier.
-     * @warning 0x01 for the first byte. First Byte is NOT 0x00.
-     */
-    uint8_t firstBytePosition;
-    /** @brief Size of underlying Data. */
-    uint8_t memorySize;
-} DataDefinition;
+/* Types *********************************************************************/
 
 /* Interfaces ****************************************************************/
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* UDS_DATA_DEFINITION_H_ */
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

@@ -38,14 +38,22 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "DataModels/MemoryDefinition.h"
-#include "DataModels/DataDefinition.h"
-#include "DataModels/TimerRates.h"
-#include "Interfaces/CallbackInterface.h"
+/* Includes ******************************************************************/
+#include "MemoryDefinition.h"
+#include "DataDefinition.h"
+#include "TimerRates.h"
+#include "CallbackInterface.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "compiler.h"
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /** @brief Read out the value of a Data Identifier.
  * @req R11 Request to Read current value of a record identified by a provided data identifier.
@@ -150,4 +158,4 @@ public bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t* 
 
 
 #endif /* UDS_DATA_TRANSMITTER_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

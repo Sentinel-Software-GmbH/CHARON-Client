@@ -34,23 +34,32 @@
 #ifndef UDS_SESSION_AND_TRANSPORT_MANAGER_H_
 #define UDS_SESSION_AND_TRANSPORT_MANAGER_H_
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "Interfaces/ComInterface.h"
-#include "Interfaces/TimerInterface.h"
-#include "Interfaces/SecurityInterface.h"
-#include "Interfaces/CallbackInterface.h"
-#include "DataModels/Session.h"
-#include "DataModels/ErrorCode.h"
-#include "DataModels/SID.h"
+/* Includes ******************************************************************/
+
+#include "ComInterface.h"
+#include "TimerInterface.h"
+#include "SecurityInterface.h"
+#include "CallbackInterface.h"
+#include "Session.h"
+#include "ErrorCode.h"
+#include "SID.h"
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
 
 struct PendingObject {
     uint8_t SID;
     UDS_callback callback;
 };
+
+/* Interfaces ****************************************************************/
 
 void STM_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxLength);
 
@@ -90,4 +99,4 @@ void STM_SetSessionTimeout(uint32_t timeout);
 
 
 #endif /* UDS_SESSION_AND_TRANSPORT_MANAGER_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
