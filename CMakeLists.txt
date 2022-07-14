@@ -4,7 +4,7 @@ project(Charon_Client LANGUAGES C CXX)
 
 set(CHARON_SOURCE_DIR ${PROJECT_SOURCE_DIR})
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/toolchain/cmake)
 
 
 add_subdirectory(src)

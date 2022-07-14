@@ -10,8 +10,7 @@ add_executable(${MODULE_NAME}
 
 target_link_directories(${MODULE_NAME}
   PRIVATE
-  ${CHARON_SOURCE_DIR}/include
-  ${CHARON_SOURCE_DIR}/include/Interfaces
+  ${CMAKE_CURRENT_LIST_DIR}/src
 )
 
 target_link_libraries(${MODULE_NAME} 

@@ -10,7 +10,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             },
-            "toolchainFile": "${sourceDir}/cmake/GCC.cmake"
+            "toolchainFile": "${sourceDir}/toolchain/cmake/GCC.cmake"
         },
         {
             "name": "Windows",
