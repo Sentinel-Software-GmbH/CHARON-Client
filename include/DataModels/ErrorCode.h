@@ -39,8 +39,6 @@
 
 /* Constants *****************************************************************/
 
-const char * ErrorCode_getString(UDS_Client_Error_t code);
-
 /* Macros ********************************************************************/
 
 /* Types *********************************************************************/
@@ -70,6 +68,7 @@ typedef enum ErrorCode_public {
 #endif
 } UDS_Client_Error_t;
 
+const char * ErrorCode_getString(UDS_Client_Error_t code);
 /* Interfaces ****************************************************************/
 
 

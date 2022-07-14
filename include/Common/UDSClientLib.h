@@ -39,6 +39,23 @@ extern "C" {
 #endif
 
 /* Includes ******************************************************************/
+#include "config.h"
+#include "compiler.h"
+#include "SessionAndTransportManager.h"
+#include "ErrorCode.h"
+#include "Session.h"
+#include "MemoryDefinition.h"
+#include "DataDefinition.h"
+#include "BaudRates.h"
+#include "CommunicationControl.h"
+#include "ComparisonLogic.h"
+#include "ResetTypes.h"
+#include "SID.h"
+#include "TimerRates.h"
+#include "ComInterface.h"
+#include "TimerInterface.h"
+#include "CallbackInterface.h"
+#include "SecurityInterface.h"
 #include <stdbool.h>
 #include <stdint.h>
 

@@ -35,7 +35,7 @@
 #ifndef CALLBACK_INTERFACE_H_
 #define CALLBACK_INTERFACE_H_
     #include <stdint.h>
-    #include "DataModels/ErrorCode.h"
+    #include "ErrorCode.h"
 
     /** @brief Represents a callback function that this UDS Client can handle.
      * @req S06 Notify application.

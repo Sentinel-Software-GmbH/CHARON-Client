@@ -8,5 +8,6 @@ target_include_directories(${MODULE_NAME}
   INTERFACE PUBLIC 
   ${PROJECT_SOURCE_DIR}/include/ComLogic
   ${PROJECT_SOURCE_DIR}/include/Interfaces
-  ${PROJECT_SOURCE_DIR}/inlcue/Common
+  ${PROJECT_SOURCE_DIR}/include/DataModels
+  ${PROJECT_SOURCE_DIR}/include/Common
 )

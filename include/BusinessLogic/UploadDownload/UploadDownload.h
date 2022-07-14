@@ -44,8 +44,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "Interfaces/CallbackInterface.h"
-#include "DataModels/MemoryDefinition.h"
+#include "CallbackInterface.h"
+#include "MemoryDefinition.h"
 #include "compiler.h"
 
 /* Constants *****************************************************************/
