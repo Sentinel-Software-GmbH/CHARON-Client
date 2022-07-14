@@ -5,11 +5,9 @@ set(MODULE_NAME DataTransmitter)
 add_library(${MODULE_NAME} DataTransmitter.c)
 
 target_include_directories(${MODULE_NAME}
-  PUBLIC 
-  ${PROJECT_SOURCE_DIR}/include
-  ${PROJECT_SOURCE_DIR}/include/Interfaces
+  INTERFACE PUBLIC
   ${PROJECT_SOURCE_DIR}/include/DataModels
-  ${PROJECT_SOURCE_DIR}/src/Library
+  ${PROJECT_SOURCE_DIR}/include/BusinessLogic/DataTransmitter
   )
 
 target_link_libraries(${MODULE_NAME} 

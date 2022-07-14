@@ -33,8 +33,8 @@
 /* Includes ******************************************************************/
 
 #include "SessionAndTransportManager.h"
-#include "DataModels/SID.h"
-#include "DataModels/Session.h"
+#include "SID.h"
+#include "Session.h"
 #include "config.h"
 #include <stddef.h>
 

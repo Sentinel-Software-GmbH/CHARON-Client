@@ -36,6 +36,14 @@
 #ifndef UDS_SERVICE_IDENTIFIER_H_
 #define UDS_SERVICE_IDENTIFIER_H_
 
+/* Includes ******************************************************************/
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
 // TODO: Do they need to be public?
 
     /** @brief All possible Request Commands defined by the ISO 14229-1 UDS Standard.
@@ -118,4 +126,7 @@
         NRC_responsePending = 0x78,
     } NRC_t;
 
+/* Interfaces ****************************************************************/
+
 #endif // UDS_SERVICE_IDENTIFIER_H_
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

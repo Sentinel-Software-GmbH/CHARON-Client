@@ -33,8 +33,8 @@
 /* Includes */
 
 #include "DataTransmitter.h"
-#include "ComLogic/SessionAndTransportManager.h"
-#include "DataModels/SID.h"
+#include "SessionAndTransportManager.h"
+#include "SID.h"
 #include <stdint.h>
 #include <string.h>
 

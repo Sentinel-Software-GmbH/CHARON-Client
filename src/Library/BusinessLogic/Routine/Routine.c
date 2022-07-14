@@ -33,8 +33,8 @@
 
 #include <string.h>
 #include "Routine.h"
-#include "DataModels/SID.h"
-#include "ComLogic/SessionAndTransportManager.h"
+#include "SID.h"
+#include "SessionAndTransportManager.h"
 
 /* Private Function Definitions */
 

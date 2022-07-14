@@ -37,6 +37,14 @@
 #ifndef UDS_RESET_H_
 #define UDS_RESET_H_
 
+/* Includes ******************************************************************/
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
 /** @brief How the Server should Reset on an ECU Reset Request. */
 typedef enum UDS_Reset_Type_public {
     UDS_Reset_Reserved00 = 0x00,                /**< ISO Reserved*/
@@ -47,4 +55,7 @@ typedef enum UDS_Reset_Type_public {
     UDS_disableRapidPowerShutDown = 0x05,       /**< Disable a rapid Shutdown on ECUs that support this. */
 } UDS_Reset_t;
 
+/* Interfaces ****************************************************************/
+
 #endif /* UDS_RESET_H_ */
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

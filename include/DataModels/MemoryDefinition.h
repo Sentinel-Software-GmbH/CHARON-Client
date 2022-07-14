@@ -36,12 +36,19 @@
 #ifndef UDS_MEMORY_DEFINITION_H_
 #define UDS_MEMORY_DEFINITION_H_
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* Includes ******************************************************************/
+
 #include <stdint.h>
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
 
 /**
  * Data Class for a MemoryAddress.
@@ -77,6 +84,7 @@ typedef struct MemoryDefinition_public {
     uint8_t SizeLength;
 } MemoryDefinition;
 
+/* Interfaces ****************************************************************/
 /**
  * Prepares the Address and Length Format Identifier by truncating the AddressLength and SizeLength
  * and writing the corresponding nibbles.
@@ -96,4 +104,4 @@ uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition *m
 
 
 #endif /* UDS_MEMORY_DEFINITION_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

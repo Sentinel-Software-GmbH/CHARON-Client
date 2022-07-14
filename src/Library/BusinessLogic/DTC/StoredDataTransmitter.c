@@ -30,8 +30,8 @@
  */
 
 #include "StoredDataTransmitter.h"
-#include "DataModels/SID.h"
-#include "ComLogic/SessionAndTransportManager.h"
+#include "SID.h"
+#include "SessionAndTransportManager.h"
 
 bool UDS_DTC_ClearDiagnosticInformation(uint32_t groupOfDTC, UDS_callback callback)
 {

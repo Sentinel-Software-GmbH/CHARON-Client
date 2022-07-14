@@ -35,9 +35,9 @@
 #include <string.h>
 #include "UploadDownload.h"
 #include "config.h"
-#include "Interfaces/CallbackInterface.h"
-#include "DataModels/SID.h"
-#include "ComLogic/SessionAndTransportManager.h"
+#include "CallbackInterface.h"
+#include "SID.h"
+#include "SessionAndTransportManager.h"
 
 /* Imports *******************************************************************/
 

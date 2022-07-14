@@ -32,7 +32,7 @@
  */
 /*****************************************************************************/
 
-#include "DataModels/MemoryDefinition.h"
+#include "MemoryDefinition.h"
 #include <stdint.h>
 
 uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition * memdef) {

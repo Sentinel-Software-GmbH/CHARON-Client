@@ -35,6 +35,16 @@
 #ifndef ERROR_CODE_H_
 #define ERROR_CODE_H_
 
+/* Includes ******************************************************************/
+
+/* Constants *****************************************************************/
+
+const char * ErrorCode_getString(UDS_Client_Error_t code);
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
 /** @brief A representation of all the Errors that the Client could have. */
 typedef enum ErrorCode_public {
     /** @brief Everything was OK. */
@@ -60,6 +70,8 @@ typedef enum ErrorCode_public {
 #endif
 } UDS_Client_Error_t;
 
-const char * ErrorCode_getString(UDS_Client_Error_t code);
+/* Interfaces ****************************************************************/
+
 
 #endif // ERROR_CODE_H_
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

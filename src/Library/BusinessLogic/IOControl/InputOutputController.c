@@ -30,9 +30,9 @@
  */
 
 #include "InputOutputController.h"
-#include "DataModels/SID.h"
+#include "SID.h"
 #include "string.h"
-#include "ComLogic/SessionAndTransportManager.h"
+#include "SessionAndTransportManager.h"
 
 
 /* Private Function Definitions */

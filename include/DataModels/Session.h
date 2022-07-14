@@ -41,8 +41,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Includes ******************************************************************/
 
 #include <stdint.h>
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
 
 /** @brief Representation of every possible ISO specified Session on the Server. */
 typedef enum SessionType_public
@@ -62,6 +69,8 @@ typedef struct Session_public
     uint16_t p2_star;                   /**< Timeout for the extended answer. 10ms Resolution. */
 } UDS_Session_t;
 
+/* Interfaces ****************************************************************/
+
 
 #ifdef __cplusplus
 }
@@ -69,4 +78,4 @@ typedef struct Session_public
 
 
 #endif /* UDS_SESSION_H_ */
- 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
