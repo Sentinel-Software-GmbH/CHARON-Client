@@ -24,7 +24,11 @@ set(STATIC_LIBS ON)
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(COMMON_FLAGS "-O0 -Wall -fno-set-stack-executable -mwin32 -mconsole -mnop-fun-dllimport")
+if(PORT STREQUAL Windows)
+  set(PORT_FLAGS "-fno-set-stack-executable -mwin32 -mconsole -mnop-fun-dllimport")
+endif()
+
+set(COMMON_FLAGS "${PORT_FLAGS} -O0 -Wall ")
 set(CMAKE_C_FLAGS "${COMMON_FLAGS}")
 
 # Debug Flags
