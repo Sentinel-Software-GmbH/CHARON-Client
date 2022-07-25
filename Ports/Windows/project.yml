@@ -13,7 +13,7 @@
   :compile_threads: 1
   :release_build: TRUE
   :test_file_prefix: test_
-  :which_ceedling: ../../../toolchain/ceedling
+  :which_ceedling: ../../toolchain/ceedling
   :default_tasks:
     - release
 
@@ -37,7 +37,7 @@
 :paths:
   :source:
     - src/**
-    - ../../../include/**
-    - ../../Library/**
+    - ../../include/**
+    - ../../src/**
 
 ...

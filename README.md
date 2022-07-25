@@ -54,3 +54,10 @@ Then use ninja to build.
 ### Ceedling:
 Navigate to the Port folder and use one of the Ports.
 Use ceedling release to build .exe or .elf.
+
+
+
+# Available presets
+```
+Windows
+```
