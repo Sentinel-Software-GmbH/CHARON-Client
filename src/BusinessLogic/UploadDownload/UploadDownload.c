@@ -114,7 +114,7 @@ bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
     txBuffer[0] = SID_TransferData;
     txBuffer[1] = blockSequenceCounter;
     UDS_MUTEX_UNLOCK();
-    STM_Deploy(txBuffer, 2, callback, false);
+    return STM_Deploy(txBuffer, 2, callback, false);
 }
 
 bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback) {
@@ -133,13 +133,29 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
     txBuffer[0] = SID_RequestTransferExit;
     memcpy(&txBuffer[1], vendorSpecificServiceParameter, lengthOfParameter);
     UDS_MUTEX_UNLOCK();
-    STM_Deploy(txBuffer, length, callback, false);
+    return STM_Deploy(txBuffer, length, callback, false);
 }
 
-bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace) {}
-bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path) {}
-bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback);
-bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback);
+bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace) 
+{
+    //@todo finish this
+    return true;
+}
+bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path) 
+{
+    //@todo finish this
+    return true;
+}
+bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback) 
+{
+    //@todo finish this
+    return true;
+};
+bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback) 
+{
+    //@todo finish this
+    return true;
+};
 
 /* Private Function **********************************************************/
 

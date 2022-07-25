@@ -29,11 +29,28 @@ You guys rock.
 I also want to thank you, the user, to give my measly bachelor project a chance. Any and all feedback is much appreciated.
 
 
-## Bulding Tools:
+# Building Tools and small How To:
 
-CMAKE:
+### CMAKE:
 For CMAKE use this Pattern in your Build folder:
-```
-cmake ../uds_client --preset=Windows
 
 ```
+cmake ../uds_server --preset=Windows
+
+```
+If you want to switch Ports without deleting the full build folder then follow the steps.
+
+Step 1:
+Navigate to your build folder and find and delete the CMakeCache.txt.
+
+Step 2:
+Find the and delete the CMakeFiles folder.
+
+Step 3:
+Open cmd in your build folder and use the pattern below(use the Port you like to build).
+The previous steps causes CMake to reconfigure the project and swapping compilers. 
+Then use ninja to build.
+
+### Ceedling:
+Navigate to the Port folder and use one of the Ports.
+Use ceedling release to build .exe or .elf.

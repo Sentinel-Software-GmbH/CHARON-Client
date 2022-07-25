@@ -167,6 +167,8 @@ bool UDS_DCM_AccessTimingParameter(uint16_t P2, uint16_t P2_star, UDS_callback c
    	if(callback != NULL) {
 		callback(E_NotSupported, NULL, 0);
 	}
+	//@todo finish this
+	return true;
 }
 
 bool UDS_DCM_ResponseOnCustomEvent(uint8_t event,
@@ -334,10 +336,13 @@ bool UDS_DCM_LinkControl_WithSpecificParameter(uint32_t modeParameter, UDS_callb
 
 // TODO: SecuredDataTransmission einstellen
 bool UDS_DCM_activateSecuredDataTransmission() {
-	
+	//@todo finish this
+	return true;	
 }
 
 bool UDS_DCM_deactivateSecuredDataTransmission() {
+	//@todo finish this
+	return true;
 	
 }
 

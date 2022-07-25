@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <stdarg.h>
+#include "DiagnosticCommunicationManager.h"
 
 /* Imports *******************************************************************/
 
