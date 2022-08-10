@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
-
+#set up module name for UDS Client Library
 set(MODULE_NAME UDSClientLib)
-
-add_library(${MODULE_NAME} UDSClientLib.c)
-
+#create library and link all needed librariers
+add_library(${MODULE_NAME} 
+  ${CMAKE_CURRENT_LIST_DIR}/UDSClientLib.c
+)
 target_include_directories(${MODULE_NAME}
   INTERFACE PUBLIC
   ${CHARON_SOURCE_DIR}/include/Common
