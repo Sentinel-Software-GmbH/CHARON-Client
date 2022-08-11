@@ -66,11 +66,11 @@ For CMake you have to create a build folder. After that you can use one of the p
 
 If you want to build a Charon port in a build folder that is created outside your project folder:
 ```
-cmake ../uds_server --preset=windows    
+cmake ../uds_server --preset=Windows    
 ```
 If you want to build a Charon port in a build folder that is created inside your project folder:
 ```
-cmake ../ --preset=windows 
+cmake ../ --preset=Windows 
 ```
 
 The commands above causes CMake to configure the Windows port as a debug build.
@@ -99,14 +99,14 @@ To build unit tests, open CMD in your project folder and use ```ceedling.cmd``` 
 You can use the runCharonBuilder.cmd to run and configure CMake and Ninja for you.
 To use the runCharonBuilder, open a CMD in your project folder and use:
 ```
-runCharonBuilder.cmd --port windows
+runCharonBuilder.cmd --port Windows
 ```
 The command above will create a debug build folder inside your project folder. After that it will configure CMake for the Windows port,
 it will also run Ninja.
 You can choose between a debug and a release build.
 To create a release build, use the command below.
 ```
-runCharonBuilder.cmd --release windows
+runCharonBuilder.cmd --release Windows
 ```
 The command above will also create a release build folder.
 The commands for the other ports are the same as the CMake presets.
