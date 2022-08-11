@@ -49,7 +49,7 @@ bool UDS_DTC_ReportNumberOfDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback c
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x01;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -59,7 +59,7 @@ bool UDS_DTC_ReportDTCByStatusMask(uint8_t DTCStatusMask, UDS_callback callback)
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x02;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -193,7 +193,7 @@ bool UDS_DTC_ReportMirrorMemoryDTCByStatusMask(uint8_t DTCStatusMask, UDS_callba
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x0F;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -216,7 +216,7 @@ bool UDS_DTC_ReportNumberOfMirrorMemoryDTCByStatusMask(uint8_t DTCStatusMask, UD
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x11;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -226,7 +226,7 @@ bool UDS_DTC_ReportNumberOfEmissionsOBDDTCByStatusMask(uint8_t DTCStatusMask, UD
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x12;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -236,7 +236,7 @@ bool UDS_DTC_ReportEmissionsOBDDTCByStatusMask(uint8_t DTCStatusMask, UDS_callba
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x13;
-    message[3] = DTCStatusMask;
+    message[2] = DTCStatusMask;
     return STM_Deploy(message, 3, callback, false);
 }
 
@@ -327,7 +327,7 @@ bool UDS_DTC_ReportWWHOBDDTCWithPermanentStatus(uint8_t FunctionalGroupIdentifie
     uint8_t message[3];
     message[0] = SID_ReadDTCInformation;
     message[1] = 0x55;
-    message[3] = FunctionalGroupIdentifier;
+    message[2] = FunctionalGroupIdentifier;
     return STM_Deploy(message, 3, callback, false);
 }
 

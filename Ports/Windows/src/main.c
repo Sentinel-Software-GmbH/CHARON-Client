@@ -42,6 +42,7 @@
 #include <windows.h>
 #include <stdarg.h>
 #include "DiagnosticCommunicationManager.h"
+#include "StoredDataTransmitter.h"
 
 /* Imports *******************************************************************/
 
@@ -77,7 +78,7 @@ void printMessage(UDS_Client_Error_t error, uint8_t* receive, uint32_t receive_l
         for (int i = 0; i < receive_length; i++) {
             printf("%02x", receive[i]);
         }
-        printf("\n");    
+        printf("\n"); 
     }
     return;
 }
@@ -129,8 +130,10 @@ void DCM() {
     uds_wait();
 }
 
-void DTC() {
-
+void DTC() 
+{
+    UDS_DTC_ReportNumberOfDTCByStatusMask(121,printMessage);
+    uds_wait();
 }
 
 void IOControl() {
@@ -151,10 +154,13 @@ void DataTransmit() {
 
 
 int main(void) {
-       pipe_init();
-       UDS_Client_Init(&wincom1, &timer1, NULL, rxBuffer, RX_BUFFER_LENGTH);
-    DCM();
-       exit(0);
+    pipe_init();
+    UDS_Client_Init(&wincom1, &timer1, NULL, rxBuffer, RX_BUFFER_LENGTH);
+
+    DTC();
+    getchar();
+
+    exit(0);
 }
 /* Private Function **********************************************************/
 

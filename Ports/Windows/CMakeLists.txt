@@ -10,6 +10,7 @@ add_executable(${MODULE_NAME}
 target_link_libraries(${MODULE_NAME} 
   PUBLIC
   DataTransmitter
+  DTC
   UDSClientLib
   DCM
 )
