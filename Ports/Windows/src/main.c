@@ -18,9 +18,9 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup Window Port
+ * @addtogroup WindowsPort Windows Port
  * @{
- * @file
+ * @file main.c
  * Brief Description.
  * main.c
  * Detailed Description.

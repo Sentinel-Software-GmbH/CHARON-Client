@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup BusinessLogic
+ * @defgroup BusinessLogic Business Logic Modules
  * @{
  * @file
  * Implementation of the Stored Data Transmitter Functional Unit.

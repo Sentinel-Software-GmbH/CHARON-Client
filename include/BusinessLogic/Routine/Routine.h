@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup BusinessLogic
+ * @defgroup BusinessLogic Business Logic Modules
  * @{
  * @file
  * Provides functions to transmit data to and from the server.

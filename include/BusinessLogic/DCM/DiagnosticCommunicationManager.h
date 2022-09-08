@@ -18,7 +18,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup BusinessLogic
+ * @addtogroup BusinessLogic Business Logic Modules
  * @{
  * @file
  * Implementation of the Diagnostic and Communication Management Functional

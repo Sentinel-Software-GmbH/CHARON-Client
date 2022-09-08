@@ -18,9 +18,9 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup timer.c
+ * @addtogroup WindowsPort Windows Port
  * @{
- * @file
+ * @file timer.c
  * Brief Description.
  * Detailed Description.
  *
