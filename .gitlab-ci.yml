@@ -57,8 +57,6 @@ Doxygen:
         - when: always
     script:
         chmod +x ./documentation.bat
-    after_script:
-        - if (Test-Path build/documentation/html/Charon_UDS_Client.chm) { Move-Item build/documentation/html/Charon_UDS_Client.chm documentation }
     artifacts:
         name: "DoxygenArtefact"
         when:

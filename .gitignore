@@ -8,3 +8,5 @@
 
 /cppcheck.xml
 /documentation_error.log
+/.gitlab-ci.yml.bak
+/documentation.bat.bak
