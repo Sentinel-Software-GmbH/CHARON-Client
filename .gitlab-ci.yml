@@ -56,7 +56,7 @@ Doxygen:
     rules:
         - when: always
     script:
-        chmod +x ./documentation.bat
+        doxygen "documentation/Doxyfile" 2> documentation_error.log
     artifacts:
         name: "DoxygenArtefact"
         when:
