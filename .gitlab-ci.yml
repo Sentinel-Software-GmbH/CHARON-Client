@@ -57,8 +57,10 @@ Doxygen:
         - when: always
     script:
         - doxygen "documentation/Doxyfile" 2> documentation_error.log
+        - cd build\documentation\html
+        - copy Charon_UDS_Client.chm ..\
     after_script:
-        - if (Test-Path build/documtation/html/Charon_UDS_Client.chm) { Move-Item build/documentation/html/Charon_UDS_Client.chm Documentation }
+        - if (Test-Path build/documentation/html/Charon_UDS_Client.chm) { Move-Item build/documentation/html/Charon_UDS_Client.chm documentation }
     artifacts:
         name: "DoxygenArtefact"
         when:
