@@ -30,6 +30,7 @@ Like:
  - Runtime Execution
  - EOL Adaption
  - etc...
+
 ## Thanks
 
 I started this project as my bachelor thesis and want to finish it as a fully fledged junior developer.
@@ -59,6 +60,7 @@ Python
 Doxygen
 HTMLHelpCompiler
 CPPcheck
+(Graphviz) DOT
 ```
 for automatic build tool and unit tests.
 
@@ -121,12 +123,14 @@ The command above will create a build folder and run Ceedling to create unit tes
 
 ### CppCheck
 To run CppCheck on charon .c files you can use the codeanalysis.bat.
-At this current state the analysis will only applay to the file in the src folder and the Windows port files.
-To change or add new foldert of files to analysis modify the codeanalysis.bat 
+At the current state the analysis will only apply to the file in the src folder and the Windows port files.
+To change or add new folders or files to analysis modify the codeanalysis.bat.
+You can find the analysis report in the folder *build\cppCheckReport\index.html*.   
 
 ### Doxygen 
 To generate Doxygen documentation you can use the documentation.bat.
 If you do not have the HTMLHelpCompiler in your Path you need to set it up in the Doxyfile or use the DoxygenWizard.
+You can find the documentation in the folder *build\documentation\Charon_UDS_Client*.
 
 ## Note
 The available preset for CMake can be found in the CMakePreset.json file. 
