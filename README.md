@@ -56,6 +56,9 @@ use the compiler based on your target port
 Ruby
 Ceedling
 Python
+Doxygen
+HTMLHelpCompiler
+CPPcheck
 ```
 for automatic build tool and unit tests.
 
@@ -114,7 +117,17 @@ If you like you can use:
 ```
 runCharonBuilder.cmd --port unittest
 ```
-The command above will create a build folder and run Ceedling to create unit tests. 
+The command above will create a build folder and run Ceedling to create unit tests.
+
+### CppCheck
+To run CppCheck on charon .c files you can use the codeanalysis.bat.
+At this current state the analysis will only applay to the file in the src folder and the Windows port files.
+To change or add new foldert of files to analysis modify the codeanalysis.bat 
+
+### Doxygen 
+To generate Doxygen documentation you can use the documentation.bat.
+If you do not have the HTMLHelpCompiler in your Path you need to set it up in the Doxyfile or use the DoxygenWizard.
+
 ## Note
 The available preset for CMake can be found in the CMakePreset.json file. 
 If you want to add an other preset please use the existing one as template.
