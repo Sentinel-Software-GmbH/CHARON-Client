@@ -9,7 +9,7 @@ stages:
   - test
   - DebugBuild
   - static-code-analysis
-#  - doxygen
+  - doxygen
 
 
 cppcheck:
@@ -47,6 +47,25 @@ Unit Tests:
              - build/ceedling/artifacts/test/report.xml
         paths:
             - build/ceedling/artifacts/test/*
+
+
+Doxygen:
+    stage: doxygen
+    allow_failure: true
+    needs:
+    rules:
+        - when: always
+    script:
+        - doxygen "documentation/Doxyfile" 2> documentation_error.log
+    after_script:
+        - if (Test-Path build/documtation/html/Charon_UDS_Client.chm) { Move-Item build/documentation/html/Charon_UDS_Client.chm Documentation }
+    artifacts:
+        name: "DoxygenArtefact"
+        when:
+            always
+        paths:
+            - documentation_error.log
+            - build/documentation/Charon_UDS_Client.chm
 
 
 .build_instruction: &build
