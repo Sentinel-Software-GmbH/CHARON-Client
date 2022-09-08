@@ -5,3 +5,5 @@
 **.code-snippets
 
 **/.vscode
+
+/cppcheck.xml
