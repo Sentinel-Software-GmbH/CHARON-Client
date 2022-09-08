@@ -56,9 +56,7 @@ Doxygen:
     rules:
         - when: always
     script:
-        - doxygen "documentation/Doxyfile" 2> documentation_error.log
-        - cd build\documentation\html
-        - copy Charon_UDS_Client.chm ..\
+        chmod +x ./documentation.bat
     after_script:
         - if (Test-Path build/documentation/html/Charon_UDS_Client.chm) { Move-Item build/documentation/html/Charon_UDS_Client.chm documentation }
     artifacts:
@@ -86,9 +84,9 @@ Doxygen:
       - build/CMakeDebugBuild/port/*
 
 
-windows:
+Windows:
   extends: .build_job
-standalone:
-  extends: .build_job
-stm32f4:
-  extends: .build_job   
+# standalone:
+  # extends: .build_job
+# stm32f4:
+  # extends: .build_job   
