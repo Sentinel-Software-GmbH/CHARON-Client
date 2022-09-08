@@ -791,7 +791,8 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = .\documentation_src \
-                         .\src\Library \
+                         .\src \
+						 .\Ports\Windows\src \
                          .\include \
                          .\README.md
 

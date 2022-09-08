@@ -7,3 +7,4 @@
 **/.vscode
 
 /cppcheck.xml
+/documentation_error.log
