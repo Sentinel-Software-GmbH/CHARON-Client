@@ -1,7 +1,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @defgroup Facade
+ * @defgroup Facade Facade
  * @brief The Facade for the Business Logic, the user only needs to include this header to access all UDS services.
  * 
  * @defgroup BusinessLogic Business Logic Modules
@@ -10,7 +10,7 @@
  * @defgroup ComLogic Communication Logic Modules
  * @brief The Modules where the communication and session management logic resides.
  * 
- * @defgroup Interfaces
+ * @defgroup Interfaces Interfaces
  * @brief Interfaces for the user to implement.
  * 
  * @defgroup DataModels Data Model Modules

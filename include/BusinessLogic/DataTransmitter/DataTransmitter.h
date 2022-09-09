@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup BusinessLogic
+ * @addtogroup BusinessLogic Business Logic Modules
  * @{
  * @file DataTransmitter.h
  * Collection of all configurable variables of the client.

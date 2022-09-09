@@ -18,9 +18,9 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup wincom.c
+ * @addtogroup WindowsPort Windows Port
  * @{
- * @file
+ * @file wincom.c
  * Brief Description.
  * Communication Interface for Windows.
  * Detailed Description.

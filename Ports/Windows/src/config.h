@@ -22,7 +22,7 @@
  * @{
  * @addtogroup Config
  * @{
- * @file $Filename$.h
+ * @file config.h
  * Brief Description.
  * Detailed Description
  *

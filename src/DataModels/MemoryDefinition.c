@@ -20,7 +20,7 @@
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup DataModels
+ * @addtogroup DataModels Data Model Modules
  * @{
  * @file
  * Provides helper functions for MemoryDefinition.
