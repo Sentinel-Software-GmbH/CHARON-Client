@@ -18,15 +18,10 @@ cppcheck:
         - when: always
     allow_failure: true
     script:
-        - py -m pip install cppcheck-junit
         - .\codeanalysis.bat
-    after_script:
-        - cppcheck_junit cppcheck.xml results.xml
     artifacts:
         name: "CppCheck"
         when: always
-        reports:
-            junit: cppcheck.xml
         paths:
           - build/cppCheckReport/*
 
@@ -38,13 +33,9 @@ Unit Tests:
         - when: always
     script:
         - ridk enable
-        - py -m pip install gcovr
         - ruby toolchain\ceedling\bin\ceedling
     artifacts:
         name: "UnitTestArtefact"
-        reports:
-            junit:
-             - build/ceedling/artifacts/test/report.xml
         paths:
             - build/ceedling/artifacts/test/*
 
