@@ -15,15 +15,16 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- *  Created on: Tue Jul 28 2020
+ *  Created on: Wed Jul 29 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup Interfaces
+ * @addtogroup Facade
  * @{
- * @file CallbackInterface.h
- * Includes a prototype of a Callback.
+ * @file
+ * Includes a user friendly representation of the fixed values to adjust the speed.
+ * 
  *
  * $Id:  $
  * $URL:  $
@@ -32,13 +33,13 @@
  */
 /*****************************************************************************/
 
-#ifndef CALLBACK_INTERFACE_H_
-#define CALLBACK_INTERFACE_H_
-    #include <stdint.h>
-    #include "ErrorCode.h"
+#include "UDSClientLib.h"
+#include "SessionAndTransportManager.h"
 
-    /** @brief Represents a callback function that this UDS Client can handle.
-     * @req S06 Notify application.
-    */
-    typedef void(*UDS_callback)(UDS_Client_Error_t errorCode, uint8_t* buffer, uint32_t length);
-#endif // CALLBACK_INTERFACE_H
+void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
+    STM_Init(com, timer, security, rxBuffer, rxBufferLength);
+}
+
+UDS_Client_Error_t UDS_Client_Task(void) {
+    return STM_cyclic();
+}

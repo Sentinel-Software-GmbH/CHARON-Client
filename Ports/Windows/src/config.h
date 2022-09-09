@@ -15,16 +15,16 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- *  Created on: Wed Jul 29 2020
+ *  Created on: Tue Jul 28 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup DataModels
+ * @addtogroup Config
  * @{
- * @file DataDefinition.h
- * Includes a Data Struct to gather all relevant data for an DID Access.
- * 
+ * @file $Filename$.h
+ * Brief Description.
+ * Detailed Description
  *
  * $Id:  $
  * $URL:  $
@@ -33,44 +33,40 @@
  */
 /*****************************************************************************/
 
-#ifndef UDS_DATA_DEFINITION_H_
-#define UDS_DATA_DEFINITION_H_
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+#ifndef UDS_CLIENT_CONFIG_H_
+#define UDS_CLIENT_CONFIG_H_
 
 /* Includes ******************************************************************/
 
-#include <stdint.h>
+#include <stdio.h>
+
+/* Timings *******************************************************************/
+
+#define P2_DEFAULT              100U
+#define P2_STAR_DEFAULT         300U
+#define NON_DEFAULT_SESSION_TIMEOUT 2000U
 
 /* Constants *****************************************************************/
 
-/* Macros ********************************************************************/
+#define MAX_ASYNC_MESSAGES      5U
+#define PROGRAMMING_BAUD_RATE   9600U
+
+/* OS Plug Functions *********************************************************/
+
+#define UDS_MUTEX_LOCK()
+#define UDS_MUTEX_UNLOCK()
+
+#define UDS_LOG_INFO(x, ...)         printf("[UDS Client] Info: " x "\n", ##__VA_ARGS__)
+#define UDS_LOG_WARNING(x, ...)      printf("[UDS Client] Warning: " x "\n", ##__VA_ARGS__)
+#define UDS_LOG_ERROR(x, ...)        printf("[UDS Client] Error: " x "\n", ##__VA_ARGS__)
 
 /* Types *********************************************************************/
 
-/** @brief Data Structure of all the Information the Server needs to access a Data Identifier */
-typedef struct DataDefinition_public
-{
-    /** @brief Data Identifier. This is Server/Vendor/Manufacturer specific.
-     * Can also be a dynamically defined Identifier.
-     */
-    uint16_t DID;
-    /** @brief Offset in Data Identifier.
-     * @warning 0x01 for the first byte. First Byte is NOT 0x00.
-     */
-    uint8_t firstBytePosition;
-    /** @brief Size of underlying Data. */
-    uint8_t memorySize;
-} DataDefinition;
-
 /* Interfaces ****************************************************************/
 
-#ifdef __cplusplus
-}
-#endif
+#define str(x) #x
+#define xstr(x) str(x)
 
-#endif /* UDS_DATA_DEFINITION_H_ */
+#endif /* UDS_CLIENT_CONFIG_H_ */
+
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

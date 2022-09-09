@@ -14,16 +14,16 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
- *  Created on: Tue Jul 28 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup Interfaces
+ * @addtogroup BusinessLogic
  * @{
- * @file CallbackInterface.h
- * Includes a prototype of a Callback.
+ * @file
+ * Implementation of the Diagnostic and Communication Management Functional
+ * Unit. The detailed specifications can be found in @b ISO @b 14229-1
+ * Chapter 9.
  *
  * $Id:  $
  * $URL:  $
@@ -32,13 +32,21 @@
  */
 /*****************************************************************************/
 
-#ifndef CALLBACK_INTERFACE_H_
-#define CALLBACK_INTERFACE_H_
-    #include <stdint.h>
-    #include "ErrorCode.h"
+/* Includes ******************************************************************/
+#include "config.h"
 
-    /** @brief Represents a callback function that this UDS Client can handle.
-     * @req S06 Notify application.
-    */
-    typedef void(*UDS_callback)(UDS_Client_Error_t errorCode, uint8_t* buffer, uint32_t length);
-#endif // CALLBACK_INTERFACE_H
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+#if EXPORT_TO_DLL==1
+#define public __declspec(dllexport)
+#else
+#define public
+#endif
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
+
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

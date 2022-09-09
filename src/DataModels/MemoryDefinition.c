@@ -15,15 +15,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- *  Created on: Tue Jul 28 2020
+ * Created on: Mon Aug 24 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup Interfaces
+ * @addtogroup DataModels
  * @{
- * @file CallbackInterface.h
- * Includes a prototype of a Callback.
+ * @file
+ * Provides helper functions for MemoryDefinition.
  *
  * $Id:  $
  * $URL:  $
@@ -32,13 +32,10 @@
  */
 /*****************************************************************************/
 
-#ifndef CALLBACK_INTERFACE_H_
-#define CALLBACK_INTERFACE_H_
-    #include <stdint.h>
-    #include "ErrorCode.h"
+#include "MemoryDefinition.h"
+#include <stdint.h>
 
-    /** @brief Represents a callback function that this UDS Client can handle.
-     * @req S06 Notify application.
-    */
-    typedef void(*UDS_callback)(UDS_Client_Error_t errorCode, uint8_t* buffer, uint32_t length);
-#endif // CALLBACK_INTERFACE_H
+uint8_t MemoryDefinition_getAddressAndLengthFormatIdentifier(MemoryDefinition * memdef) {
+    return ((memdef->SizeLength & 0x0F) << 4) | (memdef->AddressLength & 0x0F);
+}
+

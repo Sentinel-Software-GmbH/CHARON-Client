@@ -1,6 +1,6 @@
 /*
  *  Sentinel Software GmbH
- *  Copyright (C) 2020 Steven Inácio
+ *  Copyright (C) 2020 ${Author}
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,18 +14,15 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
- *  Created on: Wed Jul 29 2020
  */
 /**
  * @addtogroup UDS_Client
  * @{
- * @addtogroup DataModels
+ * @addtogroup timer.c
  * @{
- * @file ResetTypes.h
- * Includes a representation of all reset functions used by the function UDS_DCM_ECUReset().
- * 
- * Check ISO 14229-1 Chapter 9.3 Table 34
+ * @file
+ * Brief Description.
+ * Detailed Description.
  *
  * $Id:  $
  * $URL:  $
@@ -34,10 +31,12 @@
  */
 /*****************************************************************************/
 
-#ifndef UDS_RESET_H_
-#define UDS_RESET_H_
-
 /* Includes ******************************************************************/
+
+#include "TimerInterface.h"
+#include <windows.h>
+
+/* Imports *******************************************************************/
 
 /* Constants *****************************************************************/
 
@@ -45,17 +44,32 @@
 
 /* Types *********************************************************************/
 
-/** @brief How the Server should Reset on an ECU Reset Request. */
-typedef enum UDS_Reset_Type_public {
-    UDS_Reset_Reserved00 = 0x00,                /**< ISO Reserved*/
-    UDS_HardReset = 0x01,                       /**< Force a Hard Reset on the Server. */
-    UDS_KeyOffOnReset = 0x02,                   /**< Simulate an Ignition Off and On Event. */
-    UDS_SoftReset = 0x03,                       /**< Softreset the ECU. */
-    UDS_enableRapidPowerShutDown = 0x04,        /**< Enable a rapid Shutdown on ECUs that support this. */
-    UDS_disableRapidPowerShutDown = 0x05,       /**< Disable a rapid Shutdown on ECUs that support this. */
-} UDS_Reset_t;
+/* Variables *****************************************************************/
 
-/* Interfaces ****************************************************************/
+uint32_t getTime();
+int64_t diffTime(uint32_t start, uint32_t stop);
 
-#endif /* UDS_RESET_H_ */
+/* Private Function Definitions **********************************************/
+
+/* Interfaces  ***************************************************************/
+
+TimerInterface timer1 = {
+    getTime,
+    diffTime
+};
+
+uint32_t getTime() {
+    return GetTickCount();
+}
+
+int64_t diffTime(uint32_t start, uint32_t stop) {
+    int64_t diff = stop;
+    diff = diff - start;
+    return diff;
+}
+/* Private Function **********************************************************/
+
+
+
+
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

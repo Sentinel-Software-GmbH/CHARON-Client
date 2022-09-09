@@ -37,6 +37,12 @@
 #ifndef _UDS_COMMUNICATION_CONTROL_H_
 #define _UDS_COMMUNICATION_CONTROL_H_
 
+/* Includes ******************************************************************/
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
 /** @brief How the Server should modify the <tt>Communication Type</tt>
  * @note ISO 14229-1 Chapter 9.5
  */
@@ -58,4 +64,9 @@ typedef enum Com_public {
     UDS_Com_networkManagementCommunicationMessagesAndNormalCommunicationMessages = 0x03     /**< This value references all network management and application-related communication. @note ISO 14229-1 Pg. 333 */
 } UDS_CommunicationType_t;
 
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
+
 #endif // _UDS_COMMUNICATION_CONTROL_H_
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
