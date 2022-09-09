@@ -7,8 +7,8 @@ default:
 
 stages:
   - test
-  - DebugBuild
   - static-code-analysis
+  - DebugBuild
   - doxygen
 
 
@@ -70,7 +70,7 @@ Doxygen:
     - *build
   artifacts:
     paths:
-      - build/CMakeDebugBuild/port/*
+      - build/CMakeDebugBuild/Ports/*
 
 
 Windows:
