@@ -39,9 +39,18 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Includes ******************************************************************/
 
 #include <stdint.h>
 #include <stdbool.h>
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /** @brief Takes a uds message starting at SID and send it to the server.
  * The user should implement the uds conform transport protocol (or if necessary the application protocol frame).
@@ -51,7 +60,7 @@ extern "C" {
  * @note Implement the uds conform transport protocol here.
  * Refer to @b ISO @b 14229-3,-4,-5,-6,-7 @c UDSon... Standard Documents.
  * 
- * @param buffer The data to be sent. This is the inner message, this does not include the application layer protocol frames.
+ * @param data The data to be sent. This is the inner message, this does not include the application layer protocol frames.
  * @param length Size of the data in bytes.
  * @return How many bytes have been sent. Returns a negative number when an error ocurred.
  */
@@ -135,4 +144,5 @@ typedef struct ComInterface_public {
 
 
 #endif /* UDS_COM_INTERFACE_H_ */
+ /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
  

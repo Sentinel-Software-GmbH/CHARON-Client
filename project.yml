@@ -33,10 +33,20 @@
     - +:test/**
     - -:test/support
   :source:
-    - include/**
     - src/**
+  :include:
+    - include/**
   :support:
     - test/support
+
+
+:flags:
+  :test:
+    :compile:
+      :*:
+        - -Wall
+        - -Wpedantic
+        - -std=c99
 
 :defines:
   # in order to add common defines:

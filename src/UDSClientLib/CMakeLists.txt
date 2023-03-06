@@ -1,17 +1,27 @@
-cmake_minimum_required(VERSION 3.19)
 #set up module name for UDS Client Library
-set(MODULE_NAME UDSClientLib)
+set(MODULE_NAME charon_UDSClientLib)
+
+add_library(${MODULE_NAME}-Interface
+  INTERFACE
+  )
+target_include_directories(${MODULE_NAME}-Interface
+  INTERFACE
+    ${CHARON_SOURCE_DIR}/include/UDSClientLib
+  )
+target_link_libraries(${MODULE_NAME}-Interface
+  INTERFACE  
+    charon_SessionAndTransportManger-Interface
+    charon_Interfaces
+    charon_compiler-Interface
+    charon_DataModels
+    ${CHARON_CONFIG}
+  )
+
 #create library and link all needed librariers
 add_library(${MODULE_NAME} 
   ${CMAKE_CURRENT_LIST_DIR}/UDSClientLib.c
 )
-target_include_directories(${MODULE_NAME}
-  INTERFACE PUBLIC
-  ${CHARON_SOURCE_DIR}/include/Common
-  ${PROJECT_SOURCE_DIR}/include/Interface
-  ${PROJECT_SOURCE_DIR}/include/DataModels
-)
 target_link_libraries(${MODULE_NAME}
   PRIVATE
-  ComLogic
-)
+    ${MODULE_NAME}-Interface 
+  )

@@ -24,7 +24,7 @@ set(STATIC_LIBS ON)
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(PORT STREQUAL Windows)
+if(PORT STREQUAL Windows OR PORT STREQUAL demo)
   set(PORT_FLAGS "-fno-set-stack-executable -mwin32 -mconsole -mnop-fun-dllimport")
 endif()
 
@@ -32,7 +32,7 @@ set(COMMON_FLAGS "${PORT_FLAGS} -O0 -Wall ")
 set(CMAKE_C_FLAGS "${COMMON_FLAGS}")
 
 # Debug Flags
-set(COMMON_DEBUG_FLAGS "-g3 -gdwarf-2 --debug")
+set(COMMON_DEBUG_FLAGS "-g3 -gdwarf-2 --debug -DDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "${COMMON_DEBUG_FLAGS}")
 set(CMAKE_ASM_FLAGS_DEBUG "${COMMON_DEBUG_FLAGS}")
 
@@ -42,5 +42,3 @@ set(CMAKE_C_FLAGS_RELEASE "${COMMON_RELEASE_FLAGS}")
 set(CMAKE_ASM_FLAGS_RELEASE "${COMMON_RELEASE_FLAGS}")
 
 set(CMAKE_C_COMPILER_TARGET gcc)
-
-

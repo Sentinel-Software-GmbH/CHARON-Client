@@ -30,33 +30,49 @@
  */
 /*****************************************************************************/
 
-/* Includes */
+/* Includes ******************************************************************/
 
 #include "DataTransmitter.h"
 #include "SessionAndTransportManager.h"
+#include "MemoryDefinition.h"
 #include "SID.h"
 #include <stdint.h>
 #include <string.h>
 
-/* Types */
+/* Types *********************************************************************/
 
-/* Constants */
+/* Constants *****************************************************************/
 
-/* Variables */
+/* Macros ********************************************************************/
 
-static uint8_t *periodicDID;
-static uint32_t periodicDIDlength = 0;
-UDS_callback user_callback = NULL;
-
-/* Private Function Definitions */
-
-static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
-
+/** @brief Macro to find out which variable is larger. */
 #define MAX(x, y) (x > y ? x : y)
 
-/* Interfaces */
+/* Variables *****************************************************************/
 
-bool UDS_DT_readDataByIdentifier(uint16_t *dataIdentifier, uint8_t length, UDS_callback callback)
+/** @brief Pointer for periodic DID.*/
+static uint8_t *periodicDID;
+/** @brief Pointer for length of periodic DID.*/
+static uint32_t periodicDIDlength = 0;
+/** @brief User callback function @ref UDS_callback.*/
+UDS_callback user_callback = NULL;
+
+/* Function Definitions ******************************************************/
+
+/* Private Function Definitions **********************************************/
+
+/**
+ * @brief This function is used to remove entities from pending list.
+ * 
+ * @param error @ref UDS_Client_Error_t.
+ * @param data Data for callback function. 
+ * @param length Size of data.
+ */
+static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length);
+
+/* Interfaces ****************************************************************/
+
+bool UDS_DT_readDataByIdentifier(uint16_t* dataIdentifier, uint8_t length, UDS_callback callback)
 {
 	uint8_t message[1 + length * 2];
 	message[0] = SID_ReadDataByIdentifier;
@@ -79,8 +95,8 @@ bool UDS_DT_readMemoryByAddress(MemoryDefinition sourceMemory, UDS_callback call
 	return STM_Deploy(message, length, callback, false);
 }
 
-/*
- * TODO: Very Complex. Might need the user to interpret the return values
+/**
+ * @todo: Very Complex. Might need the user to interpret the return values
  */
 bool UDS_DT_readScalingDataByIdentifier(uint16_t dataIdentifier, UDS_callback callback)
 {
@@ -101,7 +117,6 @@ bool UDS_DT_ReadDataByPeriodicIdentifier(UDS_TimerRates_t transmissionMode, uint
 
 bool UDS_DT_stopDataByPeriodicIdentifier(uint8_t *periodicDataIdentifiers, uint8_t periodicDataIdsLength, UDS_callback callback)
 {
-	if(periodicDataIdsLength == 0) return false;
 	uint8_t message[2 + periodicDataIdsLength];
 	message[0] = SID_ReadDataByPeriodicIdentifier;
 	message[1] = 0x04;
@@ -174,7 +189,7 @@ bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t *writeBu
 	uint32_t length = 2 + targetMemory.SizeLength + targetMemory.AddressLength + bufferLength;
 	uint32_t i = 0;
 	uint8_t message[length];
-	message[i++] = SID_WriteMemoryByAdress;
+	message[i++] = SID_WriteMemoryByAddress;
 	message[i++] = MemoryDefinition_getAddressAndLengthFormatIdentifier(&targetMemory);
 	memcpy(&message[i], targetMemory.Address, targetMemory.AddressLength);
 	i += targetMemory.AddressLength;
@@ -184,14 +199,21 @@ bool UDS_DT_writeMemoryByAddress(MemoryDefinition targetMemory, uint8_t *writeBu
 	return STM_Deploy(message, length, callback, false);
 }
 
-static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) {
-	if(E_OK == error) {
-		for (int i = 0; i < periodicDIDlength; i++) {
+/* Private Functions **************************************************************************/
+
+static void DT_StopCallback(UDS_Client_Error_t error, uint8_t* data, uint32_t length) 
+{
+	if(E_OK == error) 
+	{
+		for (int i = 0; i < periodicDIDlength; i++) 
+		{
 			STM_RemoveAsync(periodicDID[i]);
 		}
 	}
-	if(user_callback != NULL) {
+	if(user_callback != NULL) 
+	{
 		user_callback(error, data, length);
 	}
 	return;
 }
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

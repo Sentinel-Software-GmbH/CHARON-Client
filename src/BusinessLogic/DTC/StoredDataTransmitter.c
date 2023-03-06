@@ -27,11 +27,27 @@
  * $URL:  $
  * @}
  * @}
- */
+ *****************************************************************************/
+
+/* Includes ******************************************************************/
 
 #include "StoredDataTransmitter.h"
 #include "SID.h"
 #include "SessionAndTransportManager.h"
+
+/* Imports *******************************************************************/
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Variables *****************************************************************/
+
+/* Private Function Definitions **********************************************/
+
+/* Interfaces  ***************************************************************/
 
 bool UDS_DTC_ClearDiagnosticInformation(uint32_t groupOfDTC, UDS_callback callback)
 {
@@ -299,7 +315,7 @@ bool UDS_DTC_ReportUserDefMemoryDTCExtDataRecordByDTCNumber(uint32_t DTCMaskReco
 {    
     uint8_t message[7];
     message[0] = SID_ReadDTCInformation;
-    message[1] = 0x18;
+    message[1] = 0x19;
     message[2] = DTCMaskRecord >> 16;
     message[3] = DTCMaskRecord >> 8;
     message[4] = DTCMaskRecord;
@@ -331,3 +347,4 @@ bool UDS_DTC_ReportWWHOBDDTCWithPermanentStatus(uint8_t FunctionalGroupIdentifie
     return STM_Deploy(message, 3, callback, false);
 }
 
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

@@ -34,11 +34,22 @@
 
 #ifndef CALLBACK_INTERFACE_H_
 #define CALLBACK_INTERFACE_H_
-    #include <stdint.h>
-    #include "ErrorCode.h"
+/* Includes ******************************************************************/
+#include <stdint.h>
+#include "ErrorCode.h"
 
-    /** @brief Represents a callback function that this UDS Client can handle.
-     * @req S06 Notify application.
-    */
-    typedef void(*UDS_callback)(UDS_Client_Error_t errorCode, uint8_t* buffer, uint32_t length);
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
+
+/** @brief Represents a callback function that this UDS Client can handle.
+ * @req S06 Notify application.
+*/
+typedef void(*UDS_callback)(UDS_Client_Error_t errorCode, uint8_t* buffer, uint32_t length);
+
 #endif // CALLBACK_INTERFACE_H
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

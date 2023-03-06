@@ -27,35 +27,46 @@
  * $URL:  $
  * @}
  * @}
- */
+ **********************************************************************************/
 
-/* INCLUDE */
+/* Includes ***********************************************************************/
 
 #include <string.h>
 #include "Routine.h"
 #include "SID.h"
 #include "SessionAndTransportManager.h"
 
-/* Private Function Definitions */
+/* Private Function Definitions ***************************************************/
 
+/** @brief This callback function is used to put together messages send to server for Routine Functional Unit.
+ * 
+ * @param command Select routine Control Type.
+ * @param routineIdentifier Routine Identifier. see ISO 14229-1 Annex F Tabelle F.1
+ * @param routineControlOptionRecord Routine entry option parameters, which optionally specify start conditions of the routine.
+ * @param routineControlOptionsLength  Size in bytes of the routineControlOptionRecord.
+ * @param callback A user provided callback function that gets executed when a Server response was received or an error has occurred.
+ * @return Status if message was successful.
+ */
 static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback);
 
-/* Interface Functions */
+/* Interface Functions ************************************************************/
 
 bool UDS_ROUTINE_startRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
     return commonRoutine(0x01, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
 }
+
 bool UDS_ROUTINE_stopRoutine(uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
     return commonRoutine(0x02, routineIdentifier, routineControlOptionRecord, routineControlOptionsLength, callback);
 }
+
 bool UDS_ROUTINE_requestRoutineResults(uint16_t routineIdentifier, UDS_callback callback)
 {
     return commonRoutine(0x03, routineIdentifier, NULL, 0, callback);
 }
 
-/* Private Functions */
+/* Private Functions *************************************************************/
 
 static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *routineControlOptionRecord, uint32_t routineControlOptionsLength, UDS_callback callback)
 {
@@ -69,3 +80,5 @@ static bool commonRoutine(uint8_t command, uint16_t routineIdentifier, uint8_t *
     }
     return STM_Deploy(message, 4 + routineControlOptionsLength, callback, false);
 }
+
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

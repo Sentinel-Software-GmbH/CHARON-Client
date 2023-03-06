@@ -181,7 +181,7 @@ public bool UDS_DTC_ReportMirrorMemoryDTCByStatusMask(uint8_t DTCStatusMask, UDS
 
 /** @brief Request DTCExtendedData records out of the DTC mirror memory.
  * @param DTCMaskRecord Filter records by this DTC Number.
- * @param DTCExtDataRecord Select records by this record number. 0xFF for all records, 0xFE for all OBD records.
+ * @param DTCExtDataRecordNumber Select records by this record number. 0xFF for all records, 0xFE for all OBD records.
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occurred.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.
@@ -228,7 +228,7 @@ public bool UDS_DTC_ReportDTCFaultDetectionCounter(UDS_callback callback);
 public bool UDS_DTC_ReportDTCWithPermanentStatus(UDS_callback callback);
 
 /** @brief Request the DTCExtendedData records.
- * @param DTCExtDataRecord Request the DTCExtendedData record with this record number. 
+ * @param DTCExtDataRecordNumber Request the DTCExtendedData record with this record number. 
  * @param callback A user provided callback function that gets executed when a Server response was received or an error has occurred.
  * @returns An Indicator for the successful deployment of the message.
  * This does not mean that the Service was also successful, just that the client has transmitted the request to the server.

@@ -13,24 +13,34 @@
             "toolchainFile": "${sourceDir}/toolchain/cmake/GCC.cmake"
         },
         {
-            "name": "Windows",
-            "displayName": "Port - Windows",
+            "name": "windows",
+            "displayName": "Port - windows",
             "description": "Building the exe file for Windows",
             "inherits": "BASE",
             "cacheVariables": {
-                "PORT": "Windows"
+                "PORT": "windows"
             }
         },
         {
-            "name": "STM32F4",
-            "displayName": "Port - STM32F4",
-            "description": "Building the elf file for STM32F4",
+            "name": "stm32f4",
+            "displayName": "Port - stm32f4",
+            "description": "Building the elf file for stm32f4",
             "inherits": "BASE",
             "cacheVariables": {
-                "PORT": "STM32F4"
+                "PORT": "stm32f4"
+            }
+        },
+        {
+            "name": "demo",
+            "displayName": "Port - demo",
+            "description": "Building the exe file for showcase demo",
+            "inherits": "BASE",
+            "cacheVariables": {
+                "PORT": "demo"
             }
         }
     
+        
     ]
 }
 

@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -43,7 +43,7 @@
 
 /* Types *********************************************************************/
 
-/** @brief A representation of all the Errors that the Client could have. */
+/** @brief A representation of all the Errors that the Client and Server could have. */
 typedef enum ErrorCode_public {
     /** @brief Everything was OK. */
     E_OK,
@@ -64,10 +64,17 @@ typedef enum ErrorCode_public {
     /** @brief The message was too long for the Static TXBuffer */
     E_MessageTooLong,
 #ifndef DOXY_SKIP
+    /** @brief Amount of all possible Errorcodes. */
     ErrorCode_amount
 #endif
 } UDS_Client_Error_t;
 
+/**
+ * @brief Function that returns Errorcodes as a Sting.
+ * 
+ * @param code possible Errorcodes @ref UDS_Client_Error_t.
+ * @return const char* Errorcode a a string.
+ */
 const char * ErrorCode_getString(UDS_Client_Error_t code);
 /* Interfaces ****************************************************************/
 

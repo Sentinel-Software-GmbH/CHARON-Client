@@ -40,9 +40,13 @@
 /* Imports *******************************************************************/
 
 /* Constants *****************************************************************/
-static uint8_t address[] = { 0x00, 0x01, 0x00, 0x00 };
-static uint8_t memory[] = { 0x00 , 0x00, 0x00, 0x10 };
-static MemoryDefinition mem = {address, memory, 4, 4};
+
+static MemoryDefinition mem = {
+    .Address = { 0x00, 0x01, 0x00, 0x00 },
+    .Size = { 0x00 , 0x00, 0x00, 0x10 },
+    .AddressLength = 4,
+    .SizeLength = 4,
+    };
 static uint8_t data[] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
 
 /* Macros ********************************************************************/
@@ -81,7 +85,6 @@ void test_DownloadDataToMemory() {
 void test_UploadDataFromMemory() {
     TEST_MESSAGE("Testing receiving data from the server.");
     TEST_MESSAGE("This test proofs ROTs R23, R24 and R25.");
-    uint8_t rxBuffer[16];
     uint8_t* expectedData = (uint8_t[]) {SID_RequestUpload, 0x00, 0x44, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10 };
     STM_Deploy_ExpectAndReturn(expectedData, 11, NULL, false, true);
     UDS_UPDOWN_UploadRequest(0x00, 0x00, mem, NULL);

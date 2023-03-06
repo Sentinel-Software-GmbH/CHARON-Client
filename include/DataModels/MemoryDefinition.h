@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -60,7 +60,7 @@ typedef struct MemoryDefinition_public {
      * 
      * @warning Please make sure this number has its MSB first.
      */
-    uint8_t* Address;
+    uint8_t Address[15];
     
     /** @brief The size of the wanted memory block.
      * 
@@ -69,7 +69,7 @@ typedef struct MemoryDefinition_public {
      * 
      * @warning Please make sure this number has its MSB first.
      */ 
-    uint8_t* Size;
+    uint8_t Size[15];
 
     /** @brief Length in Bytes of the address. 
      * 
@@ -89,7 +89,7 @@ typedef struct MemoryDefinition_public {
  * Prepares the Address and Length Format Identifier by truncating the AddressLength and SizeLength
  * and writing the corresponding nibbles.
  * 
- * Takes the AddressLength and SizeLength of the @ref @c MemoryDefinition, masks them with @c 0x0F and saves it into one byte,
+ * Takes the AddressLength and SizeLength of the @ref MemoryDefinition, masks them with @c 0x0F and saves it into one byte,
  * according to e.g. @b ISO @b 14229-1 @b Table @b 152 @c addressAndLengthFormatIdentifier.
  * 
  * @param memdef The memory definition where address and memory size should be compiled into the addressAndLengthFormatIdentifier

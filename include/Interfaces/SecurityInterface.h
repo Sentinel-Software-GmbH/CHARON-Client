@@ -48,7 +48,7 @@ extern "C" {
  * It's in the responsibility of the user to provide keys, or any other required data to encrypt the message, inside this function.
  * 
  * @param message The byte array to be encoded.
- * 
+ * @param length length of the message in bytes.
  * @return An encrypted message.
  */
 typedef uint8_t*(*encryptFunc)(uint8_t* message, uint32_t length);
@@ -58,7 +58,7 @@ typedef uint8_t*(*encryptFunc)(uint8_t* message, uint32_t length);
  * 
  * It's in the responsibility of the user to provide keys, or any other required data to decrypt the message, inside this function.
  * @param message The encrypted message.
- * 
+ * @param length length of the message in bytes.
  * @return A decrypted message.
  */
 typedef uint8_t*(*decryptFunc)(uint8_t* message, uint32_t length);

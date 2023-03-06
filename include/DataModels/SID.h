@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -44,7 +44,7 @@
 
 /* Types *********************************************************************/
 
-// TODO: Do they need to be public?
+  /** @todo: Do they need to be public? */
 
     /** @brief All possible Request Commands defined by the ISO 14229-1 UDS Standard.
      * The first byte of the UDS Message always declares what function the server should execute on this request.
@@ -77,7 +77,7 @@
         SID_Authentication = 0x29,
         /** @brief Read a DataIdentifier periodically, resulting in asynchronous Responses from the Server */
         SID_ReadDataByPeriodicIdentifier = 0x2A,
-        /** @brief Dynamically define a Data Identifier eitherby Memory Address or combining other Data Identifier */
+        /** @brief Dynamically define a Data Identifier either by Memory Address or combining other Data Identifier */
         SID_DynamicallyDefineDataIdentifier = 0x2C,
         /** @brief Write Data to an Data Identifier */
         SID_WriteDataByIdentifier = 0x2E,
@@ -96,7 +96,7 @@
         /** @brief Request an Upload of a File, Server to Client */
         SID_RequestFileTransfer = 0x38,
         /** @brief Write Data to a specified Memory Address. */
-        SID_WriteMemoryByAdress = 0x3D,
+        SID_WriteMemoryByAddress = 0x3D,
         /** @brief Signals the Server that the Client is still present and wants to remain in the active non-default Session */
         SID_TesterPresent = 0x3E,
         /** @brief Signal of the Server to the Client, that the previous request was unsuccessful */
@@ -113,7 +113,7 @@
         SID_LinkControl = 0x87,
     } SID_t;
 
-    // TODO: Add all Negative Error Codes to provide a better Error Handling.
+    /** @todo: Add all Negative Error Codes to provide a better Error Handling. */
     /** @brief Server Error Codes.
      * @note ISO 14229-1 Table A.1
     */

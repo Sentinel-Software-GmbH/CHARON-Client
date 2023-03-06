@@ -5,7 +5,7 @@
 **.code-snippets
 
 **/.vscode
-
+/checks.json
 /cppcheck.xml
 /documentation_error.log
 /.gitlab-ci.yml.bak
