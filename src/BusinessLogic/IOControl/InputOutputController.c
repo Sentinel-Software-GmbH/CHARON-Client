@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -27,15 +27,32 @@
  * $URL:  $
  * @}
  * @}
- */
+ *****************************************************************************/
+
+/* Includes ******************************************************************/
 
 #include "InputOutputController.h"
 #include "SID.h"
-#include "string.h"
+#include <string.h>
 #include "SessionAndTransportManager.h"
 
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
 
 /* Private Function Definitions */
+
+/** @brief This callback function is used to put together messages send to server for Input Output Controller Functional Unit.
+ * 
+ * @param command Is the Input Output Control Parameter.
+ * @param dataIdentifier A data identifier that references an in - or output value.
+ * @param controlMask List of Bit Masks of all Data Identifier Values that you want to change. see ISO 14229-1 Table 353
+ * @param controlMaskLength Length of the Control Mask list.
+ * @param callback  A user provided callback function that gets executed when a Server response was received or an error has occurred @ref UDS_callback.
+ * @return Status if message was successful.
+ */
 static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *controlMask, uint32_t controlMaskLength, UDS_callback callback);
 
 /* Interface Functions */
@@ -85,3 +102,4 @@ static bool commonControl(uint8_t command, uint16_t dataIdentifier, uint8_t *con
     }
     return STM_Deploy(message, 4 + controlMaskLength, callback, false);
 }
+/*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/

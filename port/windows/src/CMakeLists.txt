@@ -1,0 +1,4 @@
+add_subdirectory(config)
+add_subdirectory(communication_test)
+add_subdirectory(timer)
+add_subdirectory(wincom)

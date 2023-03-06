@@ -21,7 +21,7 @@
  * @addtogroup BusinessLogic
  * @{
  * @file UploadDownload.c
- * Implementation of the Service and Session Control Module
+ * Implementation of the Upload Download Module
  *
  * $Id:  $
  * $URL:  $
@@ -52,6 +52,7 @@
 #ifdef TEST
     static uint32_t STATIC_BUFFER_SIZE = UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE;
 #else
+    /** @brief Macro to set buffer size defined in config.h file.*/
     #define STATIC_BUFFER_SIZE UPLOAD_DOWNLOAD_STATIC_BUFFER_SIZE
 #endif
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 1
@@ -60,28 +61,43 @@
 
 /* Private Function Definitions **********************************************/
 
+/** @brief This callback function is used to put together messages send to server for Upload Download Functional Unit.
+ * 
+ * @param upload Parameter is used to decide between upload and download. False means download / true means upload.
+ * @param compressionMethod Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
+ * @param encryptionMethod  Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
+ * @param memoryDefinition A Data structure representing a pointer and the size of some data in the memory of the server.
+ * @param callback A User provided callback that get executed when the Service has finished.
+ * @return Status if message was successful or failed.
+ */
 bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback);
 
 /* Interfaces  ***************************************************************/
 
-bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+bool UDS_UPDOWN_DownloadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) 
+{
     return request(false, compressionMethod, encryptionMethod, memoryDefinition, callback);
 }
 
-bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t dataSize, uint32_t maxNumberOfBlockLength, UDS_callback callback) {
+bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t dataSize, uint32_t maxNumberOfBlockLength, UDS_callback callback) 
+{
     uint32_t length = maxNumberOfBlockLength;
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > STATIC_BUFFER_SIZE) { 
-        if(callback != NULL) {
+    if (length > STATIC_BUFFER_SIZE) 
+    { 
+        if(callback != NULL) 
+        {
             callback(E_MessageTooLong, NULL, 0);
         }
         return false;
     }
 #endif
-    if(dataSize > maxNumberOfBlockLength - 2) {
-        if (callback != NULL) {
+    if(dataSize > maxNumberOfBlockLength - 2) 
+    {
+        if (callback != NULL) 
+        {
             callback(E_MessageTooLong, NULL, 0);
         }
         return false;
@@ -94,17 +110,21 @@ bool UDS_UPDOWN_Download(uint8_t blockSequenceCounter, uint8_t* data, uint32_t d
     return STM_Deploy(txBuffer, length, callback, false);
 }
 
-bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+bool UDS_UPDOWN_UploadRequest(uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) 
+{
     return request(true, compressionMethod, encryptionMethod, memoryDefinition, callback);
 }
 
-bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
+bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) 
+{
     uint32_t length = 2;
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > STATIC_BUFFER_SIZE) {
-        if(callback != NULL) {
+    if (length > STATIC_BUFFER_SIZE) 
+    {
+        if(callback != NULL) 
+        {
             callback(E_MessageTooLong, NULL, 0);
         }
         return false;
@@ -117,13 +137,16 @@ bool UDS_UPDOWN_Upload(uint8_t blockSequenceCounter, UDS_callback callback) {
     return STM_Deploy(txBuffer, 2, callback, false);
 }
 
-bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback) {
+bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t lengthOfParameter, UDS_callback callback) 
+{
     uint32_t length = 1 + lengthOfParameter;
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > STATIC_BUFFER_SIZE) {
-        if(callback != NULL) {
+    if (length > STATIC_BUFFER_SIZE) 
+    {
+        if(callback != NULL) 
+        {
             callback(E_MessageTooLong, NULL, 0);
         }
         return false;
@@ -138,34 +161,37 @@ bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uint32_t l
 
 bool UDS_UPDOWN_AddFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptingMethod, uint8_t fileSizeParameterLength, uint8_t* fileSizeUncompressed, uint8_t* fileSizeCompressed, bool replace) 
 {
-    //@todo finish this
+    /** @todo finish this UDS_UPDOWN_AddFile */
     return true;
 }
 bool UDS_UPDOWN_DeleteFile(uint16_t pathLength, char* path) 
 {
-    //@todo finish this
+    /** @todo finish this UDS_UPDOWN_DeleteFile */
     return true;
 }
 bool UDS_UPDOWN_ReadFile(uint16_t pathLength, char* path, uint8_t compressionMethod, uint8_t encryptionMethod, UDS_callback callback) 
 {
-    //@todo finish this
+    /** @todo finish this UDS_UPDOWN_ReadFile */
     return true;
 };
 bool UDS_UPDOWN_ReadDir(uint16_t pathLength, char* path, UDS_callback callback) 
 {
-    //@todo finish this
+    /** @todo finish this UDS_UPDOWN_ReadDir */
     return true;
 };
 
 /* Private Function **********************************************************/
 
-bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) {
+bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, MemoryDefinition memoryDefinition, UDS_callback callback) 
+{
     uint32_t length = 3 + memoryDefinition.AddressLength + memoryDefinition.SizeLength;
 #if UPLOAD_DOWNLOAD_USES_STATIC_BUFFER == 0
     uint8_t txBuffer[length];
 #else
-    if (length > STATIC_BUFFER_SIZE) {
-        if(callback != NULL) {
+    if (length > STATIC_BUFFER_SIZE) 
+    {
+        if(callback != NULL) 
+        {
             callback(E_MessageTooLong, NULL, 0);
         }
         return false;
@@ -189,13 +215,3 @@ bool request(bool upload, uint8_t compressionMethod, uint8_t encryptionMethod, M
 
 
 /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
-
-
-
-
-
-
-
-
-/* Architektur Dokument, Test Dokument, Test Log, Source Documentation, Test Source Documentation, BA */
-/* Was war gefordert. Wer ist Beteiligt, Welche Requirements */

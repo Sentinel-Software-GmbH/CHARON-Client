@@ -64,7 +64,7 @@ typedef enum SessionType_public
 /** @brief Formal Description of a Session and its relevant Timings */
 typedef struct Session_public
 {
-    UDS_SessionType_t session;          /**< Session Type as described in @ref @c UDS_SessionType_t */
+    UDS_SessionType_t session;          /**< Session Type as described in @ref UDS_SessionType_t */
     uint16_t p2;                        /**< Timeout for the initial answer. 1ms Resolution. */
     uint16_t p2_star;                   /**< Timeout for the extended answer. 10ms Resolution. */
 } UDS_Session_t;

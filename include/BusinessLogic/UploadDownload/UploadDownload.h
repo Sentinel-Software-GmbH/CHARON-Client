@@ -125,7 +125,7 @@ public bool UDS_UPDOWN_ExitTransfer(uint8_t *vendorSpecificServiceParameter, uin
  * @param pathLength Number of characters inside the pathLength.
  * @param path Destination Path on the server's file system. <br>@b NOTE: This includes the filename.
  * @param compressionMethod Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
- * @param encryptionMethod Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
+ * @param encryptingMethod Anything other than 0x0 is vendor-specific. Check ISO 14229-1 Chapter 14.2 Table 394 under dataFormatIdentifier.
  * @param fileSizeParameterLength Defines the length in bytes for both parameters fileSizeUncompressed and fileSizeCompressed.
  * @param fileSizeUncompressed The Size of the file after decompression. <br>@b NOTE: This needs to be present even if no compression method has been used.
  * @param fileSizeCompressed The size of the file after compression. <br>@b NOTE: this needs to be present even if no compression method has been used.

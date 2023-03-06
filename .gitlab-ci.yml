@@ -2,7 +2,7 @@ default:
     tags:
         - native
     before_script:
-        - chmod +x ./cleanCMakeCache.bat
+        - .\cleanCMakeCache.bat
     
 
 stages:
@@ -27,12 +27,11 @@ cppcheck:
 
 
 Unit Tests:
-    needs:
     stage: test
+    needs:
     rules:
         - when: always
     script:
-        - ridk enable
         - ruby toolchain\ceedling\bin\ceedling
     artifacts:
         name: "UnitTestArtefact"
@@ -73,7 +72,9 @@ Doxygen:
       - build/CMakeDebugBuild/Ports/*
 
 
-Windows:
+windows:
+  extends: .build_job
+demo:
   extends: .build_job
 # standalone:
   # extends: .build_job

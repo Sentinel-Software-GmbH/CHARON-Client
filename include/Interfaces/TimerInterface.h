@@ -1,4 +1,4 @@
-/*
+/**
  *  Sentinel Software GmbH
  *  Copyright (C) 2020 Steven Inácio
  *
@@ -39,8 +39,17 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Includes ******************************************************************/
 
 #include <stdint.h>
+
+/* Constants *****************************************************************/
+
+/* Macros ********************************************************************/
+
+/* Types *********************************************************************/
+
+/* Interfaces ****************************************************************/
 
 /**
  * @brief A Function that should return a value that increases every Millisecond.
@@ -48,7 +57,8 @@ extern "C" {
  * @returns An unsigned numeric value that increases every Millisecond. 
  */
 typedef uint32_t(*getTimeFunc)(void);
-/** @brief A function to get the difference between two timestamps provided by the @ref @c getTimeFunc .
+
+/** @brief A function to get the difference between two timestamps provided by the @ref getTimeFunc .
  * @warning Please take overflowing values into consideration.
  * @returns The difference between two provided timestamps.
  * start > end should return a negative value.
@@ -60,9 +70,10 @@ typedef int64_t(*diffTimeFunc)(uint32_t start, uint32_t stop);
 /** @brief A Class that represents the implementation of a System Timer.
  * @req S04 Define a Timer Interface
  */
-typedef struct TimerInterface_public {
-    getTimeFunc getTime;
-    diffTimeFunc diffTime;
+typedef struct TimerInterface_public 
+{
+    getTimeFunc getTime;        /**< member of class TimerInterface function pointer @ref getTimeFunc */
+    diffTimeFunc diffTime;      /**< member of class TimerInterface function pointer @ref diffTimeFunc*/
 } TimerInterface;
 
 
@@ -72,4 +83,5 @@ typedef struct TimerInterface_public {
 
 
 #endif /* UDS_TIMER_INTERFACE_H_*/
+ /*---************** (C) COPYRIGHT Sentinel Software GmbH *****END OF FILE*---*/
  

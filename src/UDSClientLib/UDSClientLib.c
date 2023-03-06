@@ -36,10 +36,12 @@
 #include "UDSClientLib.h"
 #include "SessionAndTransportManager.h"
 
-void UDS_Client_Init(ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) {
+void UDS_Client_Init(const ComInterface *com, TimerInterface *timer, SecurityInterface *security, uint8_t * const rxBuffer, uint32_t rxBufferLength) 
+{
     STM_Init(com, timer, security, rxBuffer, rxBufferLength);
 }
 
-UDS_Client_Error_t UDS_Client_Task(void) {
+UDS_Client_Error_t UDS_Client_Task(void) 
+{
     return STM_cyclic();
 }

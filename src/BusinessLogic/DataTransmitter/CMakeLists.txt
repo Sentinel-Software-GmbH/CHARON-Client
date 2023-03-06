@@ -1,18 +1,29 @@
-cmake_minimum_required(VERSION 3.19)
 #set up module name from businesslogic
-set(MODULE_NAME DataTransmitter)
+set(MODULE_NAME charon_DataTransmitter)
+
+add_library(${MODULE_NAME}-Interface
+  INTERFACE
+  )
+target_include_directories(${MODULE_NAME}-Interface
+  INTERFACE
+    ${CHARON_SOURCE_DIR}/include/BusinessLogic/DataTransmitter
+  )
+target_link_libraries(${MODULE_NAME}-Interface
+  INTERFACE
+    charon_SessionAndTransportManger-Interface
+    charon_Interfaces
+    charon_compiler-Interface
+    charon_DataModels
+  )
+
 #create library and link all needed librariers
 add_library(${MODULE_NAME} 
   ${CMAKE_CURRENT_LIST_DIR}/DataTransmitter.c
-)
-target_include_directories(${MODULE_NAME}
-  INTERFACE PUBLIC
-  ${PROJECT_SOURCE_DIR}/include/Common
-  ${PROJECT_SOURCE_DIR}/include/DataModels
-  ${PROJECT_SOURCE_DIR}/include/Interface
-  ${PROJECT_SOURCE_DIR}/include/BusinessLogic/DataTransmitter
-)
+  )
 target_link_libraries(${MODULE_NAME} 
   PRIVATE
-  ComLogic
-)
+    ${MODULE_NAME}-Interface  
+    charon_MemoryDefinition
+    charon_DataModels
+    ${CHARON_CONFIG}
+  )

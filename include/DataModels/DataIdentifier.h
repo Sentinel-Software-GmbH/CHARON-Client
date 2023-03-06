@@ -44,7 +44,7 @@
 /* Types *********************************************************************/
 
 
-/* TODO: Insert all DIDs */
+/** @todo: Insert all DIDs */
 /** @brief All ISO 14229-1 specified DIDs.
  * @note Check ISO 14229-1 Table C.1
  * @warning Only the Starting Address is defined, the Range of the DID can be found as Length under the notes of the documentation of the DID.

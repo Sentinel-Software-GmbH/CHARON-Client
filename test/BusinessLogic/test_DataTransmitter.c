@@ -33,7 +33,7 @@
 /* Includes ******************************************************************/
 
 #include "BusinessLogic/DataTransmitter/DataTransmitter.h"
-#include "DataModels/SID.h"
+#include "SID.h"
 #include "mock_MemoryDefinition.h"
 #include "mock_SessionAndTransportManager.h"
 #include "unity.h"
@@ -57,8 +57,8 @@ static DataDefinition dataDef = {
 
 /** Definition of a Memory Range on the server */
 static MemoryDefinition memDef = {
-    .Address = (uint8_t[]){0x43, 0x21},
-    .Size = (uint8_t[]){0x00, 0x10},
+    .Address = {0x43, 0x21},
+    .Size = {0x00, 0x10},
     .AddressLength = 2,
     .SizeLength = 2,
 };
@@ -120,9 +120,9 @@ void test_ReadDataByPeriodicIdentifier(void)
     TEST_PASS_MESSAGE("This proves R14");
 }
 
-/* TODO: Everything */
 void test_stopDataByPeriodicIdentifier(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a stop data by periodic identifier request.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_ReadDataByPeriodicIdentifier, 0x04, 0x23, 0x53, 0x12};
     STM_Deploy_ExpectAndReturn(expectedMessage, 5, NULL, false, true);
@@ -131,9 +131,9 @@ void test_stopDataByPeriodicIdentifier(void)
     TEST_PASS_MESSAGE("This proves R14");
 }
 
-/* TODO: Everything */
 void test_dynamicallyDefineDataIdentifierByDID(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a dynamically defined data by a data identifier request.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_DynamicallyDefineDataIdentifier, 0x01, 0xF2, 0x66, 0x01, 0x34, 0x04, 0x10};
     STM_Deploy_ExpectAndReturn(expectedMessage, 8, NULL, false, true);
@@ -142,9 +142,9 @@ void test_dynamicallyDefineDataIdentifierByDID(void)
     TEST_PASS_MESSAGE("This proves R15");
 }
 
-/* TODO: Everything */
 void test_dynamicallyDefineDataIdentifierByMemoryDefinition(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a dynamically defined data by a memory address definition request.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_DynamicallyDefineDataIdentifier, 0x02, 0xF3, 0x66, 0x22, 0x43, 0x21, 0x00, 0x10};
     MemoryDefinition_getAddressAndLengthFormatIdentifier_ExpectAndReturn(&memDef, 0x22);
@@ -154,9 +154,9 @@ void test_dynamicallyDefineDataIdentifierByMemoryDefinition(void)
     TEST_PASS_MESSAGE("This proves R15");
 }
 
-/* TODO: Everything */
 void test_clearDynamicallyDefineDataIdentifier(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a clear dynamically defined data request.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_DynamicallyDefineDataIdentifier, 0x03, 0xF2, 0x66};
     STM_Deploy_ExpectAndReturn(expectedMessage, 4, NULL, false, true);
@@ -165,9 +165,9 @@ void test_clearDynamicallyDefineDataIdentifier(void)
     TEST_PASS_MESSAGE("This proves R15");
 }
 
-/* TODO: Everything */
 void test_writeDataByIdentifier(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a write data by identifier request.");
     uint8_t *expectedMessage = (uint8_t[]) {SID_WriteDataByIdentifier, 0x01, 0x34, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
     STM_Deploy_ExpectAndReturn(expectedMessage, 19, NULL, false, true);
@@ -176,11 +176,11 @@ void test_writeDataByIdentifier(void)
     TEST_PASS_MESSAGE("This proves R16");
 }
 
-/* TODO: Everything */
 void test_writeMemoryByAddress(void)
 {
+/** @todo: Everything */
     TEST_MESSAGE("Testing the correct construction of a write memory by address request.");
-    uint8_t *expectedMessage = (uint8_t[]) {SID_WriteMemoryByAdress, 0x22, 0x43, 0x21, 0x00, 0x10, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
+    uint8_t *expectedMessage = (uint8_t[]) {SID_WriteMemoryByAddress, 0x22, 0x43, 0x21, 0x00, 0x10, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
     MemoryDefinition_getAddressAndLengthFormatIdentifier_ExpectAndReturn(&memDef, 0x22);
     STM_Deploy_ExpectAndReturn(expectedMessage, 22, NULL, false, true);
     STM_Deploy_IgnoreArg_callback();

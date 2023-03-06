@@ -1,17 +1,24 @@
-cmake_minimum_required(VERSION 3.19)
 #set up module name from businesslogic
-set(MODULE_NAME IOControl)
+set(MODULE_NAME charon_IOControl)
+
+add_library(${MODULE_NAME}-Interface
+  INTERFACE
+  )
+target_include_directories(${MODULE_NAME}-Interface
+  INTERFACE
+    ${CHARON_SOURCE_DIR}/include/BusinessLogic/IOControl
+  )
+
 #create library and link all needed librariers
 add_library(${MODULE_NAME} 
   ${CMAKE_CURRENT_LIST_DIR}/InputOutputController.c
 )
-target_include_directories(${MODULE_NAME}
-  INTERFACE PUBLIC
-  ${PROJECT_SOURCE_DIR}/include/BusinessLogic/IOControl
-  ${PROJECT_SOURCE_DIR}/include/DataModels
-  ${PROJECT_SOURCE_DIR}/inlcude/Common
-)
 target_link_libraries(${MODULE_NAME}
-  PUBLIC
-  ComLogic
-)
+  PRIVATE
+    ${MODULE_NAME}-Interface
+    charon_SessionAndTransportManger-Interface
+    charon_DataModels
+    charon_compiler-Interface
+    charon_Interfaces
+    ${CHARON_CONFIG}
+  )
